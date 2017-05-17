@@ -1,0 +1,91 @@
+##DESCRIPTION
+## Absolute Value Equalites and Inequalities
+## 
+##ENDDESCRIPTION
+## DBsubject(Algebra)
+## DBchapter(Inequalities and problem solving)
+## DBsection('Equations and Inequalities Involving Absolute Value')
+## KEYWORDS('inequalities','absolute value')
+## TitleText1('Essentials of Intermediate Algebra')
+## EditionText1('1')
+## AuthorText1('Blitzer')
+## Section1('4.3
+## Problem1('')
+## Author('RA Cruz')
+## Institution('The College of Idaho')
+## Date: 2007/10
+
+DOCUMENT(); # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "contextInequalitiesAllowStrings.pl",
+);
+
+TEXT(beginproblem());
+
+######################################
+#  Setup
+
+Context("Inequalities-AllowStrings");
+Context()->constants->add(a => Real(exp(2)/cos(1)), b=> Real(7.115));
+Context()->flags->set(formatStudentAnswer=>"parsed");
+Context()->strings->add(none=>{});
+
+$c = random(-10,10,1);
+if($c==1)
+{$c=random(2,10,1);}
+
+Context()->texStrings;
+######################################
+
+#  Main text
+
+
+BEGIN_TEXT
+Solve for \(x\) in terms of \(a\) and \(b\) (you may assume \(a \ne 0\)):  \( |a x + b| = $c \)
+$PAR
+Answer:  \{ ans_rule(20) \}
+$BR
+Note: If there are two answers, your answer should be in the form "answer 1 or answer 2". For example, if you think the answer is x=-25 or 15 you would enter x=-25 or x=15. If there's just one answer, write your answer in the form "answer". For example if the answer were just x=-25, write "x=-25". If there is no solution, write "none".
+END_TEXT
+
+
+######################################
+Context()->normalStrings;
+#  Answer
+
+
+$ans = Compute("0");
+if($c < 0 )
+{  $ans = Compute("none"); }
+if($c==0)
+{ $ans = Compute("x=-b/a"); }
+if($c>0)
+{ $ans = Compute("x=($c-b)/a or x=(-$c-b)/a"); }
+ANS($ans->cmp); 
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
