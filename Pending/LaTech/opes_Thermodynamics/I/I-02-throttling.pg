@@ -1,15 +1,16 @@
 ## DBsubject(Thermodynamics)
 ## DBchapter(Entropy)
-## DBsection(Reservoirs)
-## Level(3)
-## KEYWORDS('entropy', 'throttling')
-## TitleText1(TBD)
-## EditionText1(TBD)
-## AuthorText1(TBD)
-## Section1(TBD) 
-## Problem1(TBD)
-## Author(Niel Crews)
+## DBsection(Pure substance: saturated liquid)
 ## Institution(Louisiana Tech University)
+## Author(Niel Crews)
+## Level(3)
+## Status(A)
+## TitleText1('TBD')
+## AuthorText1('TBD')
+## EditionText1('TBD')
+## Section1('.')
+## Problem1('')
+## KEYWORDS('entropy', 'throttling')
 
 ## NOTES :  
 ##  
@@ -19,14 +20,12 @@
 DOCUMENT();        # This should be the first executable line in the problem.
 
 loadMacros(
-"PG.pl",
-"PGbasicmacros.pl",
-"PGchoicemacros.pl",
-"PGanswermacros.pl",
-"extraAnswerEvaluators.pl",
-"PGauxiliaryFunctions.pl",
-"PGasu.pl",
-"interpMacros.pl"
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "extraAnswerEvaluators.pl",
+  "PGasu.pl",
+  "interpMacros.pl",
+  "PGcourse.pl"
 );
 
 TEXT(beginproblem());
