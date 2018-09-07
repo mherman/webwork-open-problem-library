@@ -1,0 +1,40 @@
+## Original: /rochesterLibrary/setIntegrals20Volume/ur_in_20_4.pg
+
+#DESCRIPTION
+#  Integration
+#  Volume formed by rotating curves about axis
+#ENDDESCRIPTION
+
+#KEYWORDS('Integration', 'Volume')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', p =>'Real');
+$A = Formula("A");
+$p = list_random(.5,2,3,4);
+$func1 = Compute("x^($p)")->reduce;
+$func2  =Compute("$A*x");
+
+Context()->texStrings;
+BEGIN_TEXT
+Assume \(A \gt 0 \), and compute the volume of the solid obtained by revolving the region bound by the graph of \(f(x) = $func1 \) and the graph of \(g(x) = $func2\) about the x-axis. Your answer should be in terms of  \(A\).
+$PAR
+Volume = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$num = Compute("2*($A)^((2*$p+1)/($p-1))*($p-1)^2*pi");
+$den = Compute("3*(2*$p + 1)*($p+2) ");
+$ans =$num/$den;
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

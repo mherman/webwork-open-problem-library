@@ -1,0 +1,54 @@
+#DESCRIPTION
+#TYPE('word problem')
+# Related rates -- two ships moving away from each other.
+#ENDDESCRIPTION
+
+##Tagged by ynw2d
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Related rates)
+## MLT(RelatedRate-TravelDifferentDirections)
+## Level(5)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('3.11')
+## Problem1('13')
+## KEYWORDS('Derivatives','Calculus')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+Context("Numeric");
+Context()->variables->add(R=> 'Real', d=> 'Real', r=> 'Real', h=> 'Real');
+
+$R = Compute("R");
+$d = Compute("d");
+$r = Compute("r");
+$h = Compute("h");
+
+Context()->texStrings;
+BEGIN_TEXT
+At a certain time, ship A is \($d\) miles due west of ship B. Ship A is sailing west at \($r \) mph, and ship B is sailing north at \($R \) mph. How fast is the distance between the ships changing \($h\) hours later? Your answer should be expressed in terms of \(d\), \(r\), \(R\), and \(h\).
+$PAR
+Answer: \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans = Compute("($R^2 * $h + ($d + $r * $h ) * $r ) /(sqrt($R^2 * $h^2+ ($d + $r * $h )^2 ) ) ");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

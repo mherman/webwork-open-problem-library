@@ -1,0 +1,59 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of Differentiation)
+## DBsection(Related rates)
+## Institution(W.H.Freeman)
+## Author(Emily Price)
+## Level(5)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('3.11')
+## Problem1('16')
+## KEYWORDS('calculus', 'derivatives', 'related rates')
+
+DOCUMENT();
+
+
+
+#Load Necessary Macros
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(D=>'Real',d=>'Real', r=>'Real');
+#Book Values
+#$speed = 60;
+#$distance1 = 1;
+#$distance2 = 3;
+
+$D = Compute("D");
+$d = random(1,50,1);
+$r = Compute("r");
+
+
+Context()->texStrings;
+
+BEGIN_TEXT
+$PAR
+A road perpendicular to a highway leads to a farmhouse located \($d\) miles away. An automobile traveling on this highway passes through this intersection and continues at a constant speed of \($r\) mph. Compute how fast the distance betwen the automobile and the farmhouse is increasing when the automobile is \($D\) miles past the intersection of the highway and the road, in terms of \($r\), and \(D\). 
+$PAR
+Answer: \{ans_rule(30)\}
+END_TEXT
+
+Context()->normalStrings;
+
+ANS(Compute("($D*$r)/(sqrt($d^2 + $D^2) )")->cmp);
+
+Context()->texStrings;
+SOLUTION(EV3(<<'END_SOLUTION'));
+$PAR
+See the original problem at /Library/WHFreeman/Rogawski_Calculus_Early_Transcendentals_Second_Edition/3_Differentiation/3.11_Related_Rates/3.11.16.pg for a full solution. 
+
+
+END_SOLUTION
+
+ENDDOCUMENT();
+

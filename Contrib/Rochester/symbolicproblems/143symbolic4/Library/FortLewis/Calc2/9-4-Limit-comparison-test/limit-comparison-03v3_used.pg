@@ -1,0 +1,62 @@
+#DESCRIPTION
+#  Series: limit comparison test
+#ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Comparison tests)
+## Institution(Fort Lewis College)
+## Author(Paul Pearson)
+## MLT(LCT_bit_by_bit)
+## Level(3)
+## TitleText1('Calculus')
+## AuthorText1('')
+## EditionText1('')
+## Section1('.')
+## Problem1('')
+## KEYWORDS('series','limit comparison test')
+
+######################################
+#  Initialization
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserPopUp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context('Numeric');
+Context()->variables->are(a=> 'Real', b=> 'Real', c=> 'Real', A=> 'Real', B=> 'Real', C => 'Real', D=> 'Real', E=>'Real', n=> 'Real');
+
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+$A = random(1,15,1);
+$B = random(1,15,1);
+$C = random(1,15,1);
+$D = random(1,15,1);
+$E = random(1,15,1);
+
+$popup = PopUp(['?','converges','diverges'],'converges');
+
+
+$func = Compute("($a n^2 + $b n + $c )/($A n^4 + $B n^3 + $C n^2 + $D n + $E)")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \(\displaystyle \sum_{n=1}^{\infty} $func \). Does this series converge or diverge?
+$BR
+This series \{$popup->menu()\}.
+END_TEXT
+Context()->normalStrings;
+
+ANS( $popup->cmp );
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

@@ -1,0 +1,79 @@
+#DESCRIPTION
+##  Calculus: The Root Test
+##ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Root test)
+## Date(04/13/2010)
+## Institution(University of Minnesota)
+## Author(Justin Sukiennik)
+## Level(2)
+## TitleText1('Calculus: Concepts and Contexts')
+## AuthorText1('Stewart')
+## EditionText1('4 Custom UMTYMP Ed.')
+## Section1('11.6')
+## Problem1('24')
+## KEYWORDS('calculus', 'series', 'root test', 'absolutely convergent')
+
+
+#####################################################################
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+
+$showPartialCorrectAnswers = 0;
+
+Context("Interval");
+Context()->constants->add(a=>Real(cos(.254)), A=>Real(sin(.2456)), B=>Real(e^(cos(.225))) );
+Context()->variables->are(n=> 'Real');
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$a = Formula("a");
+$A = Formula("A");
+$B = Formula("B");
+
+$func = Compute(" ( $a / (arctan($A * n + $B ) ) )^n");
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \( \displaystyle \sum_{n=1}^{\infty} c_n\), where \( \displaystyle c_n = $func \), with \(a, A, B \gt 0\). Complete the following:
+$PAR
+(i) Compute \( \displaystyle \lim_{n\to \infty} |c_n |^{\frac{1}{n}}\) in terms of \(a\), \(A\), and \(B\).
+$PAR
+\( \displaystyle \lim_{n\to \infty} |\frac{c_{n+1}}{c_n } | = \)\{ans_rule(30)\}
+$PAR
+(ii) Based on your answer to (i), the series converges absolutely by the root test if \(a\) belongs to what range of numbers (your answer should be in terms of \(A\) and \(B\))?
+$PAR
+The series converges with \(a\) on \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}
+$PAR
+(iii) Based on your answer to (i), the series diverges by the root test if \(a\) belongs to what range of numbers (your answer should be in terms of \(A\) and \(B\))?
+$PAR
+The series diverges with \(a\) on \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}
+$PAR
+(iv) Based on your answer to (i), the root test does not tell if this series converges if \(a\) belongs to what range of numbers (your answer should be in terms of \(A\) and \(B\))?
+$PAR
+The ratio test does not give us convergence information with \(a\) on \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}
+$PAR
+
+
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("(2*$a) / pi ");
+$ans2 = Compute("(-1/2 pi, 1/2 pi)");
+$ans3 = Compute("(-infinity,-1/2 pi)U(1/2 pi, infinity)");
+$ans4 = Compute("{-1/2 pi , 1/2 pi } ");
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ANS($ans3->cmp);
+ANS($ans4->cmp);
+
+ENDDOCUMENT()

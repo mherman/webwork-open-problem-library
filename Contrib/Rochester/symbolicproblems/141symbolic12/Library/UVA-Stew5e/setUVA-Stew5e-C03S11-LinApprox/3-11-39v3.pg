@@ -1,0 +1,56 @@
+## DESCRIPTION
+##  Calculus: Linear Approximations and Differentials
+## ENDDESCRIPTION
+
+## Tagged by YL
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Linear approximation and differentials)
+## Date(5/29/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## MLT(LinearApprox_cube)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('3.11')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('3.10')
+## Problem2('')
+## KEYWORDS('derivatives', 'linear approximation')
+
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl");
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are(s=> 'Real', z=> 'Real');
+$s = Compute("s");
+$z = Compute("z");
+
+$ans = Compute("2* $s *$z");
+
+Context()->texStrings;
+BEGIN_TEXT
+The edge of a square is measured to be \(s\) units with a maximum possible error of \(z\) units. Use differentials to compute the maximum possible error in computing the area of the square based on this measurement.
+$BR
+Maximum Error: \{ans_rule(30)\} square units.
+$BR
+END_TEXT
+Context()->normalStrings;
+
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

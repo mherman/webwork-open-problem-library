@@ -1,0 +1,102 @@
+##DESCRIPTION
+## Determine if a series converges
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Alternating series test)
+## Date(6/3/2002)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.5')
+## Problem1('11')
+## KEYWORDS('Sequences', 'Comparison Test')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGbasicmacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserPopUp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+Context("Numeric");
+Context()->variables->are(a=> 'Real', b=> 'Real', A=> 'Real', B=> 'Real', n=> 'Real', C=> 'Real', p=> 'Real');
+
+
+$a = Compute("a");
+$b = Compute("b");
+$A = Compute("A");
+$B = Compute("B");
+$C = Compute("C");
+$p = Compute("p");
+
+$func = Compute("(-1)^n *(sqrt($a n + $b ))/($A * n + $B ) ");
+$popup = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"conditionally convergent");
+Context()->texStrings;
+BEGIN_TEXT
+$BBOLD (A) $EBOLD Is the series \( \displaystyle \sum_{n=1}^{\infty} $func \), where \(a, A, B \gt 0 \), $BITALIC absolutely convergent$EITALIC,$BITALIC conditionally convergent$EITALIC, or $BITALIC divergent $EITALIC?
+$BR
+The series \( \displaystyle \sum_{n=1}^{\infty} $func \) is \{$popup->menu\}
+END_TEXT
+Context()->normalStrings;
+ANS($popup->cmp);
+
+
+$func = Compute("(-1)^n *($a n + $b )/($A * ln(n) + $B ) ")->reduce;
+$popup = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"divergent");
+Context()->texStrings;
+BEGIN_TEXT
+$HR
+$BBOLD (B) $EBOLD Is the series \( \displaystyle \sum_{n=1}^{\infty} $func \), where \(a, A, B \gt 0 \), $BITALIC absolutely convergent$EITALIC,$BITALIC conditionally convergent$EITALIC, or $BITALIC divergent $EITALIC?
+$BR
+The series \( \displaystyle \sum_{n=1}^{\infty} $func \) is \{$popup->menu\}
+END_TEXT
+Context()->normalStrings;
+ANS($popup->cmp);
+
+
+$func = Compute("cos(n pi) / (n^($p))")->reduce;
+$popup1 = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"conditionally convergent");
+$popup2 = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"absolutely convergent");
+Context()->texStrings;
+BEGIN_TEXT
+$HR
+$BBOLD (C) $EBOLD Determine if the series \( \displaystyle \sum_{n=1}^{\infty} $func \) is $BITALIC absolutely convergent$EITALIC,$BITALIC conditionally convergent$EITALIC, or $BITALIC divergent $EITALIC, if
+$BR
+(i) \( 0 \lt p \le  1 \) 
+$BR
+\{$popup1->menu\}
+$PAR
+(ii) \( p \gt 1\).
+$BR
+\{$popup2->menu\}
+END_TEXT
+Context()->normalStrings;
+ANS($popup1->cmp);
+ANS($popup2->cmp);
+
+
+$func = Compute("(-1)^n *(sin(1/($A n + $B )) )")->reduce;
+$popup = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"conditionally convergent");
+Context()->texStrings;
+BEGIN_TEXT
+$HR
+$BBOLD (D) $EBOLD Is the series \( \displaystyle \sum_{n=1}^{\infty} $func \), where \(A, B \gt 0 \), $BITALIC absolutely convergent$EITALIC,$BITALIC conditionally convergent$EITALIC, or $BITALIC divergent $EITALIC?
+$BR
+The series \( \displaystyle \sum_{n=1}^{\infty} $func \) is \{$popup->menu\}
+END_TEXT
+Context()->normalStrings;
+ANS($popup->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

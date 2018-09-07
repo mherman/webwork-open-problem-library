@@ -1,0 +1,77 @@
+## DESCRIPTION
+## First order differential equation
+## ENDDESCRIPTION
+
+## KEYWORDS('First order differential equation')
+
+## DBsubject('Differential Equations')
+## DBchapter('First Order Differential Equations')
+## DBsection('Introduction to Differential Equations')
+## Date('01/01/2012')
+## Author('Paul Pearson')
+## Institution('Fort Lewis College')
+## TitleText1('Elementary Differential Equations')
+## EditionText1('2006')
+## AuthorText1('Kohler and Johnson')
+## Section1('1.2')
+## Problem1('12')
+
+
+##############################
+#  Initialization
+
+DOCUMENT(); 
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+
+
+#############################
+#  Setup
+
+Context("Numeric");
+Context()->variables->add(A=>'Real',a=>'Real',b=>'Real', B=>'Real');
+Context()->variables->set(A=>{limits=>[1,20]});
+Context()->variables->set(B=>{limits=>[1,20]});
+$A = Formula("A");
+$B = Formula("B");
+$b = Formula("b");
+$a = Formula("a");
+
+#############################
+#  Main text
+
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(A,B \gt 0 \), find the solution  \(y = y(x)\) to the initial-value problem 
+\[ \begin{aligned}
+&y^{\prime} = $A y^2 + $B \\
+&y($a) = $b.
+\end{aligned}, \]
+in terms of \(A\), \(B\), \(a\), and \(b\).
+$PAR
+\(y  = \)\{ans_rule(30)\}
+
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+
+############################
+#  Answers
+
+$showPartialCorrectAnswers = 1;
+
+$ans1 = Compute("sqrt($B/$A)*tan((x-$a)*sqrt($A*$B)+arctan(($b*sqrt($A/$B)) )) ");
+ANS($ans1->cmp);
+
+
+
+COMMENT("MathObject version.");
+
+ENDDOCUMENT();

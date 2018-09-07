@@ -1,0 +1,67 @@
+## DESCRIPTION
+##  Calculus: Maximum and Minimum Values
+## ENDDESCRIPTION
+
+## Tagged by YL
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Increasing/decreasing functions and local extrema)
+## Date(5/29/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('4.1')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('4.1')
+## Problem2('')
+## KEYWORDS('derivatives', 'minimum', 'maximum')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(A=> 'Real', B=> 'Real', s=> 'Real', r=> 'Real');
+$A = Compute("A");
+$B = Compute("B");
+$s = Compute("s");
+$r  = Compute("r");
+
+$func = Compute("$A x^$r + $B x^$s")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+Let
+\( f(x) = $func  \), with \(A \lt 0 \lt B, r \gt 1, s \gt 1, r \ne s \). How many critical numbers does \(f\) have? List the critical numbers of \(f\) in terms of \(A\), \(r\), \(B\), and \(s\). If there are more than one, separate your answers with commas. 
+$BR
+Number of Critical Numbers: \{ans_rule(10) \}
+$BR
+Critical Numbers: \(x = \) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("2");
+ANS($ans1->cmp);
+$ans2 = Compute("0");
+$ans3 = Compute("(- $s * $B / ($r *$A))^(1/($r-$s)) ");
+
+$ans2n3 = List($ans2 , $ans3);
+ANS($ans2n3->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

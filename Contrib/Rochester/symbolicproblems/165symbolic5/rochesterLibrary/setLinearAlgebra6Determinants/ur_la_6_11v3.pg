@@ -1,0 +1,66 @@
+##DESCRIPTION
+## DBsubject(Linear algebra)
+## DBchapter('Determinants')
+## DBsection(Computing determinants)
+## Date('6/3/2002')
+## TitleText1('Elementary Linear Algebra')
+## AuthorText1('Larson, Edwards, Falvo')
+## EditionText1('5')
+## Section1('3.1')
+## Problem1('')
+## TitleText2('Linear Algebra with Applications')
+## AuthorText2('Jeffrey Holt')
+## EditionText2('1')
+## Section2('5.1')
+## Problem2('')
+## KEYWORDS('matrix', 'determinant', 'upper triangular')
+##
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Matrix");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->remove(e);
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+f=>Real(random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Compute("c");
+$d = Formula("d");
+$e = Compute("e");
+$f = Compute("f");
+$A = Matrix([
+[$a,$b,$c],
+[0,$d,$e],
+[0,0,$f]
+]);
+$ans = Formula("$a*$d*$f");
+Context()->texStrings;
+BEGIN_TEXT
+Suppose 
+\[A = $A.\]
+Compute the determinant of \(A\), \(\det (A)\), in terms of \(a,b,\) and \(d\).
+$PAR
+\{mbox('\(\det(A)\)',$ans->ans_rule)\}
+
+END_TEXT
+Context()->normalStrings;
+ANS($ans->cmp);
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.
+

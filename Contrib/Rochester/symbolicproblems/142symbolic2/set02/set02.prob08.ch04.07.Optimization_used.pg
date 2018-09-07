@@ -1,0 +1,55 @@
+## Original: /tmpEdit/ma122DB/set9/s4_7_22-b.pg.pearson.tmp
+
+##DESCRIPTION
+## Max/min -- Find dimensions maximizing area of rectangle inscribed in ##parabola.
+##ENDDESCRIPTION
+##KEYWORDS('maximization,minimization', 'derivatives', 'maximum,minimum',
+## 'optimization')
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Optimization Problems')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('4.7')
+## Problem1('22')
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers=1;
+Context("Numeric");
+Context()->variables->add(C=> 'Real');
+Context()->variables->set(C=>{limits=>[1, 10]});
+$C = Formula("C");
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Consider a rectangle that is inscribed with its base on the \(x\)-axis and its upper corners on the parabola \(y = $C -x^2\), with \(C \gt 0 \). What are the width and height that maximize the area of this rectangle? What is that maximal area? Your answers should be in terms of \(C\). 
+$PAR
+Width = \{ans_rule(30)\} $BR
+Height = \{ans_rule(30)\} $BR
+Area = \{ans_rule(30)\} $BR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("2sqrt($C) / (sqrt(3) )");
+$ans2 = Compute("2*$C / 3 ");
+$ans3 = $ans1*$ans2;
+
+ANS($ans1->cmp,$ans2->cmp,$ans3->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

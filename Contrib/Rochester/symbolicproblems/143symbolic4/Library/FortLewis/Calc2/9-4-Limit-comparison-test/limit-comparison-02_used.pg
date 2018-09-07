@@ -1,0 +1,59 @@
+#DESCRIPTION
+#  Series: limit comparison test
+#ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Comparison tests)
+## Institution(Fort Lewis College)
+## Author(Paul Pearson)
+## MLT(LCT_bit_by_bit)
+## Level(3)
+## TitleText1('Calculus')
+## AuthorText1('')
+## EditionText1('')
+## Section1('.')
+## Problem1('')
+## KEYWORDS('series','limit comparison test')
+
+######################################
+#  Initialization
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserPopUp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context('Numeric');
+Context()->variables->are(a=> 'Real', b=> 'Real', A=> 'Real', B=> 'Real', n=> 'Real');
+
+$a = Compute("a");
+$b = Compute("b");
+$A = Compute("A");
+$B = Compute("B");
+
+
+$popup = PopUp(['?','converges','diverges'],'converges');
+
+
+$func = Compute("($a*n+ $b) / (($A*n + $B)^3 ) ")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \(\displaystyle \sum_{n=1}^{\infty} $func \), with \(A,B \gt 0\). Does this series converge or diverge?
+$BR
+This series \{$popup->menu()\}.
+END_TEXT
+Context()->normalStrings;
+
+ANS( $popup->cmp );
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

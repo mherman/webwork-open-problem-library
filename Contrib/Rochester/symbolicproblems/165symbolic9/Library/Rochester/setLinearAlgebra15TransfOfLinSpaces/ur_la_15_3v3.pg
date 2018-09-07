@@ -1,0 +1,76 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 5/3/06
+
+## DBsubject(Linear algebra)
+## DBchapter(Linear transformations)
+## DBsection('Properties')
+## Institution('Rochester')
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('9.1')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"IansMacros.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->constants->remove(e);
+$text = <<'STOP';
+Context()->constants->add(
+a=>Real(random(1,10,1)*random(-1,1,1)),
+b=>Real(random(1,10,1)*random(-1,1,1)),
+c=>Real(random(1,10,1)*random(-1,1,1)),
+d=>Real(random(1,10,1)*random(-1,1,1)),
+e=>Real(random(1,10,1)*random(-1,1,1)),
+f=>Real(random(1,10,1)*random(-1,1,1)),
+g=>Real(random(1,10,1)*random(-1,1,1)),
+h=>Real(random(1,10,1)*random(-1,1,1)),
+i=>Real(random(1,10,1)*random(-1,1,1)),
+j=>Real(random(1,10,1)*random(-1,1,1)),
+k=>Real(random(1,10,1)*random(-1,1,1)),
+l=>Real(random(1,10,1)*random(-1,1,1)),
+m=>Real(random(1,10,1)*random(-1,1,1)),
+n=>Real(random(1,10,1)*random(-1,1,1)),
+o=>Real(random(1,10,1)*random(-1,1,1)),
+p=>Real(random(1,10,1)*random(-1,1,1)),
+q=>Real(random(1,10,1)*random(-1,1,1)),
+r=>Real(random(1,10,1)*random(-1,1,1)),
+s=>Real(random(1,10,1)*random(-1,1,1)),
+t=>Real(random(1,10,1)*random(-1,1,1)),
+);
+STOP
+generate_perl_variables_from_constants($text,"q,r,s,t");
+$func1= Formula(" $a*x^3+$b*x^2 + $c*x + $d ")->reduce;
+$func2= Formula("$e*x^3 + $f*x^2 + $g*x + $h")->reduce;
+$func3 = Formula("$i*x^3 + $j*x^2 + $k*x + $l")->reduce;
+$func4 = Formula("$m*x^3 + $n*x^2 + $o*x + $p")->reduce;
+$func5 = Formula("$q*x^3 + $r*x^2 + $s*x + $t")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \(T \colon P_3({\mathbb R}) \to P_3({\mathbb R}) \) is a linear map such that $PAR
+$BCENTER
+\(T(x^3) = $func1\), \(T(x^2) = $func2 \), \(T(x) = $func3 \), and \(T(1) = $func4\).
+$ECENTER
+$PAR
+Compute \(T($func5)\) \{InTermsOfString()\}.$PAR
+\(T($func5) = \)\{ans_rule(60)\}
+
+END_TEXT
+
+$answer = Compute("($a*$q + $e*$r + $i*$s + $m*$t)*x^3 + ($b*$q + $f*$r+$j*$s+$n*$t)*x^2 + ($c*$q+$g*$r + $k*$s+$o*$t)*x + $d*$q+$h*$r+$l*$s+$p*$t");
+ANS($answer->cmp);
+
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.
+

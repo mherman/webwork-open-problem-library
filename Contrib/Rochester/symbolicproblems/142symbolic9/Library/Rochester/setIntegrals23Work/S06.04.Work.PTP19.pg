@@ -1,0 +1,71 @@
+##DESCRIPTION
+##  Compute the work done pumping water
+##ENDDESCRIPTION
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of integration)
+## DBsection(Work)
+## Date(07/02/2008)
+## Institution(University of Rochester)
+## Author(Paul Pearson)
+## MLT(work_rectangle_tank)
+## Level(5)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('6.4')
+## Problem1('')
+## KEYWORDS('integral', 'work')
+
+
+
+DOCUMENT(); 
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(L=>'Real', W=>'Real', H=>'Real', p=>'Real',T=>'Real');
+$Length = random(2,9,1);
+$Width = random(2,9,1);
+$Depth = random(3,15,3);
+$Density = random(60,120,10);
+$Spout = random(2,6,1);
+$WorkAll = "$Length*$Width*$Density*($Depth**2)/2";
+$WorkAllSpout = "$Length*$Width*$Density*(($Depth**2)/2 + $Spout*$Depth)";
+$WorkThirds = "$Length*$Width*$Density*((2*$Depth/3)**2)/2";
+$WorkThirdsSpout = "$Length*$Width*$Density*(((2*$Depth/3)**2)/2 + $Spout*(2*$Depth/3))";
+$W = Formula("W");
+$L = Formula("L");
+$H = Formula("H");
+$p = Formula("p");
+$T = Formula("T");
+
+
+Context()->texStrings;
+BEGIN_TEXT
+
+A rectangular tank that is \($L \) feet long, \($W\) feet wide, and \($H\) feet tall is filled with a liquid that has a density of \($p\) pounds per cubic foot. If a spout is connected to the top of the tank, how much work will it take to pump all of the liquid out of the tank through the spout? 
+$PAR
+Work = \{ans_rule(30)\} ft-lb
+$PAR
+How much work will it take to pump all of the liquid out of the tank through a spout that is \($T\) feet above the top of the tank? 
+$PAR
+Work = \{ans_rule(30)\} ft-lb
+$PAR
+Your answers should be in terms of \(L\), \(W\), \(H\), \(p\), and \(T\).
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("1/2*$p*$L*$W*($H)^2");
+$ans2 = Compute("1/2*$p*$L*$W*$H*($H+2*$T)");
+
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();

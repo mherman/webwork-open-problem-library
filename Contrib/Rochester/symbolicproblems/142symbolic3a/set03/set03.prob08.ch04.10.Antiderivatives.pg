@@ -1,0 +1,56 @@
+## Original:  /Library/UVA-Stew5e/setUVA-Stew5e-C04S10-Antiderivs/4-10-27d.pg
+
+## DESCRIPTION
+##  Calculus: Antiderivatives
+## ENDDESCRIPTION
+
+## KEYWORDS ('Antiderivatives')
+## Tagged by YL
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Antiderivatives')
+## Date('5/29/2005')
+## Author('Jeff Holt')
+## Institution('UVA')
+## TitleText1('Calculus')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('4.10')
+## Problem1('27')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+
+);
+$showPartialAnswersCorrect = 1;
+TEXT(beginproblem());
+
+Context("Numeric");
+Context()->constants->add(A=> Real(cos(exp(.224))), B=> Real(sin(exp(.224))), z => Real(tan(exp(.224))) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$A = Formula("A");
+$B = Formula("B");
+$z = Formula("z");
+
+
+$func = Formula("$A * e^(x) + $B")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \(F^{\prime}(x) = $func \), and \(F(0) = $z\). Find \(F(x)\) in terms of \(A\), \(B\), and \(z\). 
+$PAR
+\(F(x) = \)\{ans_rule(30)\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$A*(e^(x) -1) + $B x + $z ");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

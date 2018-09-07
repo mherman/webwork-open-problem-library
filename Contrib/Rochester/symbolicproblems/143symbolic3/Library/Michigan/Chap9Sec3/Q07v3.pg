@@ -1,0 +1,142 @@
+# DESCRIPTION
+# Problem from Calculus, single variable, Hughes-Hallett et al., 4th ed.
+# WeBWorK problem written by Gavin LaRose, <glarose@umich.edu>
+# ENDDESCRIPTION
+
+## Tagged by glr 02/08/09
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Integral test)
+## Institution(University of Michigan)
+## Author(Gavin LaRose)
+## MLT(batchtest)
+## Level(2)
+## TitleText1('Calculus')
+## AuthorText1('Hughes-Hallett')
+## EditionText1('4')
+## Section1('9.3')
+## Problem1('7 9')
+## TitleText2('Calculus')
+## AuthorText2('Hughes-Hallett')
+## EditionText2('5')
+## Section2('9.3')
+## Problem2('10 12')
+## TitleText3('Calculus')
+## AuthorText3('Hughes-Hallett')
+## EditionText3('6')
+## Section3('9.3')
+## Problem3('10 12')
+## KEYWORDS('calculus', 'integral', 'series', 'convergence', 'integral test')
+
+## Textbook tags
+## HHChapter1('Sequences and Series')
+## HHChapter2('Sequences and Series')
+
+DOCUMENT();
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"PGunion.pl"
+);
+
+Context("Numeric");
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context()->variables->add(n=> 'Real', a=> 'Real', b=> 'Real', A=> 'Real', B=> 'Real', N=> 'Real' , C=>'Real');
+Context()->strings->add('converges'=>{});
+Context()->strings->add( 'diverges'=>{});
+$n = Compute("n");
+$N = random(1,5,1);
+$a = Compute("a");
+$b = Compute("b");
+$A = Compute("A");
+$B = Compute("B");
+
+$func = Compute("$A/(x^2 + $B^2)")->reduce;
+$funcn = Compute("$A/(n^2 + $B^2)")->reduce;
+$functex = $func->reduce->TeX;
+
+#if ($displayMode eq 'TeX') {
+# $integral =
+ #   '\[\int_{'.ans_rule(4).'}^{'.\infty.'}'.
+ #        $func.'\,dx\]';
+#} else {
+ # $integral =
+  # BeginTable().
+   #  Row(['\(\displaystyle \int\)',
+    #   ans_rule(4).$BR.$BR.'\(\infty\)',
+     # "\( $functex\)",
+      # '\(dx\).'],separation=>2).
+  # EndTable();
+#}
+
+Context()->texStrings;
+BEGIN_TEXT
+Complete the following:
+$BR
+(i) Compute \(\displaystyle \int{$func}dx\) in terms of \(A\) and \(B\). Use "C" as your constant generated from taking the antiderivative.
+$BR
+\(\displaystyle \int{$func}dx=\)\{ans_rule(30)\}
+$PAR
+(ii) Use your answer from (i) to compute \(\displaystyle \int_{$N}^{$b}$func dx\) in terms of \(b\), \(A\), and \(B\). 
+$BR
+\(\displaystyle \int_{$N}^{$b}$func dx = \)\{ans_rule(30)\}
+$PAR
+(iii) Now take the limit as \(b \to \infty\) of your answer in (ii) to compute \( \displaystyle \int_{$N}^{\infty} $func dx \) in terms of \(A\) and \(B\).
+$BR
+\(\displaystyle \int_{$N}^{\infty} $func dx = \)\{ans_rule(30)\}
+$PAR
+(iv) Use your answer from (iii) to decide whether the series \(\displaystyle \sum_{n=$N}^{\infty}$funcn \) converges or diverges. 
+$BR
+\(\displaystyle \sum_{n=$N}^{\infty}$funcn \)\{ans_rule(30)\}.
+$PAR
+(v) If your answer to (iv) is "converges", use the integral test to estimate \(\displaystyle \sum_{n=$N}^{\infty}$funcn \) in terms of integrals of \($func\) (Else, write "diverges".):
+$BR
+$BCENTER
+\(\displaystyle  \int_{k_1}^{\infty}$func \le \sum_{n=$N}^{\infty}$funcn \le \int_{k_2}^{\infty}$func \) $integral
+$BR
+\(k_1 = \)\{ans_rule(30)\}, \(k_2 = \)\{ans_rule(30)\}
+$ECENTER
+
+$PAR
+(vi) If your answer to (iv) is "converges", combine your answers from (iii) and (v) to make your answer from part (v) more explicit (Else, write "diverges".):
+$BR
+$BCENTER
+\{ans_rule(30)\}\(\displaystyle \le \sum_{n=$N}^{\infty}$func \le \)\{ans_rule(30)\}.
+$ECENTER
+$PAR
+Your answers to part (vi) should be in terms of \(A\) and \(B\).
+$PAR
+$BBOLD If the limit or series is \(\infty\), write "Infinity". $BR
+If the limit or series is \(-\infty\), write "-Infinity".$BR
+If the limit does not exist, write "DNE". $BR
+If the series diverges, write "diverges". $BR
+If the series converges, write "converges". $EBOLD
+
+END_TEXT
+Context()->normalStrings;
+
+@ans = (Compute("$A/$B * arctan(x/$B)+C"),
+                Compute("$A/$B * (arctan($b/$B) - arctan($N/$B) )"),
+                Compute("$A/$B * (pi/2 - arctan($N/$B) )"),
+                Compute("converges"),
+                Compute("$N+1"),
+                Compute("$N"),
+                Compute("$A/$B*(pi/2 -arctan(($N+1)/$B)) "),
+                Compute("$A/$B*(pi/2 -arctan(($N)/$B)) "));
+#foreach my $var (@ans) {
+#ANS($ans[$var]->cmp);
+#}
+for my $i (0 .. $#ans){
+ANS($ans[$i]->cmp);
+}
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

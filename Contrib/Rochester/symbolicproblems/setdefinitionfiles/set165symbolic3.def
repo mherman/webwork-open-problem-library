@@ -1,0 +1,28 @@
+
+openDate          = 01/31/2014 at 05:00am EST
+dueDate           = 02/15/2014 at 06:00am EST
+answerDate        = 02/15/2014 at 07:00am EST
+paperHeaderFile   = paperSetHeader.pg
+screenHeaderFile  = screenSetHeader.pg
+description       = 
+problemList       = 
+165symbolic3/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_24_used.pg, 1, -1 
+165symbolic3/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_24v2.pg, 1, -1 
+165symbolic3/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_24v3.pg, 1, -1 
+165symbolic3/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_1a_used.pg, 1, -1 
+165symbolic3/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_1av2.pg, 1, -1 
+165symbolic3/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_1av3.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem5.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem5v2.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem5v3_used.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem1_used.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem1v2.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem1v3.pg, 1, -1 
+165symbolic3/Library/Rochester/setAlgebra34Matrices/cubing_2x2.pg, 1, -1 
+165symbolic3/Library/Rochester/setAlgebra34Matrices/cubing_2x2v3.pg, 1, -1 
+165symbolic3/Library/Rochester/setAlgebra34Matrices/cubing_2x2v2.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem25v2.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem25_used.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem25v3.pg, 1, -1 
+165symbolic3/Library/TCNJ/TCNJ_MatrixOperations/problem25v4.pg, 1, -1 
+

@@ -1,0 +1,58 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Integrals)
+## DBsection(Definite integrals (with trigonometric functions))
+## Date(6/3/2002)
+## Institution(ASU)
+## MLT(DefRecRootOneMiSq)
+## MLTleader(1)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('5.3')
+## Problem1('38')
+## KEYWORDS('definite' 'integral','integrals', 'definite','Calculus', 'Riemann Integral')
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', A=>'Real', B=>'Real');
+$a = list_random(0,.25,.5,.75.1)*random(-1,1,2);
+$b = list_random(0,.25,.5,.75.1)*random(-1,1,2);
+$A = Formula("A");
+$B = Formula("B");
+
+$func = Compute("$A/sqrt(($B)^2+($B)^2*x^2)")->reduce;
+$absa = Compute("|$a|");
+$absb = Compute("|$b|");
+if($absa == $absb){
+$assumestring = "\(B \gt 0,$absa \)";
+}
+else{
+$assumestring = "\(B \gt 0,$absa , $absb \)";
+}
+Context()->texStrings;
+BEGIN_TEXT
+Compute \(\displaystyle \int_{$a}^{$b} $func  dx \) in terms of \(A\), and \(B\). You may assume $assumestring .
+$PAR
+\(\displaystyle \int_{$a}^{$b} $func dx= \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("(arcsin($b)-arcsin($a))*$A/$B");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();
+

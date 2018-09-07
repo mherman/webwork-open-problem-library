@@ -1,0 +1,86 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Logarithmic differentiation)
+## Date(8/23/07)
+## Institution(Union College)
+## MLT(logDiffQuotientofPolys)
+## MLTleader(1)
+## Level(2)
+## TitleText1('Calculus')
+## AuthorText1('Anton')
+## EditionText1('7')
+## Section1('3.5')
+## Problem1('37')
+## KEYWORDS('derivative' 'chain rule')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(a=> 'Real', b=> 'Real', A=> 'Real', B=> 'Real', C => 'Real', r=> 'Real', s=> 'Real');
+Context()->variables->set(a=>{interval=>[2,3]});
+Context()->variables->set(b=>{interval=>[2,3]});
+Context()->variables->set(A=>{interval=>[2,3]});
+Context()->variables->set(B=>{interval=>[2,3]});
+Context()->variables->set(C=>{interval=>[2,3]});
+Context()->variables->set(r=>{interval=>[2,3]});
+Context()->variables->set(s=>{interval=>[2,3]});
+
+$a = Compute("a");
+$b = Compute("b");
+$A = random(1,15,1);
+$B = random(1,15,1);
+$C = random(1,15,1);
+$r = Compute("r");
+$s = Compute("s");
+
+$func = Compute("($a * x + $b)^($r)*($A *x^2 + $B*x + $C)^($s) ");
+$functex = $func->reduce->TeX;
+$dfunc = $func->D(x);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+Let \(f(x) = $functex \), with \(a,b \gt 0\). Use logarithmic differentiation to compute \(f^{\prime}(x)\) in terms of \(a\), \(b\), \(r\), and \(s\).
+$PAR
+\(f^{\prime} (x) = \) \{ans_rule(30)\}
+
+END_TEXT
+Context()->normalStrings;
+
+
+##############################################################
+#
+#  Answers
+#
+#
+$ans = $dfunc ; 
+ANS($ans->cmp());
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

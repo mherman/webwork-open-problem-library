@@ -1,0 +1,54 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Limits at infinity, horizontal and oblique asymptotes)
+## Institution(UCSB)
+## MLT(liminfrootsaddsubt)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('2.6')
+## Problem1('25')
+## KEYWORDS('Product','Quotient','Differentiation')
+
+DOCUMENT();
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(&beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(a => 'Real', b=> 'Real', c=>'Real', A => 'Real', B=> 'Real', C=> 'Real');
+
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+$A = Compute("0");
+$B = Compute("a");
+$C = Compute("0");
+
+$root1 = Compute("sqrt($a x^2 + $b x + $c)")->reduce->TeX;
+$root2 = Compute("sqrt($a) x")->reduce->TeX;
+Context()->texStrings;
+BEGIN_TEXT
+
+$PAR
+Compute, in terms of \(a\), \(b\), and \(c\), \(\displaystyle \lim_{x \to \infty} ($root1 - $root2)\). 
+$PAR
+
+\(\displaystyle \lim_{x \to \infty} ($root1-$root2) =\) \{ans_rule(10)\}
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$b/(2sqrt($a))");
+ANS($ans1->cmp());
+
+ENDDOCUMENT();

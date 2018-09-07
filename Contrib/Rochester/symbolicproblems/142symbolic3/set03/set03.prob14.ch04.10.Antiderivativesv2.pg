@@ -1,0 +1,67 @@
+## Original: /Library/ma122DB/set10/s4_10_23.pg
+
+##DESCRIPTION
+##KEYWORDS('derivatives', 'antiderivatives')
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Antiderivatives')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('4.10')
+## Problem1('23')
+##  Find an antiderivative of the function
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+
+);
+$showPartialAnswersCorrect = 1;
+TEXT(beginproblem());
+
+Context("Numeric");
+Context()->constants->add(A=> Real(cos(exp(.3147))), t=>Real(sin(exp(.3147))), r=> Real(.01177) , s => Real(exp(.01177)) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$A = random(-15,15,1);
+$t = Formula("t");
+$s = Formula("s");
+$r = Formula("r");
+
+
+$func = Formula("$A e^(x) ")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \(F^{\prime \prime \prime}(x) = $func \), with \(F^{\prime \prime}(0) = $r\) and \(F^{\prime}(0) = $s\) and \(F(0)= $t \). $BR
+Find \(F^{\prime \prime}(x)\) in terms of \(r\).
+$PAR
+\(F^{\prime \prime}(x) = \)\{ans_rule(30)\}
+$PAR
+Now find \(F^{\prime}(x) \) in terms of \(r\) and \(s\).
+$PAR
+\(F^{\prime}(x) = \)\{ans_rule(30)\}
+$PAR
+Now find \(F(x)\) in terms of \(r\), \(s\), and \(t\).
+$PAR
+\(F(x) = \)\{ans_rule(30)\}
+$PAR
+
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$A * e^x + $r-$A");
+$ans2 = Compute("$A e^x + ($r-$A)x + $s -$A");
+$ans3 = Compute("$A e^x + ($r- $A)x^2/2 + ($s -$A) x + $t-$A");
+ANS($ans1->cmp,$ans2->cmp, $ans3->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,66 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Euclidean spaces)
+## DBsection(Span)
+## Institution(TCNJ)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('2.2')
+## Problem1('')
+## KEYWORDS('vectors' 'basis' 'span' 'matrix')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+"parserPopUp.pl"
+        );
+ 
+TEXT(beginproblem());    
+# Do not show which answers are incorrect.
+$showPartialCorrectAnswers = 0;
+Context("Matrix");
+Context()->constants->remove(e);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->add(
+a=>Real(non_zero_random(-10,10,1)),
+b=>Real(non_zero_random(-10,10,1)),
+c=>Real(non_zero_random(-10,10,1)),
+d=>Real(non_zero_random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+$e = Compute("e");
+$A = ColumnVector($a,0,$c);
+$B = ColumnVector(0,$b,$d);
+$C = ColumnVector(0,0,$e);
+if($e==0){ $ans  = "No"; }
+else{ $ans = "Yes"; }
+$popup= PopUp(["?","Yes","No"],$ans);
+Context()->texStrings;
+BEGIN_TEXT
+Consider the following collection of vectors in \( {\mathbb R}^3\):
+\[$A, $B, $C,\]
+where \(a,b \ne 0\).
+$BR
+Does this collection of vectors span \( {\mathbb R}^3?\)?
+$PAR
+\{$popup->menu\}
+
+END_TEXT
+Context()->normalStrings;
+ANS(
+$popup->cmp
+);
+
+ENDDOCUMENT();

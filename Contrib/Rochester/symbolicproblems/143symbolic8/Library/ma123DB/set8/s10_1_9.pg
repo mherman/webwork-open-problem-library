@@ -1,0 +1,63 @@
+##DESCRIPTION
+## Write parametric equations in cartesian form
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Parametric)
+## DBsection(Eliminating the parameter)
+## Date(6/3/2002)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('10.1')
+## Problem1('9')
+## KEYWORDS('parametric equation', 'Cartesian equation')
+
+DOCUMENT();
+loadMacros(
+"PG.pl",
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', B=> 'Real');
+$A = Compute("A");
+$B = Compute("B");
+
+Context()->texStrings;
+BEGIN_TEXT
+Eliminate the parameter \(\theta\) from the set of parametric equations.$BR
+\[  \begin{array}{rl}
+& x = $A \sin^2{\theta} \\
+& y = $B \cos^2{\theta}
+\end{array}  \]
+
+in Cartesian form if $PAR
+(i) \(0 \lt A \lt B\) $BR
+\(y(x) = \)\{ans_rule(30)\} $PAR
+(ii) \(0 \lt B \lt A\) $BR
+\(y(x) = \)\{ans_rule(30)\}$PAR
+(iii) \(A = B \gt 0 \) $BR
+\(y(x) = \)\{ans_rule(30)\}.
+$PAR
+These equations are valid for \{ans_rule(15)\}\(\le x\le \)\{ans_rule(15)\}
+$BR
+Your answers should all be in terms of \(A \) and \(B\).
+
+END_TEXT
+Context()->normalStrings;
+ANS(
+Compute("-$B * x / $A+$B")->cmp,
+Compute("-$B*($A)^(-1)*x + B ")->cmp,
+Compute("-x + $B")->cmp,
+Compute("0")->cmp,
+Compute("$A")->cmp);
+
+ENDDOCUMENT();

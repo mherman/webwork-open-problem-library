@@ -1,0 +1,75 @@
+##DESCRIPTION
+##Calculus: Differentiation
+##ENDDESCRIPTION
+
+##Tagged by YJ
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Higher-order derivatives)
+## Date(5/26/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## MLT(hod_pos_vel_accel_poly)
+## MLTleader(1)
+## Level(5)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('3.7')
+## Problem1('46')
+## KEYWORDS('calculus', 'differentiation')
+
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are(A=> 'Real', B=> 'Real', C=> 'Real', D=> 'Real', E=> 'Real', t=> 'Real');
+$A = Compute("A");
+$B = Compute("B");
+$C = Compute("C");
+$D = Compute("D");
+$E = Compute("E");
+$t0 = random(2,15,1);
+$t1 = random(2,15,1);
+
+$func = Compute("$A * t^4 + $B * t^3 + $C * t^2 + $D * t + $E ");
+
+Context()->texStrings;
+BEGIN_TEXT
+Supose that the equation of motion of a certain particle is \(s(t) = $func \). Compute, in terms of \(A\), \(B\), \(C\), \(D\), and \(E\), the following:
+$PAR
+(a) the velocity function \(v(t) \), $BR
+\(v(t) =  \) \{ans_rule(30)\}
+$PAR
+(b) the acceleration function \(a(t)\), $BR
+\(a(t) = \) \{ans_rule(30)\}
+$PAR
+(c) the velocity at time \( $t0 \), \(v( $t0 )\), and $BR
+ \(v($t0) = \)\{ans_rule(30)\}
+$PAR
+(d) the acceleration at time \( $t1 \), \(a( $t1 )\).$BR
+\(a( $t1 ) = \)\{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = $func->D(t);
+$ans2 = $ans1->D(t);
+$ans3 = $ans1->substitute(t=>$t0);
+$ans4 = $ans2->substitute(t=>$t1);
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ANS($ans3->cmp);
+ANS($ans4->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

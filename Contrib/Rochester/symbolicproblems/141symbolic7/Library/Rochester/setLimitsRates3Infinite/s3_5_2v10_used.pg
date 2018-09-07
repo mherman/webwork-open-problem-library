@@ -1,0 +1,99 @@
+## DESCRIPTION
+## Calculus: Limits and Derivatives
+## ENDDESCRIPTION
+
+## Tagged by LD
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Limits at infinity, horizontal and oblique asymptotes)
+## Date(6/3/2002)
+## Institution(ASU)
+## Author(Utah ww group)
+## MLT(liminfratexp)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('2.6')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('2.6')
+## Problem2('')
+## TitleText3('Mathematical Applications')
+## AuthorText3('Ronal J. Harshbarger and James J. Reynolds')
+## EditionText3('8')
+## Section3('.')
+## Problem3('')
+## TitleText4('Calculus: Early Transcendentals')
+## AuthorText4('Stewart')
+## EditionText4('5e')
+## Section4('2.6')
+## Problem4('')
+## KEYWORDS('limits', 'derivatives', 'infinite' ,'Limit', 'Infinity','Calculus','asymptote')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+Context()->strings->add( I =>{infinity=>1} );
+Context()->variables->add(a => Real(.305), b => Real(60.1532), A=> Real(00.54851), B=> Real(157) );
+$a  = Compute("a");
+$b = Compute("b");
+$A = random(-20,20,1);
+$B = random(-20,20,1);
+while($A ==0 && $B == 0)
+{
+$A = random(-20,20,1);
+$B = random(-20,20,1);
+}
+
+$Num = Compute("sqrt($a x^2 + $b)")->reduce->TeX;
+$Den = Compute("$A x + $B")->reduce->TeX;
+Context()->texStrings;
+BEGIN_TEXT
+Let \(f(x) = \frac{$Num}{$Den}\), with \($a \ge 0\). Compute, 
+in terms of \(a\) and \(b\), \(\displaystyle \lim_{x \rightarrow \infty } f(x)\) and \(\displaystyle \lim_{x \rightarrow -\infty } f(x)\)
+$BR
+Enter $BBOLD Infinity $EBOLD for \(\infty\), $BBOLD -Infinity $EBOLD for \(-\infty\),
+and $BBOLD DNE $EBOLD if the limit does not exist.
+$PAR
+\(\displaystyle \lim_{x \rightarrow \infty } f(x)\) = \{ans_rule(15) \}
+$BR
+\(\displaystyle \lim_{x \rightarrow -\infty } f(x)\) = \{ans_rule(15)\}
+END_TEXT
+
+Context()->normalStrings;
+if($A!=0){
+$ans1 = Compute("sqrt($a)/$A");
+$ans2 = -$ans1;
+}
+else{
+   if( $B< 0 )
+{
+$ans1 = Compute("-Infinity");
+$ans2 = Compute("Infinity");
+}
+else{
+$ans1 = Compute("Infinity");
+$ans2 = Compute("Infinity");
+}
+}
+ 
+ANS($ans1->cmp());
+ANS($ans2->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

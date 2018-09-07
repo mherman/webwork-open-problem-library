@@ -1,0 +1,62 @@
+## DESCRIPTION
+##  Algebra - Function Domain/Range
+## ENDDESCRIPTION
+
+## Tagged by dgt5v
+
+## DBsubject(Algebra)
+## DBchapter(Functions)
+## DBsection(Domain and range)
+## Date(6/3/2002)
+## MLT(AlgDom3)
+## Level(2)
+## TitleText1('College Algebra')
+## AuthorText1('Stewart, Redlin, Watson')
+## EditionText1('3')
+## Section1('4.1')
+## Problem1('52')
+## KEYWORDS('Algebra','Functions','Domain', 'polynomials', 'domain')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"contextInequalities.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Inequalities");
+Context()->constants->add(a => Real( exp(cos(1)) ) );
+Context()->flags->set(formatStudentAnswer => "parsed");
+
+$a = Formula("a");
+$b = random(-25,25,1);
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute the domain of the function
+\( f(x) = \sqrt { $a x + $b} \) in terms of \(a\). Assume \(a \gt 0\). Answer with an interval, i.e. [0, infinity), or unions of intervals, i.e. (-infinity,1]U(6,9), or answer simply with an inequality, i.e. x<=-10.
+$BR
+Answer: \{ans_rule(30)\} \{ AnswerFormatHelp("intervals") \} ; \{ AnswerFormatHelp("inequalities") \}
+$BR
+END_TEXT
+
+Context()->normalStrings;
+
+
+
+
+$ans = Compute("x>= -$b/$a");
+
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

@@ -1,0 +1,71 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Linear transformations)
+## DBsection(Evaluating linear transformations)
+## Date(July 2013)
+## Institution(TCNJ and Hope College)
+## Author(Paul Pearson)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('3.1')
+## Problem1('')
+## KEYWORDS('vector space', 'linear transformation', 'image' 'matrix', 'linear transformation' 'matrix' 'image')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGcourse.pl",
+"IansMacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Matrix");
+Context()->variables->remove(x);
+Context()->variables->remove("y");
+$text = <<'STOP';
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+f=>Real(random(-10,10,1)),
+y=>Real(random(-10,10,1)),
+x=>Real(random(-10,10,1)),
+);
+STOP
+generate_perl_variables_from_constants($text, "x,y");
+$A = Matrix([[$a,$b], [$c, $d],[$e,$f]]);
+
+$u = Matrix([[$x], [$y]]);
+
+$Au = Ians_matrix_mult($A,$u);
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \[ A = $A \] and the linear map \(T \colon {\mathbb R}^2 \to {\mathbb R}^3\) is defined by \(T(\vec{x} ) = A \vec{x} \). $BR
+Compute \(T(\vec{u}) \), if 
+\[\vec{u} = $u ,\] 
+\{InTermsOfString()\}.
+$BR
+$BR
+\( T(\vec{u}) = \) \{ $Au->ans_array \} 
+
+END_TEXT
+Context()->normalStrings;
+
+ANS($Au->cmp);
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

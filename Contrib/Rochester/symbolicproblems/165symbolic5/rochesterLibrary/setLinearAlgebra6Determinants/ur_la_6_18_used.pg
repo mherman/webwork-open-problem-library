@@ -1,0 +1,62 @@
+##DESCRIPTION
+##lcao tagged and PAID on 3-22-2004
+
+## DBsubject(Linear algebra)
+## DBchapter('Determinants')
+## DBsection('Properties')
+## Date('6/3/2002')
+## TitleText1('Elementary Linear Algebra')
+## AuthorText1('Larson, Edwards, Falvo')
+## EditionText1('5')
+## Section1('3.3')
+## Problem1('21')
+## KEYWORDS('matrix', 'determinant')
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('5.2')
+## Problem1('')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->add(
+n=>Real(random(2,7,1)),
+k=>Real(non_zero_random(-10,10,1)),
+l=>Real(non_zero_random(-10,10,1)),
+);
+$x = Formula("x");
+$n = Formula("n");
+$k = Formula("k");
+$l = Formula("l");
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \(A\) is an \(n \times n\) matrix whose determinant is equal to \(x\). Suppose further that the matrix \(B\) is obtained by swapping two rows of \(A\), the matrix \(C\) is obtained by multiplying one row of \(A\) by the number \(k\), and the matrix \(D\) is obtained by multiplying every row of \(A\) by the number \(l\). Compute \(\det(B)\), \(\det(C)\), and \(\det(D)\), in terms of \(n\), \(x\), \(k\), and \(l\).
+$PAR
+\(\det(B) = \)\{ans_rule(30)\}
+$BR
+\(\det(C) = \)\{ans_rule(30)\}
+$BR
+\(\det(D) = \)\{ans_rule(30)\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+ANS(
+Compute("-($x)")->cmp,
+Compute("$k*$x")->cmp,
+Compute("($l)^($n) *$x")->cmp
+);
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

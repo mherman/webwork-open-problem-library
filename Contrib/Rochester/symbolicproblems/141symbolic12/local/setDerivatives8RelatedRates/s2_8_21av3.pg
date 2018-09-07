@@ -1,0 +1,38 @@
+#DESCRIPTION
+#KEYWORDS('derivatives', 'related rates')
+#TYPE('word problem')
+# Related rates -- gravel dumped in a pile in a shape of a right circular
+#  cone with diameter = height.  Find the rate at which the height is growing
+#  given the volume, height and rate of change of the volume
+#ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+Context()->variables->add(R=> 'Real', H=> 'Real');
+
+$R = Compute("R");
+$H = random(2,6,1);
+Context()->texStrings;
+BEGIN_TEXT
+Gravel is being dumped from a conveyor belt at a rate of \($R \frac{ft^3}{min} \) and forming a pile in the shape of a right circular cone whose base diameter and height are always equal. How fast is the height of the pile increasing when the pike is \($H\) feet high? Your answer should be expressed in terms of \(R\).
+$PAR
+Answer: \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans = Compute("4 * $R / (pi * $H^2 ) ");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

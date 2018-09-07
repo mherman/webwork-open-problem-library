@@ -1,0 +1,73 @@
+## Determine the interval of convergence
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Interval of convergence of a power series)
+## Date(6/3/2002)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.8')
+## Problem1('25')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('10.6')
+## Problem2('13')
+## KEYWORDS('Power Series', 'Radius of Convergence', 'Interval of Convergence')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Interval");
+Context()->constants->add(A => Real(.01145), p=> Real(5510.554), B=> Real(cos(sin(exp(.024)))) );
+Context()->variables->add(n=> 'Real');
+
+$A = non_zero_random(-10,10,1);
+$B = random(-15,15,1);
+$p = Formula("p");
+
+ 
+$func = Formula("($A * x-$B)^n /(n^($p) )  ")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the power series \(\displaystyle \sum_{n = 1}^{\infty} $func \), where \(p \gt 0 \). Find the radius of convergence and interval of convergence of this power series, first if \( p \le 1\), and second if \(p\gt 1\).
+$PAR
+Radius of convergence: \{ans_rule(30)\}
+$BR
+Interval of convergence (\(p \le 1\)): \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$BR
+Interval of convergence (\(p \gt 1\)): \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$BR
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+if($A>0){
+$ans1 = Compute("1/$A");
+$ans2 = Compute("[($B-1)/$A, ($B+1)/$A)");
+$ans3 = Compute("[($B-1)/$A, ($B+1)/$A] ");
+}
+else{
+$ans1 = Compute("-1/$A");
+$ans2 = Compute("(($B+1)/($A),($B-1)/$A]");
+$ans3 = Compute("[($B+1)/($A),($B-1)/$A]");
+}
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ANS($ans3->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

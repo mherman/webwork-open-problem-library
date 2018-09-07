@@ -1,0 +1,100 @@
+## Original: /Library/ASU-topics/setSecondDerivative/5-2-51.pg
+
+## DESCRIPTION
+## Calculus: Second Derivatives and curve sketching
+## ENDDESCRIPTION
+
+## KEYWORDS('second derivative', 'maxima', 'minima', 'inflection point')
+## Tagged by cmd6a 2/10/06
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Summary of Curve Sketching')
+## Date('')
+## Author('')
+## Institution('ASU')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Interval");
+Context()->constants->add(A=> Real(sin(.1477)), B=> sin(cos(.01477)), a=>Real(exp(.1477)), b=>Real(exp(.01447)) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->strings->add('none'=>{});
+$a = random(1,10,1);
+$b = Formula("b");
+$A = random(1,10,1);
+$B = Formula("B");
+
+$func = Formula(" ($A*x +$B)*e^($a*x+$b)")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Consider the function \(f(x) = $func \).Answer the following in terms of \(B\) and \(b\):
+$PAR
+(i) What are the critical numbers of \(f\)?$BR
+Critical numbers: \(x =\)\{ans_rule(30)\}
+$PAR
+(ii) Where is \(f\) increasing? $BR
+\(f\) is increasing on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(iii) Where is \(f\) decreasing? $BR
+\(f\) is decreasing on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(iv) At which \(x\) does \(f\) achieve its local maxima? $BR
+\(f\) achieves local maxima at \(x = \) \{ans_rule(30)\}
+$PAR
+(v) At which \(x\) does \(f\) achieve its local minima? $BR
+\(f\) achieves local minima at \(x = \) \{ans_rule(30)\}
+$PAR
+(vi) Where is \(f\) concave up? $BR
+\(f\) is concave up on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(vii) Where is \(f\) concave down? $BR
+\(f\) is concave down on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(viii) At which \(x\) does \(f\) have points of inflection? $BR
+\(f\) has points of inflection at \(x = \)\{ans_rule(30)\}
+$PAR
+(ix) For which numbers \(c\) is the line \(y = c\) a horizontal asymptote for \(f\)? $BR
+\(f\) has horizontal asymptotes for \(c = \)\{ans_rule(30)\}
+$PAR
+(x) For which numbers \(c\) is the line \(x = c\) a vertical asymptote for \(f\)? $BR
+\(f\) has vertical asymptotes for \(c = \)\{ans_rule(30)\}
+$PAR
+If there are multiple answers, separate your answers by commas. $BR
+If there are no solutions, write "none". $BR
+If an answer is the empty set, write "{}". $BR
+END_TEXT
+Context()->normalStrings;
+
+@ans = (0,1,2,3,4,5,6,7,8,9);
+$ans[0] = Formula("-(1/$a + $B/$A)");
+$ans[1] = Compute("($ans[0],infinity)");
+$ans[2] = Compute("(-infinity,$ans[0])");
+$ans[3] = Compute("none");
+$ans[4] = Compute("$ans[0]");
+$ans[5] = Compute("(-(2/$a+$B/$A),infinity)");
+$ans[6] = Compute("(-infinity,-(2/$a+$B/$A))");
+$ans[7] = Compute("-(2/$a+$B/$A)");
+$ans[8] = Compute("0");
+$ans[9] = Compute("none");
+
+for my $i (0 .. $#ans){
+ANS($ans[$i]->cmp);
+}
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

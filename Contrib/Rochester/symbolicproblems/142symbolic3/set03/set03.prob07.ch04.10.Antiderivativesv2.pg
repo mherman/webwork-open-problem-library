@@ -1,0 +1,55 @@
+## Original:  /Library/ma122DB/set10/s4_10_29.pg
+
+#DESCRIPTION
+#KEYWORDS('derivatives', 'antiderivatives')
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Antiderivatives')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('4.10')
+## Problem1('29')
+# Anti-derivatives -- find f from f'.
+#ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+
+);
+$showPartialAnswersCorrect = 1;
+TEXT(beginproblem());
+
+Context("Numeric");
+Context()->constants->add(a=>Real(cos(2.354)), b=> Real(.38741), p => Real(sin(cos(.369))), q=> Real(cos(sin(.369))), z=> Real(.01177) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$a = random(-15,15,1);
+$b = random(-15,15,1);
+$p = Formula("p");
+$q = Formula("q");
+$z = Formula("z");
+
+$func = Formula("$a *x^($p)+$b*x^($q) ")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppse \(F^{\prime}(x) = $func \), with \( p, q \ne -1\), and \(F(1) = $z\). Find \(F(x)\) in terms of  \(p\), \(q\), and \(z\). 
+$PAR
+\(F(x) = \)\{ans_rule(30)\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$a / ($p+1) * (x^($p+1)-1) + $b / ($q+1)*(x^($q+1) -1 ) + $z");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,36 @@
+## Original: /rochesterLibrary/setIntegrals4FTC/sc5_4_12.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'fundamental theorem of calculus')
+##  Find a derivative of a given integral
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFunctionPrime.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+parser::FunctionPrime->Enable();
+parserFunction("f(x)" => "e^cos(e*x)");
+parserFunction("g(x)"=> "e^sin(e*x)");
+parserFunction("h(x)"=> "e^tan(e^x)");
+Context()->texStrings;
+BEGIN_TEXT
+Consider the function \(F(x)\) defined by \(\displaystyle F(x) = \int_{g(x)}^{h(x)} f(t) dt \). Assuming that \(f\), \(g\), and \(h\) are differentiable functions, express the derivative \(F^{\prime}(x) \) in terms of \(f\), \(g\), \(h\), and their derivatives.
+$PAR 
+\(f^{\prime}(x) = \)\{ans_rule(30)\} 
+$PAR
+Note: to express \(f(x)\), you may enter "f(x)". Similarly, for \(f^{\prime}(x)\), you may enter "f'(x)". You may do the same with \(g\) and \(h\), and you may compound functions.
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("f(h(x))*h'(x) - f(g(x))*g'(x) ");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

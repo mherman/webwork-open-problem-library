@@ -1,0 +1,55 @@
+## Original: /Library/maCalcDB/setIntegrals5Trig/ur_in_5_3.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'trigonometry', 'substitution')
+##use trig identities, then substitute.
+# Integrals - trig functions
+#ENDDESCRIPTION
+
+## BenBush tagged and PAID on 2-20-2004
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Trigonometric Integrals')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('7.2')
+## Problem1('41,42,43,49')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real');
+$a = Formula("a");
+$b = non_zero_random(-5,5,1);
+
+$func = Formula("sin($a*x)*cos($b*x) ")->reduce;
+
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Assuming \(0 \ne \pm $a \ne $b\), compute $integral in terms of \(a\). 
+$PAR
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans = FormulaUpToConstant("-1/(2*($a+$b)) * cos(($a+$b)*x) - 1/(2*($a-$b))*cos(($a-$b)*x) ");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

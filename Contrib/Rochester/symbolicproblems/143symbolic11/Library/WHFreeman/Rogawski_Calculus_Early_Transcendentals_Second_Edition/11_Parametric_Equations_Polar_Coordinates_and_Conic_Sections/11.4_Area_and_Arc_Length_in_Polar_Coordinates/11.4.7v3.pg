@@ -1,0 +1,48 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Polar)
+## DBsection(Area)
+## Institution(W.H.Freeman)
+## Author(JustAsk - Kobi Fonarov)
+## MLT(pa-area-cardioids)
+## MLTleader(1)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('11.4')
+## Problem1('7')
+## KEYWORDS('calculus')
+## UsesAuxiliaryFiles('image_11_4_5_a.png','image_11_4_5_b.png')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+TEXT(beginproblem());
+$showPartialAnswersCorrect = 1;
+Context("Numeric");
+Context()->variables->add(B=>'Real', A=> 'Real', theta=> 'Real');
+Context()->variables->set(theta=>{TeX=>'\theta'});
+
+$A = Formula("A");
+$B = random(1,10,1);
+Context()->variables->set(A=>{limits=>[$B,40]});
+
+$func = Formula("$A*cos(theta)");
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Assuming \($B \le $A\), compute the area that is inside the region bounded by the graph of \(r_1(\theta) = $func\), but outside the region bounded by the graph of \(r_2(\theta) = $B\). Your answer should be in terms of \(A\).$PAR
+
+Area = \{ans_rule(30)\}
+END_TEXT
+
+$ans1 = Compute("(1/2*($A)^2 - ($B)^2)arccos(($B/$A)) + 1/2 *$A*$B *sqrt(1- ($B)^2/($A)^2 ) ");
+
+ANS($ans1->cmp);
+
+
+
+ENDDOCUMENT();

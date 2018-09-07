@@ -1,0 +1,92 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by LD
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(One-sided limits - concept of)
+## Date(6/3/2002)
+## Institution(ASU)
+## Author(Jeff Holt)
+## MLT(limits_one_sided_heavyside)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5e')
+## Section1('2.3')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('2.3')
+## Problem2('')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('5')
+## Section3('2.3')
+## Problem3('40')
+## KEYWORDS('calculus','limits','Product','Quotient','Differentiation', 'derivatives','Limit', 'Piecewise', 'Absolute Value', 'factoring')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+
+$a = non_zero_random(-8,8,1);
+Context()->texStrings;
+BEGIN_TEXT
+Compute 
+\[ \lim_{ x \rightarrow b^- }
+ \frac { a }
+{ x-b}
+\]
+If
+$BR
+(a) \(a \lt 0\),
+$BR
+\(\lim_{ x \rightarrow b^- }  \frac { a }{ x-b} =\)\{ans_rule(35)\}
+$PAR 
+(b) \(a \gt 0\),
+$BR
+\(\lim_{ x \rightarrow b^- }  \frac { a }{ x-b} =\)\{ans_rule(35)\}
+$PAR 
+Now compute \[ \lim_{x \rightarrow b^+} \frac{a}{x-b}\] If
+$BR
+(c) \(a \lt 0\),
+$BR
+\(\lim_{ x \rightarrow b^+}  \frac { a }{ x-b} =\)\{ans_rule(35)\}
+$PAR 
+(d) \(a \gt 0\),
+$BR
+\(\lim_{ x \rightarrow  b^+ }  \frac { a }{ x-b} =\)\{ans_rule(35)\}
+$PAR 
+END_TEXT
+
+Context()->normalStrings;
+
+$ans1 = Compute("Infinity");
+$ans2 = Compute("- Infinity");
+$ans3 = Compute("- Infinity");
+$ans4 = Compute("Infinity");
+
+ANS($ans1->cmp());
+ANS($ans2->cmp());
+ANS($ans3->cmp());
+ANS($ans4->cmp());
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

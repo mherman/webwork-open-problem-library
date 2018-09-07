@@ -1,0 +1,59 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Interval of convergence of a power series)
+## Institution(W.H.Freeman)
+## Author(Emily Price)
+## MLT(SeriesForCOverLinear)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('10.7')
+## Problem1('3')
+## KEYWORDS('calculus', 'series', 'sequences', 'power series', 'convergence', 'radius of convergence', 'interval of convergence')
+DOCUMENT();
+
+
+
+#Load Necessary Macros
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl"
+);
+
+Context("Interval");
+Context()->variables->add(n=>'Real');
+Context()->constants->add(a=>Real(cos(exp(.3001))), b=> Real(cos(exp(.1.003))), c=> Real(exp(cos(.5001))) );
+Context()->flags->set(formatStudentAnswer=>'parsed' );
+
+$a = Formula("a");
+$b = Formula("b");
+$c  = random(-15,15,1);
+
+$func = Formula("$a / ($b + $c*x ) ")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+Consider the function \( f(x) = $func \), with \(a, b  \ne 0 \). This function can be represented as a Maclaurin series \(\displaystyle \sum_{n = 1}^{\infty} c_n x^n\). Find, in terms of \(a\) and \(b\), the radius of convergence and the interval of convergence of this Maclaurin series.
+$PAR
+Radius of convergence: \{ans_rule(30)\}
+$BR
+Interval of convergence: \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$BR
+END_TEXT
+Context()->normalStrings;
+if($c !=0){
+$ans1 = Formula("|$b / $c |");
+$ans2 = Compute("(-$ans1, $ans1)");
+}
+else{
+$ans1 = Compute("infinity");
+$ans2 = Compute("(-Infinity,Infinity)");
+}
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+
+ENDDOCUMENT()

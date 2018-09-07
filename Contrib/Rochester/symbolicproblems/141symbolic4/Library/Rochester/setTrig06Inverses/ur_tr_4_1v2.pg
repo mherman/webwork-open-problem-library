@@ -1,0 +1,76 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 5/11/06
+
+## DBsubject('Trigonometry')
+## DBchapter('Analytic Trigonometry')
+## DBsection('Inverse Trigonometric Functions')
+## Date('6/3/2002')
+## TitleText1('Precalculus')
+## AuthorText1('Stewart, Redlin, Watson')
+## EditionText1('3')
+## Section1('7.4')
+## Problem1('39 40 41')
+## KEYWORDS('integration','inverse trigonometric functions','trig substitution','Substitution' , 'Trig Substitution' , 'Trigonometric Substitution' )
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+
+BEGIN_TEXT
+
+Let \( 0 \lt x \lt 1\). Compute, in terms of \(x\), the following:
+$BR
+\(\sin[\arcsin(x)] = \)\{ans_rule(15)\}
+$BR
+
+\(\cos[\arcsin(x)] = \)\{ans_rule(15)\}
+
+$BR
+\(\tan[\arcsin(x)] = \)\{ans_rule(15)\}
+
+$BR
+\(\csc[\arcsin(x)] = \)\{ans_rule(15)\}
+
+$BR
+\(\sec[\arcsin(x)] = \)\{ans_rule(15)\}
+
+$BR
+\(\cot[\arcsin(x)] = \)\{ans_rule(15)\}
+
+
+
+END_TEXT
+
+@ans = (
+Compute("x"),
+Compute("sqrt(1 - x^2)"), 
+Compute("x/sqrt(1-x^2)") ,
+Compute("1/x"),
+Compute("1/(sqrt(1-x^2))"),
+Compute("sqrt(1-x^2)/x"),
+              );
+
+ANS($ans[0]->cmp());
+ANS($ans[1]->cmp());
+ANS($ans[2]->cmp());
+ANS($ans[3]->cmp());
+ANS($ans[4]->cmp());
+ANS($ans[5]->cmp());
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

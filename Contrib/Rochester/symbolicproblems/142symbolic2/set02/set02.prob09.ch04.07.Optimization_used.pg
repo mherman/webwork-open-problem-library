@@ -1,0 +1,55 @@
+## Original: /Library/Indiana/Indiana_setDerivatives10_5Optim/nsc4_6_3.pg
+
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## KEYWORDS('maximization' 'minimization' 'derivatives' 'optimization')
+## Tagged by tda2d
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Optimization Problems')
+## Date('')
+## Author('')
+## Institution('Indiana')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+
+Context("Numeric");
+Context()->variables->add(A =>'Real');
+Context()->variables->set(A=>{limits=>[1,10]});
+
+$A = Formula("A");
+
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+A box with a square base and an open top is being constructed out of \($A\) cm\(^2\) of material. If the volume of the box is to be maximized, what should the side length of the base be? What should the height of the box be? What is the maximal volume of the box? Your answers should be in terms of \(A\).
+$PAR
+Side length = \{ans_rule(30)\} cm $BR
+Height  = \{ans_rule(30)\} cm $BR
+Volume = \{ans_rule(30)\} cm\(^3\)$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("sqrt($A)/sqrt(3) ");
+$ans2 = Compute("$ans1 /2 ");
+$ans3 = Compute("$ans1*$ans1 $ans2");
+ANS($ans1->cmp,$ans2->cmp,$ans3->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

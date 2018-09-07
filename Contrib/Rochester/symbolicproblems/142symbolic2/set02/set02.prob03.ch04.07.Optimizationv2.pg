@@ -1,0 +1,59 @@
+## Original: /Library/ASU-topics/setOptimization/jj1.pg
+## Modified May 2007 by Paul Pearson
+
+## DESCRIPTION
+## Optimization
+## ENDDESCRIPTION
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Optimization Problems')
+## Date('May 2007')
+## Author('Paul Pearson')
+## Institution('University of Rochester')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('4.7')
+## Problem1('7')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+$who = list_random("A naked mole rat rancher", "A micro pig rancher","A sloth rancher", "A manticore rancher");
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(D=>'Real', N=>'Real');
+$D = random(100,1000,100);
+$N = Formula("N");
+Context()->texStrings;
+BEGIN_TEXT
+$who  wants to use \($D\) feet of fencing to fence off a rectangular area that is subdivided into \($N\) rectangular pens with fencing parallel to one side of the main rectangular area. In terms of \(N\), what should the dimensions of the main rectangle be? 
+
+$PAR
+Dimensions: \{ans_rule(30)\} feet
+$BR
+Note: enter with length and width separated by a comma, i.e., length x width => length , width.
+$PAR
+With those dimensions, what is the area of the rectangle and what is the area of each pen?
+$PAR
+Area of the rectangle = \{ans_rule(30)\} sq. feet
+$BR
+Area of each pen = \{ans_rule(30)\} sq. feet.
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("1/4 *$D , $D/(2*($N+1))");
+$ans2 = Compute("($D)^2/(8($N+1))");
+$ans3 = $ans2/$N;
+ANS($ans1->cmp,$ans2->cmp,$ans3->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

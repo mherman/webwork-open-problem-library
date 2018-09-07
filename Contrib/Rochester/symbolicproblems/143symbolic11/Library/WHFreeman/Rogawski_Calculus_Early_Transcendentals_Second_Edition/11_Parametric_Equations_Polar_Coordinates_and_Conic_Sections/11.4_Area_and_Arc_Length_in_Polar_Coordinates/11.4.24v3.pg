@@ -1,0 +1,75 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Polar)
+## DBsection(Arc length)
+## Institution(W.H.Freeman)
+## Author(JustAsk - Kobi Fonarov)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('11.4')
+## Problem1('24')
+## KEYWORDS('calculus')
+## UsesAuxiliaryFiles('image_11_4_27.png')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+Context("Numeric");
+Context()->variables->add(A=> 'Real',  theta=> 'Real');
+Context()->variables->set(theta=>{TeX=>'\theta'});
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = Formula("A");
+$a = list_random(0,2,3,4);
+$b = list_random(0,2,3,4);
+while($a>=$b){
+$a = list_random(0,2,3,4);
+$b = list_random(0,2,3,4);
+}
+Context()->constants->add('a'=>Real($a/12*3.1415926), 'b'=>Real($b/12*3.1415926));
+if($a ==2){
+Context()->constants->set(a=>{TeX=>'\frac{\pi}{6}'});
+}
+if($a == 4){
+Context()->constants->set(a=>{TeX=>'\frac{\pi}{3}'});
+}
+if($a ==3){
+Context()->constants->set(a=>{TeX=>'\frac{\pi}{4}'});
+}
+if($b==0){
+Context()->constants->set(b=>{TeX=>'0'});
+}
+if($b ==2){
+Context()->constants->set(b=>{TeX=>'\frac{\pi}{6}'});
+}
+if($b == 4){
+Context()->constants->set(b=>{TeX=>'\frac{\pi}{3}'});
+}
+if($b ==3){
+Context()->constants->set(b=>{TeX=>'\frac{\pi}{4}'});
+}
+if($b==0){
+Context()->constants->set(b=>{TeX=>'0'});
+}
+
+$func = Formula("$A*sec(theta)")->reduce;
+$a = Formula("a");
+$b = Formula("b");
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Compute the arc length, in terms of \(a\), and \(b\), of the curve \(r (\theta)  = $func \) from \(\theta = $a \) to \(\theta = $b\). 
+$PAR
+Arc length = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("|$A|*(tan($b)-tan($a))");
+ANS($ans1->cmp);
+
+
+ENDDOCUMENT();

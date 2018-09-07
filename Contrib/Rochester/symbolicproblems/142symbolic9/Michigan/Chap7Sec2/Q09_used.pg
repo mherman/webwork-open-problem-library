@@ -1,0 +1,71 @@
+# DESCRIPTION
+# Problem from Calculus, single variable, Hughes-Hallett et al., 4th ed.
+# WeBWorK problem written by Gavin LaRose, <glarose@umich.edu>
+# ENDDESCRIPTION
+
+## KEYWORDS('calculus', 'integral', 'integration by parts', 'indefinite integrals', 'antiderivatives')
+## Tagged by glr 02/08/09
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Integration by Parts')
+## Date('')
+## Author('Gavin LaRose')
+## Institution('University of Michigan')
+## TitleText1('Calculus')
+## TitleText2('Calculus')
+## EditionText1('4')
+## EditionText2('5')
+## AuthorText1('Hughes-Hallett')
+## AuthorText2('Hughes-Hallett')
+## Section1('7.2')
+## Section2('7.2')
+## Problem1('9')
+## Problem2('10')
+
+## Textbook tags
+## HHChapter1('Integration')
+## HHChapter2('Integration')
+## HHSection1('Integration by Parts')
+## HHSection2('Integration by Parts')
+
+
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(p=>'Real');
+Context()->variables->set(p=>{limits=>[1, 8]});
+Context()->variables->set(x=>{limits=>[1, 8]});
+$p = Formula("p");
+
+$func = Formula("x^($p)*ln(x)");
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Assume \(p \ne -1 \) and compute $integral . Your answer should be in terms of \(p\).
+$PAR 
+$integral = \{ans_rule(30)\}
+$PAR
+Compute the integral again, if \(p = -1\).
+$PAR
+$integral = \{ans_rule(30)\}
+$PAR
+$BR NOTE: For this problem, WeBWorK expects you to include the + C as part of your answers.$BR$BR  Also note that \(p\) represents a number here.  You should treat it exactly as if it were an actual number. $BR If you could do the previous three problems, you can do this one too!!!$BR$BR  For the second part of the question, you should replace \(p\) by  \(-1\). $BR Note that you can do the second part of the question using integration by parts if you want, but it is easier to do it using a simple \(u\) substitution.
+END_TEXT
+Context()->normalStrings;
+$ans1 = FormulaUpToConstant("x^($p+1)/($p+1)*(ln(x)-1/($p+1) )");
+ANS($ans1->cmp);
+
+$ans2 = FormulaUpToConstant("1/2*(ln(x))^2");
+ANS($ans2->cmp);
+
+ENDDOCUMENT();

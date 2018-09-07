@@ -1,0 +1,101 @@
+#DESCRIPTION
+##  Calculus: Implicit differentiation
+##ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Implicit differentiation)
+## Date(11/11/2010)
+## Institution(University of Minnesota)
+## Author(Justin Sukiennik)
+## MLT(xy_powers_slope_zero_infinite)
+## MLTleader(1)
+## Level(4)
+## TitleText1('Calculus: Concepts and Contexts')
+## AuthorText1('Stewart')
+## EditionText1('4 Custom UMTYMP Ed.')
+## Section1('3.5')
+## Problem1('')
+## KEYWORDS('calculus', 'derivative', 'implicit differentiation', 'tangent line', 'circle')
+
+#####################################################################
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGgraphmacros.pl",
+  "PGcourse.pl", 
+"AnswerFormatHelp.pl",
+);
+#####################################################################
+
+TEXT(beginproblem());
+
+$showPartialCorrectAnswers = 1;
+
+#####################################################################
+
+Context("Numeric");
+Context()->variables->add(y=>"Real", h => 'Real', k=> 'Real', a=> 'Real' , b=> 'Real');
+
+$h = Compute("h");
+$k = Compute("k");
+$a = Compute("a");
+$b = Compute("b");
+
+$func = Compute("((x-$h)^2)/$a^2+((y-$k)^2)/$b^2")->reduce;
+$d = Compute("$b^2*($h - x)/($a^2*(y-$k))");
+
+$x11 = $h;
+$y11 = $k + $b;
+$x12 = $h;
+$y12 = $k-$b;
+
+$x21 = $h+$a;
+$y21 = $k;
+$x22 = $h-$a;
+$y22 = $k;
+
+Context("Point");
+Context()->variables->add(h => 'Real', k=> 'Real', r=> 'Real', a=> 'Real' , b=> 'Real');
+$p1 = Compute("($x11,$y11)");
+$p2 = Compute("($x12,$y12)");
+$p3 = Compute("($x21,$y21)");
+$p4 = Compute("($x22,$y22)");
+
+
+$ans2 = List(" $p1,$p2");
+$ans3 = List("$p3, $p4");
+
+#####################################################################
+Context()->texStrings;
+BEGIN_TEXT
+Consider the ellipse defined by the equation \( $func = 1\), with \(a,b \gt 0\). $BR
+(i) Use implicit differentiation to find \(\frac{dy}{dx}\) for this ellipse in terms of \(x\), \(y\), \(h \), \( k\), \(a,\) and \(b\). 
+$BR
+\(\frac{dy}{dx} = \) \{ans_rule(30)\}
+$PAR
+(ii) Find the coordinates of the two points on the ellipse where the tangent line is horizontal in terms of \( h\), \(k\), \(a\)and \(b\). 
+$BR
+Points: \{ans_rule(30)\} \{AnswerFormatHelp("Points")\}
+$PAR
+(iii) Find the coordinates of the two points on the ellipse where the tangent line is vertical in terms of \(h\), \(k\), \(a\), and \(b\). 
+$BR
+Points: \{ans_rule(30)\} \{AnswerFormatHelp("Points")\}
+$PAR
+If there are multiple answers, enter the answers separated by commas.
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+#####################################################################
+
+$ans1 = $d;
+
+ANS($ans1->cmp());
+ANS($ans2->cmp());
+ANS($ans3->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

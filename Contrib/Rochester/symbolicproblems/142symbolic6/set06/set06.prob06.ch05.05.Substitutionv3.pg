@@ -1,0 +1,37 @@
+## Original: /rochesterLibrary/setIntegrals14Substitution/sc5_5_20.pg
+## Modified May 2007 by Paul Pearson
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'substitution')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real',c=>'Real');
+$a = Formula("a");
+$b  = non_zero_random(-5,5,1);
+$c = random(-5,5,1);
+$func = Compute("($a*cos(x))/($b *sin(x)+$c) ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(a\).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans = FormulaUpToConstant("$a /$b *ln(|$b*sin(x)+$c|)");
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+

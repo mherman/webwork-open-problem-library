@@ -1,0 +1,54 @@
+## Original: /Library/ma122DB/set11/s5_3_32.pg
+
+##DESCRIPTION
+## Evaluate a definite integral
+##ENDDESCRIPTION
+##KEYWORDS('integrals', 'definite')
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Integrals')
+## DBsection('The Fundamental Theorem of Calculus')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('5.3')
+## Problem1('32')
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', A=>'Real', B=>'Real', theta=>'Real');
+Context()->variables->set(theta=>{TeX=>'\theta'});
+$a = Formula("a");
+$b = Formula("b");
+$A = random(-15,15,1);
+$B = random(-15,15,1);
+
+$func = Compute("$A*sec^2(theta) + $B csc^2(theta) ")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute \(\displaystyle \int_{$a}^{$b} ($func)  d \theta \) in terms of \(a\), and \(b\). You may assume \( 0 \lt a \le b \lt \frac{\pi}{2}\). 
+$PAR
+\(\displaystyle \int_{$a}^{$b} ($func )d \theta = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$A*(tan($b)-tan($a) )-$B*(cot($b)-cot($a) ) ");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();
+
+

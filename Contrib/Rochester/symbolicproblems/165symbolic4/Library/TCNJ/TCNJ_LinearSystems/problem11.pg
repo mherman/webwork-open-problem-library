@@ -1,0 +1,63 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Systems of linear equations)
+## DBsection(Systems with 2 variables)
+## Institution(TCNJ)
+## MLT(soarethese)
+## MLTleader(1)
+## KEYWORDS('linear equations' 'system')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+ 
+TEXT(beginproblem());    
+# Do not show which answers are incorrect.
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+Context()->variables->add(y=>'Real');
+do{
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+u=>Real(random(-10,10,1)),
+v=>Real(random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+$u = Formula("u");
+$v = Formula("v");
+}while($a*$d==$c*$b);
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(ad \ne bc\), solve the system of equations,
+\[ \begin{aligned}
+&$a x + $b y = $u \\
+&$c x + $d y = $v,
+\end{aligned}\]
+for the unknowns \(x\) and \(y\) in terms of \(a,b,c,d,u,\) and \(v\).
+$PAR
+\(x = \)\{ans_rule(30)\}
+$PAR
+\(y = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Formula("($d*$u-$b*$v)/($a*$d-$b*$c)");
+$ans2 = Formula("($a*$v-$c*$u)/($a*$d-$b*$c)");
+ANS($ans1->cmp,$ans2->cmp);
+ENDDOCUMENT();

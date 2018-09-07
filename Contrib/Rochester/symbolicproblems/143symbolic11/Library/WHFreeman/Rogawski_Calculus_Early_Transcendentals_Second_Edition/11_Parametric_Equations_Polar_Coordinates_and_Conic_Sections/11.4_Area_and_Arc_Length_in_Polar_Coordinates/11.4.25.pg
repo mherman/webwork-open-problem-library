@@ -1,0 +1,51 @@
+# DESCRIPTION
+#	arc length for  r = a theta^2  on  [0,b]
+# ENDDESCRIPTION
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Polar)
+## DBsection(Arc length)
+## Date(06/01/2011)
+## Institution(W.H.Freeman)
+## Author(Dick Lane)
+## MLT(tSQ)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals 2e')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('11.4')
+## Problem1('25')
+## KEYWORDS('calculus', 'area', ‘arc length’)
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+Context("Numeric");
+Context()->variables->add(A=> 'Real',  a=> 'Real', b=> 'Real', theta=> 'Real');
+Context()->variables->set(theta=>{TeX=>'\theta'});
+$A = Formula("A");
+$a = Formula("a");
+$b = Formula("b");
+
+$func = Formula("$A*theta^2")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Compute the arc length, in terms of \(A\), \(a\), and \(b\), of the curve \(r (\theta)  = $func \) from \(\theta = $a \) to \(\theta = $b\). 
+$BR
+You may assume \(0 \le $a \le $b \).
+$PAR
+Arc length = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("1/3*|$A|*((($b)^2+4)^(3/2) - (($a)^2 + 4)^(3/2) ) ");
+ANS($ans1->cmp);
+
+
+ENDDOCUMENT();

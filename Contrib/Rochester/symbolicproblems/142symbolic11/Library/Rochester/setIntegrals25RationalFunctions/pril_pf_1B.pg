@@ -1,0 +1,198 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Techniques of integration)
+## DBsection(Partial fractions)
+## Institution(Rochester)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('7.6')
+## Problem1('13')
+## KEYWORDS('integral' 'partial fraction')
+
+DOCUMENT(); 
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl",
+"compoundProblem5.pl",
+);
+$scaffold = Scaffold();
+#$isInstructor =  ($envir{effectivePermissionLevel} >= $envir{ALWAYS_SHOW_SOLUTION_PERMISSION_LEVEL});
+$isInstructor=0;   # This variable changes what the user can see.
+INITIALIZE_SCAFFOLD('$scaffold');
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1; #normal initialization
+Context("Numeric");
+Context()->constants->add(
+A=>Real(random(3,8,.1)), 
+B=>Real(random(3,8,.1)),
+a=>Real(random(3,8,.1)),
+b=>Real(random(3,8,.1)),
+c=>Real(random(3,8,.1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = Formula("A");
+$B = Formula("B");
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$func= Formula(" ($A*x+$B)/($a*x^2 +$b*x +$c) ")->reduce;
+
+######################################
+############SECTION 1#################
+######################################
+$ans1 = Formula("2*$a*x+$b");
+
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \) ";
+DISPLAY_SECTION(  {  name=>"(i)", 
+             canshow =>1,  #always true
+             iscorrect=>$scaffold->requireCorrect(1), 
+             section=>1 #designates that this is the first section
+} , <<'END_SECTION'); 
+This problem shows how to compute the antiderivative of a rational function with irreducible degree two denominator in steps. This is a compound problem with seven parts - complete the previous parts in order to move on to the next part. Consider the integral $integral, where \($A, a \ne 0 \), and \($b^2 -4 $a $c \gt 0 \) (so the denominator cannot be factored). Complete the following: 
+$PAR
+(i) The natural desire is to make the substitution \(u = $a x^2 + $b x + $c\). With this \(u\), \(du = (\)\{SECTION_ANS($ans1->cmp), $ans1->ans_rule(5)\}\()dx\). Your answer should be a function of \(x\) written in terms of the given variables. 
+END_SECTION
+Context()->normalStrings;
+
+######################################
+############SECTION 2#################
+######################################
+$ans2 = Formula("$A/(2*$a)");
+$ans3 = Formula("$B - ($A*$b)/(2*$a) ");
+
+Context()->texStrings;
+DISPLAY_SECTION( { name=>"(ii)", 
+             canshow =>$scaffold->requireCorrect(1). " or $isInstructor",
+             iscorrect=>$scaffold->requireCorrect(2,3), 
+             section=>2
+},   <<'END_SECTION'); 
+(ii) Unfortunately, your numerator may not equal your answer to (i), \( $ans1 \). You must force a term that looks like \($ans1\) into the numerator. Therefore, complete the following equality: 
+$PAR
+\($A x +$B = (\)\{SECTION_ANS($ans2->cmp),$ans2->ans_rule(5)\}\() ( $ans1 ) +\)\{SECTION_ANS($ans3->cmp),$ans3->ans_rule(15)\}.$BR Your two answers should be in terms of the given variables. 
+END_SECTION
+Context()->normalStrings;
+
+######################################
+############SECTION 3#################
+######################################
+$ans4 = Formula("$A/(2*$a)");
+$ans5 = Formula("$B-($A*$b)/(2*$a)");
+
+Context()->texStrings;
+DISPLAY_SECTION( { name=>"(iii)", 
+             canshow =>$scaffold->requireCorrect(1,2,3). " or $isInstructor",
+             iscorrect=>$scaffold->requireCorrect(4,5), 
+             section=>3
+},   <<'END_SECTION'); 
+
+(iii) Using your answers to (i) and (ii), the given integral can be rewritten as 
+$BR
+$integral = \((\)\{SECTION_ANS($ans4->cmp),$ans4->ans_rule(5)\}\()\displaystyle \int \frac{1}{u}du + (\)\{SECTION_ANS($ans5->cmp),$ans5->ans_rule(5)\}\() \displaystyle \int \frac{1}{$a x^2 + $b x + $c } dx \). Your two answers should be numbers written in terms of the given variables. 
+
+END_SECTION
+Context()->normalStrings;
+
+
+######################################
+############SECTION 4#################
+######################################
+Context()->variables->add(u=>'Real');
+
+$ans6 = FormulaUpToConstant("ln(|u|)");
+Context()->variables->remove(u);
+$ans7 = FormulaUpToConstant("ln($a*x^2 + $b*x + $c) ");
+Context()->texStrings;
+DISPLAY_SECTION( { name=>"(iv)", 
+             canshow =>$scaffold->requireCorrect(1,2,3,4,5). " or $isInstructor",
+             iscorrect=>$scaffold->requireCorrect(6,7), 
+             section=>4
+},   <<'END_SECTION'); 
+(iv) Compute \( \displaystyle \int \frac{1}{u} du \) in terms of \(u\). 
+$BR
+\( \displaystyle \int \frac{1}{u} du =\)\{SECTION_ANS($ans6->cmp),$ans6->ans_rule(5)\} (in terms of \(u\))$PAR
+
+Now write the solution to this integral in terms of \(x\), using the substitution introduced in (i). 
+$BR
+\(  \displaystyle \int \frac{1}{u} du =\)\{SECTION_ANS($ans7->cmp),$ans7->ans_rule(5)\} (in terms of \(x\))
+END_SECTION
+Context()->normalStrings;
+
+######################################
+############SECTION 5#################
+######################################
+$ans8 = Compute("$a");
+$ans9 = Compute("$b/(2*$a)");
+$ans10 = Compute("sqrt($c/$a - ($b)^2 /(4*($a)^2) ) ");
+
+Context()->texStrings;
+DISPLAY_SECTION( { name=>"(v)", 
+             canshow =>$scaffold->requireCorrect(1,2,3,4,5,6,7). " or $isInstructor",
+             iscorrect=>$scaffold->requireCorrect(8,9,10), 
+             section=>5
+},   <<'END_SECTION'); 
+(v) To compute \(\displaystyle \int \frac{1}{$a x^2 + $b x + $c } dx \), one must complete the square. Fill in the blanks: 
+$BR
+\($a x^2 +$b x +$c = (\)\{ans_rule(5)\}\()[(x+\)\{ans_rule(5)\}\()^2+(\)\{ans_rule(5)\}\()^2] \). Your answers should be written in terms of the given variables.
+END_SECTION
+Context()->normalStrings;
+SECTION_ANS($ans8->cmp,$ans9->cmp,$ans10->cmp);
+
+
+######################################
+############SECTION 6#################
+######################################
+
+$ans11 = FormulaUpToConstant("2/sqrt(4*$a*$c - ($b)^2 ) *arctan((2*$a*x+$b)/(sqrt(4*$a*$c-($b)^2)))");
+Context()->texStrings;
+DISPLAY_SECTION( { name=>"(vi)", 
+             canshow =>$scaffold->requireCorrect(1,2,3,4,5,6,7,8,9,10). " or $isInstructor",
+             iscorrect=>$scaffold->requireCorrect(11), 
+             section=>6
+},   <<'END_SECTION'); 
+
+(vi) Using your answer to (v), compute \(\displaystyle \int \frac{1}{$a x^2 + $b x + $c } dx \).$BR
+ \(\displaystyle \int \frac{1}{$a x^2 + $b x + $c } dx =\)\{SECTION_ANS($ans11->cmp),$ans11->ans_rule(30)\}
+
+END_SECTION
+Context()->normalStrings;
+
+
+######################################
+############SECTION 7#################
+######################################
+$ans12 = FormulaUpToConstant("$A/(2*$a)*ln($a x^2 + $b x + $c) + (2*$B*$a-$A*$b)/($a*sqrt(4*$a*$c-($b)^2) )*arctan((2*$a*x + $b)/(sqrt(4*$a*$c -($b)^2) ) )");
+Context()->texStrings;
+DISPLAY_SECTION( { name=>"(vii)", 
+             canshow =>$scaffold->requireCorrect(1,2,3,4,5,6,7,8,9,10,11). " or $isInstructor",
+             iscorrect=>$scaffold->requireCorrect(12), 
+             section=>7
+},   <<'END_SECTION'); 
+
+(vii) Finally, put together your answers to (iii), (iv), and (vi) to compute $integral in terms of \($A\), \($B\), \(a\), \(b\), and \(c\).
+$BR
+$integral = \{SECTION_ANS($ans12->cmp),$ans12->ans_rule(30)\}
+$PAR
+END_SECTION
+Context()->normalStrings;
+
+PROCESS_ANSWERS();
+
+$last_correct_section = PROCESS_SECTIONS();
+
+$opensection = $last_correct_section + 1;
+$scaffold->openSections($opensection);
+
+TEXT($END_ONE_COLUMN);
+
+ENDDOCUMENT(); 

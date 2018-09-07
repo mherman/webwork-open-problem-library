@@ -1,0 +1,80 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## KEYWORDS('linear', 'transformation', 'matrix')
+## Tagged by tda2d
+
+## DBsubject('Linear Algebra')
+## DBchapter('Vector Spaces')
+## DBsection('Linear Transformations')
+## Date('')
+## Author('')
+## Institution('TCNJ')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"IansMacros.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Matrix");
+
+Context()->variables->remove('x','y','z');
+$text = <<'STOP';
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+f=>Real(random(-10,10,1)),
+g=>Real(random(-10,10,1)),
+h=>Real(random(-10,10,1)),
+i=>Real(random(-10,10,1)),
+x=>Real(random(-10,10,1)),
+y=>Real(random(-10,10,1)),
+z=>Real(random(-10,10,1)),
+);
+STOP
+generate_perl_variables_from_constants($text,"x,y,z");
+$u = ColumnVector(1,0,0);
+$v = ColumnVector(0,1,0);
+$w = ColumnVector(0,0,1);
+$A = ColumnVector($a,$b,$c);
+$B = ColumnVector($d,$e,$f);
+$C = ColumnVector($g,$h,$i);
+$m = ColumnVector($x,$y,$z);
+$answer = Matrix([
+[$a*$x+$d*$y+$g*$z],
+[$b*$x+$e*$y+$h*$z],
+[$c*$x+$f*$y + $i*$z],
+]);
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \(T \colon {\mathbb R}^3 \to {\mathbb R}^3\) is a linear map such that 
+$BCENTER
+\(T\Bigg($u\Bigg) = $A, T\Bigg($v\Bigg) = $B,\) and \(T\Bigg($w\Bigg) = $C\).
+$ECENTER
+Compute \[T\Bigg($m\Bigg)\] \{InTermsOfString()\}.
+$PAR
+\( T\Bigg($m\Bigg) = \)\{$answer->ans_array\}
+
+
+END_TEXT
+Context()->normalStrings;
+ANS($answer->cmp);
+
+
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.
+

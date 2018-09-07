@@ -1,0 +1,55 @@
+## DESCRIPTION
+## Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject('Algebra')
+## DBchapter('Functions')
+## DBsection('One-to-one Functions and Their Inverses')
+## Date('6/3/2002')
+## Institution('Rochester')
+## TitleText1('College Algebra')
+## AuthorText1('Stewart, Redlin, Watson')
+## EditionText1('3')
+## Section1('4.8')
+## Problem1('19')
+## KEYWORDS('function' 'inverse','functions', 'inverse functions')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a => 'Real', b=> 'Real' , A=> 'Real', B=>'Real');
+$a1 = Compute("a");
+$b1 = Compute("b");
+$c1 = random(-15,15,1);
+$A1 = Compute("A");
+$B1 = Compute("B");
+
+Context()->texStrings;
+
+BEGIN_TEXT
+
+If \( f(x) = \frac{$A1+$B1 x}{$a1 + $b1 x} \),  with \(b, B \ne 0\), compute \( f^{-1}(x) \) and \( f^{-1}( $c1 ) \) in terms of \(a\), \(b\), \(A\), and \(b\). $BR
+\( f^{-1}(x) = \) \{ans_rule(20) \} $BR
+\( f^{-1}( $c1 ) = \) \{ans_rule(20) \}
+
+END_TEXT
+
+
+$ans1=  Compute("($a1*x -$A1)/($B1 - $b1* x)");
+$ans2 = Compute("($a1*$c1 -$A1)/($B1 - $b1* $c1)");
+ANS($ans1->cmp());
+ANS($ans2->cmp());
+ENDDOCUMENT();        # This should be the last executable line in the problem.

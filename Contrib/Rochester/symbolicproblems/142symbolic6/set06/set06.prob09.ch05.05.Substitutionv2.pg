@@ -1,0 +1,43 @@
+## Original: /rochesterLibrary/setIntegrals14Substitution/sc5_5_11.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'substitution')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(A=>'Real', B=>'Real', p=>'Real', q=>'Real');
+$A = Formula("A");
+$B = Formula("B");
+$p = random(-2,2,1);
+$q = random(-2,2,1);
+while($p ==-1 || $q ==-1){
+$p =random(-2,2,1);
+$q = random(-2,2,1);
+}
+$func = Compute("x^($p)*($A + $B*x^($p+1))^($q) ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int $func dx " ;
+
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(A\) and \(B\). You may assume \(B \ne 0 \).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+
+$ans = FormulaUpToConstant("($A + $B*x^($p+1))^($q+1) /($B *($p+1)*($q+1) )");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

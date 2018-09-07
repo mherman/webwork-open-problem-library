@@ -1,0 +1,39 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are(a => 'Real', A=> 'Real' , B => 'Real');
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute, in terms of \(a\),  
+\[ \lim_{ x \rightarrow a} \frac{a-x}{\sqrt{a}-\sqrt{x}}. \] 
+You may assume \(a \gt 0\).
+$BR
+If the limit does not exist, write "DNE".
+$BR
+$PAR
+\( \lim_{ x \rightarrow a} \frac{a-x}{\sqrt{a}-\sqrt{x}}.  \)  \{ans_rule(25) \}
+$BR
+$BR
+END_TEXT
+
+$ans1 = Compute("2 sqrt(a)");
+ANS($ans1->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+
+

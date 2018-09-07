@@ -1,0 +1,51 @@
+## Original: /Library/ma122DB/set11/s5_3_20.pg
+
+##DESCRIPTION
+## Evaluate an integral
+##ENDDESCRIPTION
+##KEYWORDS('integrals', 'definite')
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Integrals')
+## DBsection('The Fundamental Theorem of Calculus')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('5.3')
+## Problem1('20')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', A=>'Real', B=>'Real', C=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$A = random(-15,15,1);
+$B = random(-15,15,1);
+$C = random(-15,15,1);
+
+$func = Compute("$A x^2 + $B * x + $C ")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+Compute \(\displaystyle \int_{$a}^{$b} ($func) dx \) in terms of \(a\) and \(b\).
+$PAR
+\(\displaystyle \int_{$a}^{$b} ($func) dx = \)\{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("1/3 $A*(($b)^3 - ($a)^3 ) + 1/2 *$B * (($b)^2 - ($a)^2 ) + $C *($b -$a ) ");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+

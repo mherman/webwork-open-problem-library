@@ -1,0 +1,64 @@
+## Original: /Library/maCalcDB/setIntegrals5Trig/sc5_5_99.pg
+
+##DESCRIPTION
+#KEYWORDS('integrals', 'trigonometry','substitution')
+## use trig identities, then substitution.
+##ENDDESCRIPTION
+
+## BenBush tagged and PAID on 2-20-2004
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Trigonometric Integrals')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('7.2')
+## Problem1('4,6,7,8,9,10,16,47')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl",
+);
+TEXT(beginproblem());
+
+###################################
+# Setup
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real');
+$a =  Formula("a");
+$b = random(-15,15,1);
+
+$func = Compute("cos^3($a*x + $b) ")->reduce;
+
+
+###################################
+# Main text
+
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Assuming \(a \ne 0 \), compute $integral in terms of \(a\).
+$PAR
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+###################################
+# Answers
+
+$showPartialCorrectAnswers = 1;
+
+$ans =FormulaUpToConstant(" 1/(3*$a)*(sin($a*x+$b) - 3*sin^3($a*x+$b) )");
+ANS($ans->cmp);
+###################################
+
+ENDDOCUMENT();

@@ -1,0 +1,40 @@
+DOCUMENT();
+
+loadMacros("PG.pl",
+           "PGbasicmacros.pl",
+           "PGchoicemacros.pl",
+           "PGanswermacros.pl",
+           "PGgraphmacros.pl",
+           "PGauxiliaryFunctions.pl",
+           "extraAnswerEvaluators.pl",
+           "MathObjects.pl",
+);
+
+TEXT(beginproblem());
+Context("Numeric");
+$showPartialCorrectAnswers = 1;
+
+$a = random(2,17,1);
+$c = random(1, 17,1);
+while($a == $c)
+{ $c = random(1, 17,1); }
+
+Context()->texStrings;
+BEGIN_TEXT
+
+If \(f(x) = $a^x\), find a number \(b\) such that the graph of \(f\) contains the point \( (b,$c )\).
+
+$PAR
+\(b = \) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("ln($c) / ln($a)");
+
+
+ANS( $ans1->cmp());
+
+Context()->normalStrings;
+
+
+ENDDOCUMENT();

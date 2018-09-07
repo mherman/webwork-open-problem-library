@@ -1,0 +1,82 @@
+## DESCRIPTION
+## Calculus: Limits and Derivatives
+## ENDDESCRIPTION
+
+## Tagged by LD
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Limits at infinity, horizontal and oblique asymptotes)
+## Date(6/3/2002)
+## Institution(ASU)
+## Author(Utah ww group)
+## MLT(liminfratexp)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('2.6')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('2.6')
+## Problem2('')
+## TitleText3('Mathematical Applications')
+## AuthorText3('Ronal J. Harshbarger and James J. Reynolds')
+## EditionText3('8')
+## Section3('.')
+## Problem3('')
+## TitleText4('Calculus: Early Transcendentals')
+## AuthorText4('Stewart')
+## EditionText4('5e')
+## Section4('2.6')
+## Problem4('')
+## KEYWORDS('limits', 'derivatives', 'infinite' ,'Limit', 'Infinity','Calculus','asymptote')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+Context()->variables->are(a => 'Real', b=> 'Real');
+Context()->texStrings;
+BEGIN_TEXT
+Let \(f(x) = \frac{p(x)}{q(x)}\), where \(p(x)\) is a polynomial of degree \(d_p \ge 0 \) and \(q(x)\) is a polynomial of degree \(d_q \ge 0\). Let \(a\) be the leading coefficient of \(p(x)\) and \(b\) be the leading coefficient of \(q(x)\). Compute, in terms of a and b, \(\displaystyle \lim_{x \rightarrow \infty }f(x)\) if 
+$BR
+(i) \(d_p \gt d_q\) and \(a \gt 0\): \{ans_rule(30)\}
+$BR
+(ii) \(d_p \gt d_q\) and \(a \lt 0\): \{ans_rule(30)\}
+$BR
+(iii) \(d_p = d_q\) \{ans_rule(30)\}
+$BR
+(iv) \(d_p \lt d_q\) \{ans_rule(30)\}
+$BR$BR
+Enter $BBOLD Infinity $EBOLD for \(\infty\), $BBOLD -Infinity $EBOLD for \(-\infty\),
+and $BBOLD DNE $EBOLD if the limit does not exist.
+$PAR
+$BR
+END_TEXT
+
+Context()->normalStrings;
+$ans1 = Compute("Infinity");
+$ans2 = -(Infinity);
+$ans3 = Compute("a/b");
+$ans4 = Compute("0");
+
+ANS($ans1->cmp());
+ANS($ans2->cmp());
+ANS($ans3->cmp());
+ANS($ans4->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

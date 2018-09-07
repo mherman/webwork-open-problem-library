@@ -1,0 +1,44 @@
+## Original: /rochesterLibrary/setIntegrals14Substitution/sc5_5_51.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'substitution')
+##ENDDESCRIPTION
+
+## Before doing anything, we must import the macro definitions on the next few lines.
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real',A=>'Real', B=>'Real', p=>'Real');
+$A = Formula("A");
+$a = Formula("a");
+$b = Formula("b");
+$B = Formula("B");
+$p = non_zero_random(-3,3,1);
+$func = Compute("$A * (ln(x))^$p / ($B*x) ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int_{$a}^{$b} $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(a\), \(b\), \(A\), and \(B\). You may assume \(B\ne 0\) and \(a,b \gt 1\). 
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+if($p != -1){
+$ans = Formula("$A/($B*($p+1))*(ln(x))^($p+1) ");
+}
+else{
+$ans = Formula("$A/$B *ln(ln(x))");
+}
+$ans = $ans->substitute(x=>$b) - $ans->substitute(x=>$a);
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

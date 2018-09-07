@@ -1,0 +1,77 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Ratio test)
+## Institution(W.H.Freeman)
+## Author(Emily Price)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('10.5')
+## Problem1('1')
+## KEYWORDS('calculus', 'series', 'sequences', 'convergence', 'ratio test')
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+
+$showPartialCorrectAnswers = 0;
+
+Context("Numeric");
+Context()->variables->are(n=> 'Real', a=> 'Real', b=> 'Real', p=> 'Real');
+$a = Compute("a");
+$b = Compute("b");
+$p = Compute("p");
+
+$ans1 = Compute("|$a|/|$b|");
+
+$func = Compute("(n^($p)*$a^(n) )/($b^(n) ) ");
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \( \displaystyle \sum_{n=1}^{\infty} c_n\), where \( \displaystyle c_n = $func \), with \( b \ne 0\). Complete the following:
+$PAR
+(i) Compute \( \displaystyle \lim_{n\to \infty} |\frac{c_{n+1}}{c_n } |\) in terms of \(p\), \(a\),  and \(b\).
+$PAR
+\( \displaystyle \lim_{n\to \infty} |\frac{c_{n+1}}{c_n } | = \)\{ans_rule(30)\}
+$PAR
+(ii) Based on your answer to (i), the series converges absolutely by the ratio test if \(a\) belongs to what range of numbers (your answer should be in terms of \(p\) and \(b\))?
+$PAR
+The series converges with \(a\) on \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}
+$PAR
+(iii) Based on your answer to (i), the series diverges by the ratio test if \(a\) belongs to what range of numbers (your answer should be in terms of \(p\) and \(b\))?
+$PAR
+The series diverges with \(a\) on \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}
+$PAR
+(iv) Based on your answer to (i), the ratio test does not tell if this series converges if \(a\) belongs to what range of numbers (your answer should be in terms of \(p\) and \(b\))?
+$PAR
+The ratio test does not give us convergence information with \(a\) on \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}
+$PAR
+
+
+END_TEXT
+Context()->normalStrings;
+
+Context("Interval");
+Context()->constants->add(b=>Real(.2841), p=>Real(.8713) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+
+$ans2 = Compute("(-|b|,|b| ) ");
+$ans3 = Compute("(-infinity,-|b|)U(|b|,infinity) ");
+$ans4 = Compute("{-|b|}U{|b|} ");
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ANS($ans3->cmp);
+ANS($ans4->cmp(studentsMustReduceUnions=>0));
+
+
+
+
+ENDDOCUMENT()

@@ -1,0 +1,46 @@
+#DESCRIPTION
+#KEYWORDS('derivatives', 'related rates')
+#TYPE('word problem')
+# Related rates -- gravel dumped in a pile in a shape of a right circular
+#  cone with diameter = height.  Find the rate at which the height is growing
+#  given the volume, height and rate of change of the volume
+#ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+#"parserPrime.pl",
+"parserAssignment.pl",
+"parserFunctionPrime.pl"
+);
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+Context()->variables->are(t=>'Real');
+parser::FunctionPrime->Enable();
+parserFunction("r(t)" => "cos(3*e^t)");
+parserFunction("h(t)" => "e^(cos(t))");
+
+$ans = Compute("pi (2 r(t) * r'(t) * h(t) + (r(t))^2 * h'(t) )");
+
+BEGIN_TEXT
+$PAR
+Let \(V(t)\) represent the volume of a right circular cylinder of base radius \(r(t)\) and height \(h(t)\) at time \(t\), i.e., \(V(t) = \pi [r(t)]^2 h(t) \). Compute \(V^{\prime}(t)\) in terms of \(r(t)\), \(r^{\prime}(t)\), \(h(t)\), and \(h^{\prime}(t)\).
+$PAR
+\(V^{\prime}(t) = \)\{ans_rule(30)\}
+$BR
+Use "r(t)" for \(r(t)\), "r'(t)" for \(r^{\prime}(t)\), "h(t)" for \(h(t)\), and "h'(t)" for \(h^{\prime}(t)\).
+END_TEXT
+
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

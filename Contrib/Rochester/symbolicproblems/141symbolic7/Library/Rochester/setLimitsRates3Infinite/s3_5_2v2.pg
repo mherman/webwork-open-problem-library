@@ -1,0 +1,87 @@
+## DESCRIPTION
+## Calculus: Limits and Derivatives
+## ENDDESCRIPTION
+
+## Tagged by LD
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Limits at infinity, horizontal and oblique asymptotes)
+## Date(6/3/2002)
+## Institution(ASU)
+## Author(Utah ww group)
+## MLT(liminfratexp)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('2.6')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('2.6')
+## Problem2('')
+## TitleText3('Mathematical Applications')
+## AuthorText3('Ronal J. Harshbarger and James J. Reynolds')
+## EditionText3('8')
+## Section3('.')
+## Problem3('')
+## TitleText4('Calculus: Early Transcendentals')
+## AuthorText4('Stewart')
+## EditionText4('5e')
+## Section4('2.6')
+## Problem4('')
+## KEYWORDS('limits', 'derivatives', 'infinite' ,'Limit', 'Infinity','Calculus','asymptote')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+Context()->strings->add( I =>{infinity=>1} );
+Context()->variables->add(a => Real(.305), b => Real(60.1532), A=> Real(00.54851), B=> Real(157) );
+$a = Compute("a");
+$b = Compute("b");
+$A = random(-8,8,1);
+$B = random(-8,8,1);
+while($A==0 && $B ==0){
+$A = random(-8,8,1);
+$B = random(-8,8,1);
+}
+Context()->texStrings;
+BEGIN_TEXT
+Let \(f(x) = \frac{$a x + $b}{$A x + $B}\), with \($a \gt 0\). Compute, 
+in terms of \(a\) and \(b\), \(\displaystyle \lim_{x \rightarrow \infty } f(x)\). 
+$BR
+Enter $BBOLD I $EBOLD for \(\infty\), $BBOLD -I $EBOLD for \(-\infty\),
+and $BBOLD DNE $EBOLD if the limit does not exist.
+$PAR
+Limit = \{ans_rule(15) \}
+$BR
+END_TEXT
+
+Context()->normalStrings;
+if($A ==0){
+if($B<0){
+$ans = Compute("-Infinity");
+}
+else{
+$ans =Compute("Infinity");
+}
+}else{
+$ans = $a / $A;
+}
+ANS($ans->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

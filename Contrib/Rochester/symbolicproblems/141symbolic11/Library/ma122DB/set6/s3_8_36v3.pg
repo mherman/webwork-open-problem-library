@@ -1,0 +1,93 @@
+##DESCRIPTION
+##  differentiation of log function  a(sin(x))^x
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+## tcao , PAID on 11-24-2003
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Chain rule (without trigonometric functions))
+## Date(6/3/2002)
+## MLT(Chain-LogOfProdOfPolys)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('3.6')
+## Problem1('36')
+## KEYWORDS('derivatives', 'logarithmic functions','Calculus')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+   "AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(a => 'Real',
+                                              r => 'Real', 
+                                              A => 'Real',
+                                              B => 'Real', 
+                                              s => 'Real',
+                                              C => 'Real', 
+                                              D => 'Real',
+                                              E => 'Real', 
+                                              t => 'Real');
+
+
+$a = Compute("a");
+$r = Compute("r");
+$A = random(1,5,1);
+$B = random(1,5,1);
+$s = Compute("s");
+$C = Compute("C");
+$D = Compute("D");
+$E = Compute("E");
+$t = Compute("t");
+
+$small = Compute("x^($r) ($A*x + $B)^($s) *($C*x^2 + $D*x + $E)^($t)");
+$smalltex = $small->reduce->TeX;
+$func = Compute(" ln($small)/ln($a)");
+$functex = $func->reduce->TeX;
+$dfunc = $func->D(x);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+For \( x \gt 0\), let \(f(x) = \log_{$a}[ $smalltex ]\), with \(a, C,D,E \gt 0\). Compute \(f^{\prime} (x) \), in terms of \(a\), \(C\), \(D\), \(E\) \(r\), \(s\), and \(t\).
+$PAR
+ \(f^{\prime} (x) =\)\{ans_rule(80)\}
+END_TEXT
+Context()->normalStrings;
+
+
+##############################################################
+#
+#  Answers
+#
+
+#$ans = $dfunc ; 
+$ans = Compute("1/(ln($a)) * ( $r / x + $s * $A / ($A * x + $B ) + $t* (2*$C*x + $D)/($C * x^2 + $D * x + $E) ) ");
+ANS($ans->cmp());
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

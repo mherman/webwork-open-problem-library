@@ -1,0 +1,64 @@
+## DESCRIPTION
+## Calculus: Functions and models
+## ENDDESCRIPTION
+
+## Tagged by LD
+
+
+## DBsubject(Algebra)
+## DBchapter(Inverse functions)
+## DBsection(Interpreting inverse functions)
+## Date(5/26/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## MLT(FindInverseFunction)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('1.6')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('1.6')
+## Problem2('')
+## KEYWORDS('calculus', 'functions','models')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros("PG.pl",
+           "PGbasicmacros.pl",
+           "PGchoicemacros.pl",
+           "PGanswermacros.pl",
+           "PGauxiliaryFunctions.pl",
+           "extraAnswerEvaluators.pl",
+           "MathObjects.pl");
+Context("Numeric");
+Context()->variables->add(a => 'Real', b => 'Real');
+
+$a = Compute("a");
+$b = Compute("b");
+
+Context()->texStrings;
+TEXT(beginproblem());
+
+BEGIN_TEXT
+If
+\(
+    f(x) = \ln ($a x+$b)
+\), 
+with \(a \ne 0\), find \(f^{-1}(x) \) in terms of \(a\) and \(b\).
+$PAR
+\(f^{-1}(x)\) = \{ans_rule(25)\}
+$PAR
+$PAR
+END_TEXT
+
+Context()->normalStrings;
+
+$ans = Compute("(e^(x)-$b)/($a)");
+
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,68 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Derivatives involving multiple rules (all rules))
+## Institution(UCSB)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('3.5')
+## Problem1('25')
+## KEYWORDS('Differentiation','Product','Quotient')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(a => 'Real', b=> 'Real' , A=> 'Real', B=> 'Real');
+
+$a = random(-15,15,1);
+$b = random(-15,15,1);
+$A = Compute("A");
+$B = Compute("B");
+
+
+$func = Compute("sin( ($a * x + $b)/($A * x + $B) )");
+$functex = $func->reduce->TeX;
+$dfunc = $func->D(x);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+Let \[f(x) = $functex .\] Compute \( f^{\prime}(x)\) in terms of \(A\) and \(B\).
+$PAR
+\(f^{\prime} (x) = \) \{ans_rule(30)\}
+
+END_TEXT
+Context()->normalStrings;
+
+
+##############################################################
+#
+#  Answers
+#
+#
+$ans = $dfunc ; 
+ANS($ans->cmp());
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

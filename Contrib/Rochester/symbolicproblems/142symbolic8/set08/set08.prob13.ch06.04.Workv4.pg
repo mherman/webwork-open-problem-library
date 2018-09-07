@@ -1,0 +1,44 @@
+## Original: /rochesterLibrary/setIntegrals23Work/eva5_2.pg
+## Modified May 2007 by Paul Pearson
+
+#DESCRIPTION
+#Work ns6_5_3.pg
+#ENDDESCRIPTION
+#KEYWORDS('Force', 'Work')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(w=>'Real', l=>'Real', L=>'Real');
+$w = Formula("w");
+$l = Formula("l");
+$L = Formula("L");
+#$w = non_zero_random(1,7,1);
+#$l = non_zero_random(.1, .6, .1);
+$L = non_zero_random(.6, 1.1, .1);
+
+Context()->texStrings;
+BEGIN_TEXT
+A force of \($w\) pounds is required to hold a spring stretched
+\($l\) feet beyond its natural length. How much work 
+is done in stretching the spring from its natural length to $L feet
+beyond its natural length? 
+$PAR
+Work = \{ans_rule(35)\} ft-lb.
+$BR
+Your answer should be in terms of \(w\) and \(l\).
+
+END_TEXT
+Context()->normalStrings;
+$ans= Compute("$w * ($L)^2 / (2*$l) ");
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

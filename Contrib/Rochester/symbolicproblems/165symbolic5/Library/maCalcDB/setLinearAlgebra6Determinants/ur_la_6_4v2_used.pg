@@ -1,0 +1,306 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 4/29/06
+
+## DBsubject(Linear algebra)
+## DBchapter('Determinants')
+## DBsection(Computing determinants)
+## Institution('Rochester')
+## TitleText1('Elementary Linear Algebra')
+## AuthorText1('Larson, Edwards, Falvo')
+## EditionText1('5')
+## Section1('3.2')
+## Problem1('')
+## TitleText2('Linear Algebra with Applications')
+## AuthorText2('Jeffrey Holt')
+## EditionText2('1')
+## Section2('5.1')
+## Problem2('')
+DOCUMENT() ;        
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+"parserVectorUtils.pl",
+"PGcourse.pl",
+"IansMacros.pl"
+) ;
+#####################################################
+sub matrix_cmp{
+$ansMatrix = shift;
+@ans = $ansMatrix->value;
+for my $i (0..$#ans){
+   for my $j (0.. $#{$ans[0]}){
+      ANS(($ans[$i][$j]->reduce)->cmp);
+   }
+}
+}
+
+
+sub matrix_transpose{
+  my $M = shift;
+  my @m = $M->value;
+
+  my $nrows = scalar(@m); # number of rows
+  my $ncols = scalar(@{$m[0]}); # number of columns
+  my @mt = ();
+  foreach my $i (0..$nrows-1) {
+    foreach my $j (0..$ncols-1) {
+      $mt[$j][$i] = $m[$i][$j];
+    }
+  }
+  	
+  return Matrix(@mt);
+}
+sub matrix_cross{    ##CHECKED for 2X2s
+	my $M1 = shift;
+	my $M2 = shift; #MathObject matrices
+	my @M1data = $M1->value;
+
+
+	my @M2data = $M2->value;
+
+	die("Dimensions mismatch in matrix multiplication") unless(scalar(@{$M1data[0]})==scalar(@M2data));
+	my $rows = 1+$#M1data;
+	my $cols = 1+$#{$M2data[0]};
+	my @out = ();
+	for(my $i=0; $i<$rows; $i++){
+		
+		for(my $j=0; $j<$cols; $j++){
+			
+			$out[$i][$j] = 0;
+			for(my $k=0; $k<1+$#{$M1data[0]}; $k++){
+				$out[$i][$j]+=$M1data[$i][$k]*$M2data[$k][$j];
+			}
+		}
+	
+	}
+
+	return (Matrix(@out));
+
+}
+
+sub MultRowByConstant{ ##CHECKED FOR 2x2s AND 3x3s
+	$row = shift;
+	$constant = shift;
+	$Matrix = shift;
+	@temp = ();
+        @M = $Matrix->value;
+	for my $i (0..$#M){
+		for my $j (0 .. $#M){
+			if($j==$i){
+				$temp[$i][$i] = 1;
+			}
+			else{
+				$temp[$i][$j]=0 ;
+			}			
+		}
+	}
+	$temp[$row][$row] = $constant;
+	$elem = Matrix([@temp]);
+	return	matrix_cross($elem,$Matrix);
+}
+sub MarrayToString{
+        @Marray = @_;
+my $toReturn = "(";
+        for(my $i=0; $i<scalar(@Marray); $i++){
+$toReturn = $toReturn . "  [";
+               for( my $j=0; $j<scalar(@{$Marray[0]}) ; $j++){
+                       $toReturn = $toReturn ."  ". $Marray[$i][$j] . "  ";
+               }
+               $toReturn = $toReturn."]  ";
+}
+$toReturn = $toReturn . ")";
+
+return $toReturn;
+}
+
+
+sub det{ #WORKS FOR 1X1, 2X2, 3x3
+	my $Matrix = shift;
+#warn("ENTERING ITERATION");
+#warn($Matrix);
+	my @Marray = $Matrix->value;
+#warn(MarrayToString(@Marray));
+	my $Msize = scalar(@Marray);
+	my (@decomp);
+	my $scal = 1;
+#warn("Msize: ",$Msize);
+#warn("sizeof Marray[0]: ",scalar(@{$Marray[0]}) );
+	if($Msize == 1){
+		return $Marray[0][0];
+	}
+	
+	if($Msize != scalar(@{$Marray[0]})){
+		die("Not a square matrix");
+	}
+	$stopcount = 0;
+	until($Marray[0][0] != 0){
+#warn("Rows have swapped");
+		$stopcount++;
+		if($stopcount>=$Msize){
+			return 0;
+		}
+		$Matrix = rowSwitch(0,$stopcount,$Matrix); $scal *= -1;
+		@Marray = $Matrix->value;
+	}
+	$scal *= ($Marray[0][0])**(2-$Msize);
+#warn("scal = ",$scal);
+	for(my $i=0; $i<$Msize-1; $i++){
+#warn("Entering first for loop: i == ",$i);
+		for(my $j=0; $j<$Msize-1; $j++){
+#warn("Entering second for loop: j == ",$j);
+			$decomp[$i][$j] = $Marray[0][0]*$Marray[$i+1][$j+1]-$Marray[0][$j+1]*$Marray[$i+1][0];	
+#warn(MarrayToString(@decomp));
+		}	
+	}
+#warn(Matrix([@decomp]));
+
+#warn("ABOUT TO EXIT THIS ITERATION");
+	return($scal*det(Matrix([@decomp])));
+	
+}
+sub rowSwitch{
+	$row1 = shift;
+	$row2 = shift;
+	$Matrix = shift;
+	@temp = ();
+	for my $i (0..$#{$Matrix->value}){
+		for my $j (0 .. $#{$Matrix->value}){
+			if($j==$i){
+				$temp[$i][$i] = 1;
+			}
+			else{
+				$temp[$i][$j]=0 ;
+			}			
+		}
+	}
+	$temp[$row1][$row1] = 0;
+	$temp[$row2][$row2] = 0;
+	$temp[$row1][$row2] = 1;
+	$temp[$row2][$row1] = 1;
+	return matrix_cross(Matrix([@temp]),$Matrix); 
+}
+
+
+sub AddMultOfRow{  ##ALSO APPEARS TO WORK FOR 2x2 and 3x3
+	$row1 = shift;
+	$constant = shift;
+	$row2 = shift; #Add constant*Row1 to Row2
+	$Matrix = shift;
+	@temp = ();
+        @M = $Matrix->value;
+	for my $i (0..$#M){
+		for my $j (0 .. $#M){
+			if($j==$i){
+				$temp[$i][$i] = 1;
+			}
+			else{
+				$temp[$i][$j]=0 ;
+			}			
+		}
+	}
+	$temp[$row2][$row1] = $constant;
+	$elem = Matrix([@temp]);
+	return	matrix_cross($elem,$Matrix);
+}
+
+sub Inverse{
+	$Matrix = shift;
+	die("Matrix is not invertible") unless(det($Matrix)!=0);
+	@M = $Matrix->value;
+	$size= scalar(@M);
+	@temp = ();
+	for my $i (0..$#M){
+		for my $j (0 .. $#M){
+			if($j==$i){
+				$temp[$i][$i] = 1;
+			}
+			else{
+				$temp[$i][$j]=0 ;
+			}			
+		}
+	}
+	$toreturn = Matrix([@temp]); #start as identity matrix;
+	for(my $i=0; $i<$size; $i++){ #column by column
+	warn("Before operation on this column"," ", $Matrix->reduce);
+		for(my $count =$i+1 ; $count<$size;$count++){
+			if($M[$i][$i]!=0){last;}
+			$Matrix = rowSwitch($count,$i,$Matrix);
+		}
+		if($M[$i][$i]==0){die("Rank is not ",$size,".");}
+	warn("After possible row switch", " ", $Matrix->reduce);	
+                warn("i==",$i,' ; $M[$i][$j]==',$M[$i][$j]," ; Matrix = ",$Matrix);
+		$Matrix = MultRowByConstant($i,1/$M[$i][$i],$Matrix); #divide current row by ixi's value to get 1 in the spot
+	warn("before modifying toreturn or @M, Multiplying ith row by 1/M[i][i]:"," ",$Matrix->reduce);
+
+		$toreturn = MultRowByConstant($i,1/$M[$i][$i],$toreturn);  #operate on both matrices
+		@M = $Matrix->value; #renew the array of the matrix's values
+	warn("After Multiplying ith row by 1/M[i][i]:"," ",$Matrix->reduce);	
+		for( my $j=0; $j<$size ; $j++){ #getting 0's by subtracting jxi's value times row i from row j
+			$Matrix = AddMultOfRow($i,-1*$M[$j][$i] , $j,$Matrix) ;
+			$toreturn = AddMultOfRow($i,-1*$M[$j][$i] , $j,$toreturn);
+			@M = $Matrix->value;	
+warn("After operating on the other elements in this column"," ", $Matrix->reduce);
+		} #end column
+	} #end matrix	
+        return $toreturn;
+}
+
+
+#######################################################
+
+
+$showPartialCorrectAnswers = 1 ;
+
+############
+
+TEXT(beginproblem());
+
+Context('Matrix');
+Context()->constants->remove(e,i);
+Context()->constants->add(
+a=>Real(non_zero_random(-10,10,1)),
+b=>Real(non_zero_random(-10,10,1)),
+c=>Real(non_zero_random(-10,10,1)),
+d=>Real(non_zero_random(-10,10,1)),
+e=>Real(non_zero_random(-10,10,1)),
+f=>Real(non_zero_random(-10,10,1)),
+g=>Real(non_zero_random(-10,10,1)),
+h=>Real(non_zero_random(-10,10,1)),
+i=>Real(non_zero_random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Compute("b");
+$c = Formula("c");
+$d = Compute("d");
+$e = Formula("e");
+$f = Formula("f");
+$g = Formula("g");
+$h = Compute("h");
+$i= Compute("i");
+
+
+$A = Matrix([
+[$a,$b,$c],
+[$d,$e,$f],
+[$g,$h,$i]
+]);
+
+$answer =det($A)->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \[A = $A.\]
+Compute the determinant of \(A\), \(\det(A)\), in terms of \(a,c,e,f,\) and \(g\).
+$PAR
+\(\det(A) = \)\{$answer->ans_rule\}
+END_TEXT
+Context()->normalStrings;
+ANS($answer->cmp);
+COMMENT('MathObject version');
+
+ENDDOCUMENT();

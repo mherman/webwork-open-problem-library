@@ -1,0 +1,28 @@
+
+openDate          = 02/07/2014 at 05:00am EST
+dueDate           = 02/22/2014 at 06:00am EST
+answerDate        = 02/22/2014 at 07:00am EST
+paperHeaderFile   = paperSetHeader.pg
+screenHeaderFile  = screenSetHeader.pg
+description       = 
+problemList       = 
+165symbolic4/Library/TCNJ/TCNJ_LinearSystems/problem11.pg, 1, -1 
+165symbolic4/Library/TCNJ/TCNJ_LinearSystems/problem11v2.pg, 1, -1 
+165symbolic4/Library/TCNJ/TCNJ_LinearSystems/problem11v3_used.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_31.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_31v2_used.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_31v3.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra2SystemsApplications/ur_la_2_2_used.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra2SystemsApplications/ur_la_2_2v2.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra2SystemsApplications/ur_la_2_2v3.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra2SystemsApplications/ur_la_2_2v4.pg, 1, -1 
+165symbolic4/Library/TCNJ/TCNJ_MatrixInverse/problem7.pg, 1, -1 
+165symbolic4/Library/TCNJ/TCNJ_MatrixInverse/problem7v2.pg, 1, -1 
+165symbolic4/Library/TCNJ/TCNJ_MatrixInverse/problem7v3_used.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_35.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_35v2.pg, 1, -1 
+165symbolic4/Library/Rochester/setLinearAlgebra3Matrices/ur_la_3_35v3.pg, 1, -1 
+165symbolic4/Library/NAU/setLinearAlgebra/m1.pg, 1, -1 
+165symbolic4/Library/NAU/setLinearAlgebra/m1v2.pg, 1, -1 
+165symbolic4/Library/NAU/setLinearAlgebra/m1v3_used.pg, 1, -1 
+

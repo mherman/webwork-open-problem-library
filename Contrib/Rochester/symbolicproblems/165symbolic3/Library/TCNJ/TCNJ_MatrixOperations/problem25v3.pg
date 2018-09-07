@@ -1,0 +1,143 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Matrices)
+## DBsection(Transpose and trace)
+## Date(July 2013)
+## Institution(TCNJ and Hope College)
+## Author(Paul Pearson)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('3.2')
+## Problem1('')
+## KEYWORDS('matrix' 'product','matrix' 'product' 'transpose')
+
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+"PGmatrixmacros.pl",
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+
+
+sub matrix_cmp{
+$ansMatrix = shift;
+@ans = $ansMatrix->value;
+for my $i (0..$#ans){
+   for my $j (0.. $#{$ans[0]}){
+      ANS(($ans[$i][$j]->reduce)->cmp);
+   }
+}
+}
+
+
+sub matrix_transpose{
+  my $M = shift;
+  my @m = $M->value;
+
+  my $nrows = scalar(@m); # number of rows
+  my $ncols = scalar(@{$m[0]}); # number of columns
+  my @mt = ();
+  foreach my $i (0..$nrows-1) {
+    foreach my $j (0..$ncols-1) {
+      $mt[$j][$i] = $m[$i][$j];
+    }
+  }
+  	
+  return Matrix(~~@mt);
+}
+sub matrix_cross{
+	my $M1 = shift;
+	my $M2 = shift; #MathObject matrices
+	my @M1data = $M1->value;
+
+
+	my @M2data = $M2->value;
+
+#warn(scalar(@{$M1data[0]}));
+#warn(scalar(@M2data));
+	die("Dimensions mismatch in matrix multiplication") unless(scalar(@{$M1data[0]})==scalar(@M2data));
+	my $rows = 1+$#M1data;
+	my $cols = 1+$#{$M2data[0]};
+	my @out = ();
+	for(my $i=0; $i<$rows; $i++){
+		#say("Entering first for loop: time ",$i);
+		for(my $j=0; $j<$cols; $j++){
+			#say("Entering second loop: time ",$j);
+			$out[$i][$j] = 0;
+			for(my $k=0; $k<1+$#{$M1data[0]}; $k++){
+				#say("Entering third loop: time ",$k);
+				$out[$i][$j]+=$M1data[$i][$k]*$M2data[$k][$j];
+			}
+		}
+	
+	}
+
+	return (Matrix(~~@out));
+
+}
+##############################################################
+#
+#  Setup
+#
+#
+Context("Matrix");
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Compute("b");
+$c = Formula("c");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$v = Matrix([
+[$a],
+[$b],
+[$c],
+]);
+$vt = matrix_transpose($v);
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+If \[v = $v,\]
+compute \(v v^T\) and \(v^T v\) in terms of \(a\) and \(c\).
+$PAR
+\{mbox('\(vv^T=\)',answer_matrix(3,3,5))\}
+$PAR
+\{mbox('\(v^T v=\)',answer_matrix(1,1,5))\}
+
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+matrix_cmp(matrix_cross($v,$vt));
+matrix_cmp(matrix_cross($vt,$v));
+
+ENDDOCUMENT();        

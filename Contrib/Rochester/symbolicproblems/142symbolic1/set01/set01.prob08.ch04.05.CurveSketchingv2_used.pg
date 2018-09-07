@@ -1,0 +1,112 @@
+## Original:  /UVA-Stew5e/setUVA-Stew5e-C04S03-GraphShape/4-3-44a.pg
+## Modified May 2007 by Paul Pearson
+
+## DESCRIPTION
+##  Calculus: Summary of Curve Sketching
+## ENDDESCRIPTION
+
+## KEYWORDS('Curve Sketching')
+## Tagged by YL
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Summary of Curve Sketching')
+## Date('5/29/2005')
+## Author('Jeff Holt')
+## Institution('UVA')
+## TitleText1('Calculus')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('4.5')
+## Problem1('7')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Interval");
+Context()->constants->add(A=> Real(sin(.1477)), B=> sin(cos(.01477)) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->strings->add('none'=>{});
+
+$A = non_zero_random(-15,15,1);
+$B = Formula("B");
+
+$func = Formula("($A)/(x^2-($B)^2)")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Consider the function \(f(x) = $func \), with \(B \gt 0 \). Answer the following in terms of \(B\):
+$PAR
+(i) What are the critical numbers of \(f\)?$BR
+Critical numbers: \(x =\)\{ans_rule(30)\}
+$PAR
+(ii) Where is \(f\) increasing? $BR
+\(f\) is increasing on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(iii) Where is \(f\) decreasing? $BR
+\(f\) is decreasing on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(iv) At which \(x\) does \(f\) achieve its local maxima? $BR
+\(f\) achieves local maxima at \(x = \) \{ans_rule(30)\}
+$PAR
+(v) At which \(x\) does \(f\) achieve its local minima? $BR
+\(f\) achieves local minima at \(x = \) \{ans_rule(30)\}
+$PAR
+(vi) Where is \(f\) concave up? $BR
+\(f\) is concave up on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(vii) Where is \(f\) concave down? $BR
+\(f\) is concave down on \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(viii) At which \(x\) does \(f\) have points of inflection? $BR
+\(f\) has points of inflection at \(x = \)\{ans_rule(30)\}
+$PAR
+(ix) For which numbers \(c\) is the line \(y = c\) a horizontal asymptote for \(f\)? $BR
+\(f\) has horizontal asymptotes for \(c = \)\{ans_rule(30)\}
+$PAR
+(x) For which numbers \(c\) is the line \(x = c\) a vertical asymptote for \(f\)? $BR
+\(f\) has vertical asymptotes for \(c = \)\{ans_rule(30)\}
+$PAR
+If there are multiple answers, separate your answers by commas. $BR
+If there are no solutions, write "none". $BR
+If an answer is the empty set, write "{}". $BR
+END_TEXT
+Context()->normalStrings;
+
+@ans = (0,1,2,3,4,5,6,7,8,9);
+$ans[0] = Compute("0");
+$ans[1] = Compute("(-infinity,-$B)U(-$B,0)");
+$ans[2] = Compute("(0,$B)U($B,infinity)");
+$ans[3] = Compute("0");
+$ans[4] = Compute("none");
+$ans[5] = Compute("(-infinity,-$B)U($B,infinity)");
+$ans[6] = Compute("(-$B,$B)");
+$ans[7] = Compute("none");
+$ans[8] = Compute("0");
+$ans[9] = Compute("-$B,$B");
+if($A<0){
+$temp = $ans[1];
+$ans[1] = $ans[2];
+$ans[2] = $temp;
+$temp = $ans[3];
+$ans[3] = $ans[4] ;
+$ans[4] = $temp;
+$ans[5] = Compute("(-$B,$B)");
+$ans[6] = Compute("(-infinity,-$B)U($B,infinity)");
+}
+
+
+for my $i (0 .. $#ans){
+ANS($ans[$i]->cmp);
+}
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

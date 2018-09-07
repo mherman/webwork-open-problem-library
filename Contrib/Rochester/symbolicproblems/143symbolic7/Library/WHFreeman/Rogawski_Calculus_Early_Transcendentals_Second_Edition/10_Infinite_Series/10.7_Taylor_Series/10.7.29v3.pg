@@ -1,0 +1,60 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Interval of convergence of a power series)
+## Institution(W.H.Freeman)
+## Author(Nick Hamblet)
+## MLT(SeriesForCOverLinear)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('10.7')
+## Problem1('29')
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialAnswersCorrect = 0;
+Context("Interval");
+Context()->variables->add(n=>[ 'Real', limits=>[1,20],resolution=>1]);
+Context()->constants->add(C=> Real(.5841), A => Real(.7710), B => Real(cos(.6645)) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$A = random(-15,15,1);
+$B = Formula("B");
+$C = Formula("C");
+
+$func = Formula("$A / ($B * x ) ");
+
+Context()->texStrings;
+BEGIN_TEXT
+Find the Taylor series centered at \(C \ne 0 \) for the function  \(f(x) = $func \) with \(B \ne 0 \). $BR
+Taylor Series: \(\displaystyle \sum_{n = 0 }^{\infty} \) \{ans_rule(50)\} 
+$PAR
+Now compute the radius of convergence and interval of convergence for this Taylor series. Your answers should be in terms of \(B\) and \(C\).
+$PAR
+Radius of convergence: \{ans_rule(30)\}
+$BR
+Interval of convergence: \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+if($A !=0 ){
+$ans1 = Formula("$A/($B * $C ) * (-1)^n *($C)^(-n ) *(x-$C)^(n) ");
+$ans2 = Formula("|$C|");
+$ans3 = Compute("($C - $ans2 , $C + $ans2 )");
+}
+else{
+$ans1= Compute("0");
+$ans2 = Compute("Infinity");
+$ans3 = Compute("(-Infinity,Infinity)");
+}
+ANS($ans1->cmp, $ans2->cmp, $ans3->cmp);
+
+
+ENDDOCUMENT();

@@ -1,0 +1,70 @@
+##DESCRIPTION
+## Related rates -- find rate of change of area of a circle given
+##  the rate of change of radius and value of radius.
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+## tcao , PAID on 11-24-2003
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Related rates)
+## Date(6/3/2002)
+## Institution(Univeristy of Utah)
+## Author(Utah ww group)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('3.9')
+## Problem1('5')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('3.11')
+## Problem2('5')
+## TitleText3('Calculus I')
+## AuthorText3('Jerrold Marsden and Alan Weinstein')
+## EditionText3('2')
+## Section3('Rates of Change and the Chain Rule')
+## Problem3('')
+## TitleText4('Calculus')
+## AuthorText4('Dale Varberg, Edwin J. Purcell, and Steven E. Rigdon')
+## EditionText4('9')
+## Section4('The Derivative')
+## Problem4('')
+## KEYWORDS('derivatives', 'related rates','Calculus')
+##TYPE('word problem')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGbasicmacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserFunctionPrime.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+parser::FunctionPrime->Enable();
+Context()->variables->add(t=> 'Real');
+parserFunction("r(t)" => "15");
+$r = Formula("r(t)");
+$dr = Formula("r'(t)");
+
+$dA = Compute("2 pi $r * $dr");
+
+BEGIN_TEXT
+Let \(A(t)\)  be the area of a circle with radius \(r(t)\) at time \(t\), i.e. \(A(t) = \pi[r(t)]^2.\) Compute \(A'(t) \) in terms of \(r(t)\), and \(r'(t)\). Enter "r(t)" for \(r(t)\) and "r'(t)" for \(r'(t)\).
+$PAR
+\(A'(t) = \)\{ans_rule(30) \}
+END_TEXT
+
+ANS($dA->cmp);
+
+parser::FunctionPrime->Disable();
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

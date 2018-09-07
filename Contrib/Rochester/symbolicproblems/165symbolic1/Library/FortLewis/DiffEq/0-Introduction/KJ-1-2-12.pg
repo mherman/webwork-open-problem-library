@@ -1,0 +1,77 @@
+## DESCRIPTION
+## First order differential equation
+## ENDDESCRIPTION
+
+## KEYWORDS('First order differential equation')
+
+## DBsubject('Differential Equations')
+## DBchapter('First Order Differential Equations')
+## DBsection('Introduction to Differential Equations')
+## Date('01/01/2012')
+## Author('Paul Pearson')
+## Institution('Fort Lewis College')
+## TitleText1('Elementary Differential Equations')
+## EditionText1('2006')
+## AuthorText1('Kohler and Johnson')
+## Section1('1.2')
+## Problem1('12')
+
+
+##############################
+#  Initialization
+
+DOCUMENT(); 
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+
+
+#############################
+#  Setup
+
+Context("Numeric");
+Context()->variables->add(A=>'Real',b=>'Real');
+$A = Formula("A");
+$b = Formula("b");
+
+$k = Compute("-$b");
+$y0 = Compute("$A");
+
+
+#############################
+#  Main text
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \(y(t) = $A e^{$b t} \) solves the initial-value problem 
+\[ \begin{aligned}
+&y^{\prime} +k y = 0 \\
+&y(0) = y_0.
+\end{aligned} \]
+Find the constants \(k\) and \(y_0\) in terms of \(A\) and \(b\).
+$PAR
+\(k  = \)\{ans_rule(30)\}
+$PAR
+\(y_0 = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+
+############################
+#  Answers
+
+$showPartialCorrectAnswers = 1;
+
+ANS( $k->cmp() );
+ANS( $y0->cmp() );
+
+
+COMMENT("MathObject version.");
+
+ENDDOCUMENT();

@@ -1,0 +1,82 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Global extrema)
+## Date(5/29/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## MLT(GlobalExtremes_PolyMulti)
+## MLTleader(1)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('4.2')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('5')
+## Section2('4.1')
+## Problem2('')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('6')
+## Section3('4.1')
+## Problem3('')
+## KEYWORDS('derivative' 'extrema' 'optimization','calculus', 'differentiation', 'maximum', 'minimum','derivatives')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"extraAnswerEvaluators.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a => 'Real', b=> 'Real', c=> 'Real');
+
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+
+$func = Compute("($a * x) / (x^2 + $b^2)");
+Context()->texStrings;
+
+
+
+BEGIN_TEXT
+
+Let \(f(x) = $func \), with \(a, b \gt 0\). Assuming \(c \gt b\), determine where the absolute minimum and absolute maximum of \(f\) occur in the interval \([-$c,$c]\) in terms of \(a\), \(b\), and \(c\). What, in terms of \(a\), \(b\), and \(c\), are the absolute minimum and absolute maximum values of \(f\)? 
+$PAR
+Absolute minimum occurs at \(x = \) \{ans_rule(15)\} with a value of \{ans_rule(15)\}.
+$PAR
+
+Absolute maximum occurs at \(x = \) \{ans_rule(15)\} with a value of \{ans_rule(15)\}.
+
+END_TEXT
+Context()->normalStrings;
+$minat = Compute("-$b");
+$maxat = Compute("$b");
+$minval = Compute("-$a/(2 * $b) ");
+$maxval = Compute("$a/(2* $b)");
+
+ANS($minat->cmp);
+ANS($minval->cmp);
+ANS($maxat->cmp);
+ANS($maxval->cmp);
+$ans = Compute("-1/$a");
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

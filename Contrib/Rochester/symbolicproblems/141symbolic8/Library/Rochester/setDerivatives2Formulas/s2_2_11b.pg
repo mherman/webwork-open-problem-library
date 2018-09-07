@@ -1,0 +1,80 @@
+## DESCRIPTION
+## Re-Write then Calculate the Derivative
+## ENDDESCRIPTION
+
+## Tagged by YL
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Derivatives involving multiple rules (no chain rule))
+## Date(6/3/2002)
+## Institution(ASU)
+## MLT(derMultRulesMixedTerm)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('3.1')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('3.1')
+## Problem2('')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Rogawski')
+## EditionText3('1')
+## Section3('3.3')
+## Problem3('')
+## KEYWORDS('derivative', 'polynomial','derivatives')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(p => Real(.02468),
+                                               P => Real(.14871),
+                                               a => Real(148.15),
+                                               A => Real(1.0485),
+                                               r => Real(35.21),
+                                               R => Real(41.051));
+Context()->flags->set(formatStudentAnswer => 'parsed');
+$p = Compute("p");
+$P =Compute("P");
+$a = Compute("a");
+$R = Compute("R");
+$r = Compute("r");
+$A = Compute("A");
+
+
+Context()->texStrings;
+BEGIN_TEXT
+$BR
+$PAR
+Let \[ f(x) =  $a x^{$p} \root $r \of {x}+ \frac{$A} {x^{$P} \root $R \of {x} }, \] with \(p,r,P,R \gt 0\). Compute, in terms of \(a\), \(p\), \(r\), \(A\), \(P\), and \(R\), \(f^{\prime}(x)\).
+$BR
+$PAR
+\( f'( x ) = \) \{ans_rule(30) \}
+$BR
+$BR
+END_TEXT
+Context()->normalStrings;
+
+$funct = Compute("$a x^$p x^(1/$r) + A (x ^$P x^(1/$R) )^(-1) "); 
+$ans = $funct->D(x);
+ANS($ans->cmp());
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

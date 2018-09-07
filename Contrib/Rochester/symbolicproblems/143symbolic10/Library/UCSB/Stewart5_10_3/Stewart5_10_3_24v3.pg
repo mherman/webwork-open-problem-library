@@ -1,0 +1,47 @@
+## DBsubject(Trigonometry)
+## DBchapter(Polar coordinates & vectors)
+## DBsection(Curves)
+## Institution(UCSB)
+## MLT(CartEqToPolarEq)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('10.3')
+## Problem1('24')
+## KEYWORDS('polar coordinates')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=> 'Real', B=> 'Real', C=> 'Real',y=>'Real', theta=>'Real');
+#Context()->constants->add(theta =>Real(sin(exp(.1553))) );
+Context()->variables->set(theta=>{TeX=>'\theta'});
+$A = Formula("A");
+$B = Formula("B");
+$C = non_zero_random(-15,15,1);
+
+$func = Formula("$A * x + $B*y ");
+Context()->texStrings;
+BEGIN_TEXT
+
+$PAR
+Consider the line with equation \($func = $C\). Write the equation for this line in polar form. $PAR
+\(r(\theta) = \)\{ans_rule(30)\}
+$PAR
+Note: use "theta" in place of \(\theta\) in your answer.
+$PAR 
+END_TEXT
+
+Context()->normalStrings;
+$ans1 = Compute("$C /($A*cos(theta)+$B*sin(theta))");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();

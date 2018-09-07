@@ -1,0 +1,74 @@
+##DESCRIPTION
+## Determine if the series congerges
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Comparison tests)
+## Date(6/3/2002)
+## MLT(Simple_comparison_to_p-series)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.4')
+## Problem1('21')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('10.3')
+## Problem2('67')
+## KEYWORDS('Sequences', 'Comparison Test')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserPopUp.pl",
+"AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context('Numeric');
+
+$r = random(1,5,1);
+$s = random(1,5,1);
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \(\displaystyle \sum_{n=1}^{\infty} \frac{\sqrt[$r]{p(n)}}{\sqrt[$s]{q(n)}}\), where \(p\) and \(q\) are positive polynomials of degree \(P \ge 0 \) and \(Q \ge 0 \) respectively.
+$PAR
+(i) This series converges if \(P\) is in the interval \{ans_rule(30)\}\{AnswerFormatHelp("intervals")\} and diverges if \(P\) is in the interval \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\} (your answers should be in terms of \(Q\).
+$PAR
+(ii) This series converges if \(Q\) is in the interval \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\} and diverges if \(Q\) is in the interval \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\} (your answers should be in terms of \(P\).
+$PAR
+
+$BR
+END_TEXT
+Context()->normalStrings;
+
+Context("Interval");
+Context()->constants->add(Q=>Real(5+cos(exp(1.243))), P=>Real(5+sin(exp(1.2343))) ,
+r=> Real(.541), 
+s=>Real(.589));
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$ans1 = Compute("[0,$r(Q/$s-1))");
+$ans2 = Compute("[$r(Q/$s-1),infinity)");
+$ans3 = Compute("($s(P/$r+1),infinity)");
+$ans4 = Compute("[0,$s(P/$r+1)]");
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ANS($ans3->cmp);
+ANS($ans4->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+

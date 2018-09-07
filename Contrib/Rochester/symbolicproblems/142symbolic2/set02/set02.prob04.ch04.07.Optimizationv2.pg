@@ -1,0 +1,69 @@
+## Original: /Library/ma122DB/set9/s4_7_9.pg
+## Modified May 2007 by Paul Pearson
+
+##DESCRIPTION
+## Max/min -- Minimize the perimeter of a fence of rectangular shape with a
+## section dividing it in the middle
+##ENDDESCRIPTION
+##KEYWORDS('maximization,minimization', 'derivatives', 'maximum,minimum',
+## 'optimization')
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Optimization Problems')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('4.7')
+## Problem1('9')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+$who = list_random("A naked mole rat rancher", "A micro pig rancher","A sloth rancher", "A manticore rancher");
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(D=>'Real', L=>'Real');
+$D = Formula("D");
+$L = random(20,80,5);
+$L2 = 2*$L;
+Context()->texStrings;
+BEGIN_TEXT
+$who  wants to construct a fence to enclose a rectangular field by using part of one side of her barn, which is \($L\) feet long. She has \($D\) feet of fence available for the other three sides, with \($D \lt $L2\). She wants to maximize the area of her rectangular region. How long should she make the two sides that are perpendicular to the barn?
+$BR
+Length of sides perpendicular to the barn = \{ans_rule(30)\} feet.
+$PAR
+How long should she make the side that his parallel to the barn? 
+$BR
+Length of side parallel to the barn = \{ans_rule(30)\} feet.
+$PAR
+What area will be enclosed if she makes these choices? 
+$BR
+Area = \{ans_rule(30)\} sq. feet.
+$PAR
+Your answers should be in terms of \(D\). 
+$BR
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("1/4 *$D ");
+$ans2 = Compute("1/2 *$D ");
+$ans3 = Compute("1/8 *($D)^2 ");
+ANS($ans1->cmp,$ans2->cmp,$ans3->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

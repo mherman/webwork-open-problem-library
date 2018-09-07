@@ -1,0 +1,72 @@
+## DESCRIPTION
+##   Differential Equation with Initial Condition
+## ENDDESCRIPTION
+
+## Tagged by nhamblet
+
+
+## DBsubject(Differential equations)
+## DBchapter(First order differential equations)
+## DBsection(Separable)
+## Date(6/3/2002)
+## Institution(OSU)
+## Author(Zig Fiedorowicz)
+## MLT(Separable_Initial_Condition_Other)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('9.6')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('9.5')
+## Problem2('')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Rogawski')
+## EditionText3('1')
+## Section3('9.5')
+## Problem3('15')
+## KEYWORDS('Differential Equation', 'Linear', 'Initial Condition','differential equation' 'linear' 'separable','differential equations', 'separable')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real', A=>'Real', B=>'Real',y=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$A = random(-6,6,1);
+$B = random(-8,8,1);
+
+
+
+$by = Formula("$b*y")->reduce;
+TEXT(beginproblem());
+Context()->texStrings;
+BEGIN_TEXT
+Find the solution \(y = y(x)\) to the initial-value problem 
+\[ \begin{aligned} 
+&$a y' + $by + $c = 0, \\
+&y($A) = $B,
+\end{aligned} \]
+with \(a, b \ne 0\), in terms of \(a\), \(b\), and \(c\).
+$PAR
+\(y = \)\{ans_rule(30)\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans = Compute("-$c/$b + e^($b/$a*($A-x))*($B+$c/$b) ");
+
+ANS($ans->cmp);
+
+
+
+ENDDOCUMENT();

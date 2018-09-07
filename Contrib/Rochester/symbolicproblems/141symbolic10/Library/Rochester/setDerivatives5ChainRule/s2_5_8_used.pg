@@ -1,0 +1,68 @@
+## DESCRIPTION
+##   The Chain Rule
+## ENDDESCRIPTION
+
+## Tagged by nhamblet
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Chain rule (without trigonometric functions))
+## Institution(Rochester)
+## MLT(Chain-SqrtOfPoly2)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('3.7')
+## Problem1('11')
+## KEYWORDS('Derivative', 'Chain Rule')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"PGcourse.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+###################################################
+###Setup###
+Context("Numeric");
+Context()->variables->add(a => 'Real', b => 'Real', c=> 'Real');
+Context()->variables->set(a => {limits=>[1,2]} );
+Context()->variables->set(b => {limits=>[1,2]} );
+Context()->variables->set(c => {limits=>[1,2]} );
+
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+
+$func = Compute("sqrt($a x^2 + $b x + $c)");
+$ans = $func->D(x);
+$functex = $func->reduce->TeX;
+
+###################################################
+###text###
+Context()->texStrings;
+BEGIN_TEXT
+Let \[ f(x) = $functex. \]
+Compute \(f^{\prime}(x)\) in terms of \(a\), \(b\), and \(c\).
+$PAR
+\( f'( x ) = \) \{ans_rule(40) \}
+$PAR
+
+$BR
+END_TEXT
+###################################################
+###answers###
+Context()->normalStrings;
+$ans = $func->D(x);
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

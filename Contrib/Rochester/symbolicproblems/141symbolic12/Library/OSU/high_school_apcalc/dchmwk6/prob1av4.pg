@@ -1,0 +1,51 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 5/29/06
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Related rates)
+## Date(1/17/2000)
+## Institution(OSU)
+## Author(Zig Fiedorowicz)
+## MLT(RelatedRate-FallingLadder)
+## Level(5)
+## KEYWORDS('calculus','related rates')
+
+DOCUMENT();
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+Context("Numeric");
+
+Context()->constants->add(
+l=> Real(random(4,20,1)),
+r=> Real(random(3,20,1)),
+d=>Real(random(1,3,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$l = Formula("l");
+$r = Formula("r");
+$d = random(1,3,.5);
+$ans = Formula("($r sqrt($l^2 - $d^2) )/($d) ");
+Context()->texStrings;
+TEXT(beginproblem());
+BEGIN_TEXT
+The top of a ladder of length \($l\) feet is leaning against a vertical wall and slipping down the wall at a rate of \($r \frac{ft}{s} \). How fast is the bottom of the ladder sliding along the ground when the bottom of the ladder is \($d\) feet from the base of the wall? Your answer should be expressed in terms of \(r\) and \(l\).
+$PAR
+Answer: \{ans_rule()\}
+END_TEXT
+Context()->normalStrings;
+ANS($ans->cmp);
+
+ENDDOCUMENT();

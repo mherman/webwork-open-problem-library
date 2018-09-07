@@ -1,0 +1,73 @@
+#Problem 2.6.21
+
+DOCUMENT();
+
+# Load whatever macros you need for the problem
+loadMacros("PG.pl",
+           "PGbasicmacros.pl",
+           "PGchoicemacros.pl",
+           "PGanswermacros.pl",
+           "PGauxiliaryFunctions.pl",
+           "PGgraphmacros.pl",
+           "MathObjects.pl"
+          );
+ loadMacros("freemanMacros.pl");
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Evaluating limits - trigonometric)
+## Institution(W.H.Freeman)
+## Author(JustAsk!)
+## MLT(limits_trig_sin_sq_over_x_sq)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('2.6')
+## Problem1('21')
+## KEYWORDS('calculus', 'limits', 'trigonometric functions', 'trigonometric limits')
+
+$showPartialCorrectAnswers = 0;
+$solutionexits=1;
+TEXT(beginproblem());
+Context("Numeric");
+
+Context()->variables->add(m=> 'Real',n => 'Real', a => 'Real', A=> 'Real');
+Context()->variables->set(m => {limits=>[1.3315,1.3315]} );
+Context()->variables->set(n => {limits => [1.3315,1.3315]});
+
+$m = Compute("m");
+$n = Compute("n");
+$a = random(1,10,1);
+$A = random(1,10,1);
+
+$func = Compute("($a * x)^($m) / ((sin($A *x))^($n) )");
+$functex = $func->reduce->TeX;
+Context()->texStrings;
+BEGIN_TEXT
+
+Let \(m\) and \(n\) be positive integers. Compute \( \lim_{x \to 0} $functex \) in terms of \(m\) and \(n\), if 
+$PAR
+(i) \(m \gt n\) \{ans_rule(30)\}
+$BR
+(ii) \(m = n\) \{ans_rule(30)\}
+$BR
+(iii) \(m \lt n\) \{ans_rule(30)\}
+$BR
+$PAR
+Write "DNE" if the limit does not exist. Write "Infinity" for \(\infty\) and "-Infinity" for \(-\infty\).
+END_TEXT
+
+Context()->normalStrings;
+$ans1 = Compute("0");
+$ans2 = Compute("$a^$n / ($A^$n) ");
+$ans3 = Compute("DNE");
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ANS($ans3->cmp);
+
+ENDDOCUMENT();
+
+#JustAsk

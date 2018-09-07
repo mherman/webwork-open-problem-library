@@ -1,0 +1,54 @@
+##DESCRIPTION
+## Evaluate an indefinite integral
+##ENDDESCRIPTION
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Techniques of integration)
+## DBsection(Trigonometric integrals)
+## Date(March 29, 2007)
+## Institution(University of Rochester)
+## Author(Paul Pearson)
+## MLT(tan_seceven)
+## Level(3)
+## TitleText1('Calculus Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('7.2')
+## Problem1('')
+## KEYWORDS('integrals', 'trig')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', n=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$n = random(2,5,1);
+
+$func = Formula(" tan^($n)($a*x+$b)*sec^6($a*x+$b)");
+
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Assuming \(a \ne 0 \), compute $integral in terms of \(a\) and \(b\). 
+$PAR
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans = FormulaUpToConstant("1/$a * tan^($n+1)($a*x+$b)*(1/($n+1) - 2/($n+3)*tan^2($a*x+$b) + 1/($n+5)*tan^4($a*x+$b) )");
+ANS($ans->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

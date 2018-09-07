@@ -1,0 +1,60 @@
+##DESCRIPTION
+## Relating radian measure to arclength and area of the sector
+##ENDDESCRIPTION
+
+## DBsubject('Trigonometry')
+## DBchapter('Circular Definition for Trig functions')
+## DBsection('Arc Length and Area')
+## Date('January 2012')
+## Author('John Travis')
+## Institution('Mississippi College')
+## TitleText1('Trigonometry')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+##KEYWORDS('radian', 'unit circle','arclength','area')
+
+DOCUMENT();      
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl", 
+"PGgraphmacros.pl",
+"MathObjects.pl",
+);
+
+TEXT(&beginproblem);
+
+$showPartialCorrectAnswers = 0;
+$showHint = 3;
+Context("Numeric");
+Context()->variables->are(t => 'Real');
+$r = random(1,25,1);        # circle radius, non-integer
+$theta = Formula("t");    # in degrees so that the student must convert to radians
+
+$radians = $theta*pi/180;
+$s = Compute("$r*$radians");
+
+Context()->texStrings;
+BEGIN_TEXT
+A circle has radius \(r=$r\). Compute the length of the arc of this circle subtended by a central angle \($theta\) $BBOLD degrees $EBOLD, where \(0 \lt $theta \lt 360 \), in terms of \($theta\):
+
+
+$PAR
+Arclength  = \{ ans_rule(20) \}.
+
+END_TEXT
+Context()->normalStrings;
+
+ANS($s->cmp );
+Context()->texStrings;
+BEGIN_HINT
+Don't forget to convert the angle which is given in degrees to radians.  Then, apply formulas.
+END_HINT
+
+
+ENDDOCUMENT(); 

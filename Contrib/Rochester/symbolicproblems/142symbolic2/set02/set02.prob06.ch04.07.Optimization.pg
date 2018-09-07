@@ -1,0 +1,57 @@
+## Original: /Library/UVA-Stew5e/setUVA-Stew5e-C04S07-Optimization/4-7-29.pg
+
+## DESCRIPTION
+##  Calculus: Optimization Problems
+## ENDDESCRIPTION
+
+## KEYWORDS('Optimization Problems')
+## Tagged by YL
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Optimization Problems')
+## Date('5/29/2005')
+## Author('Jeff Holt')
+## Institution('UVA')
+## TitleText1('Calculus')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('4.7')
+## Problem1('29')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+Context("Numeric");
+Context()->variables->add( l => 'Real', h => 'Real', A => 'Real');
+
+$l = Formula("l");
+$h = Formula("h");
+$A = Formula("A");
+
+
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+The top and bottom margins of a rectangular poster are each \($h\) cm and the left and right margins are each \($l\) cm. If the area of the printed material on the poster is fixed at \($A\) cm\(^2\), find the width and the height of the poster that minimizes its total area. $PAR
+Width: \{ans_rule(30)\} cm $BR
+Height: \{ans_rule(30)\} cm $PAR
+What is the area with those with and height? $PAR
+Area = \{ans_rule(30)\} cm\(^2\) $PAR
+$PAR 
+Your answers should be in terms of \(h\), \(l\), and \(A\).
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("sqrt($A * $l / $h) +2*$l");
+$ans2 = Compute("sqrt($A*$h /$l) + 2*$h ");
+$ans3 = Compute("$A + 4*$h*$l + 4*sqrt($A*$h*$l) ");
+ANS($ans1->cmp,$ans2->cmp,$ans3->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

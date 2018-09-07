@@ -1,0 +1,88 @@
+#DESCRIPTION
+##  Calculus: Implicit differentiation
+##ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Implicit differentiation)
+## Date(11/11/2010)
+## Institution(University of Minnesota)
+## Author(Justin Sukiennik)
+## MLT(xy_powers_slope_zero_infinite)
+## MLTleader(1)
+## Level(4)
+## TitleText1('Calculus: Concepts and Contexts')
+## AuthorText1('Stewart')
+## EditionText1('4 Custom UMTYMP Ed.')
+## Section1('3.5')
+## Problem1('')
+## KEYWORDS('calculus', 'derivative', 'implicit differentiation', 'tangent line', 'circle')
+
+#####################################################################
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGgraphmacros.pl",
+  "PGcourse.pl", 
+"AnswerFormatHelp.pl",
+);
+#####################################################################
+
+TEXT(beginproblem());
+
+$showPartialCorrectAnswers = 1;
+
+#####################################################################
+
+Context("Numeric");
+Context()->variables->add(y=>"Real", h => 'Real', k=> 'Real', a=> 'Real', b=>'Real');
+
+$h = Compute("h");
+$k = Compute("k");
+$a = Compute("a");
+$b = Compute("b");
+
+
+$func1 = Compute("((x- $h)^2)/($a^2) - ((y-$k)^2)/($b^2) ");
+$d = Compute("($b^2*(x-$h))/($a^2 *(y-$k)) ");
+
+$x11 = $h+$a;
+$y11 = $k;
+
+$x12 = $h - $a;
+$y12 = $k;
+Context("Point");
+Context()->variables->add(h=> 'Real', k => 'Real', a=> 'Real', b=> 'Real');
+
+$p1 = Compute("($x11,$y11)");
+$p2 = Compute("($x12,$y12)");
+$ans2 = List("$p1,$p2");
+
+#####################################################################
+Context()->texStrings;
+BEGIN_TEXT
+Consider the hyperbola defined by the equation \( $func1  = 1 \), with \(a,b \ne 0 \). $BR
+(i) Use implicit differentiation to find \(\frac{dy}{dx}\) for this hyperbola in terms of \(x\), \(y\), \(h \), \( k\), \(a\) and \(b\). 
+$BR
+\(\frac{dy}{dx} = \) \{ans_rule(30)\}
+$PAR
+(ii) Find the coordinates of the point(s) on the hyperbola where the tangent line is vertical in terms of \( h\), \(k\), \(a\) and \(b\). 
+$BR
+Point(s): \{ans_rule(30)\} \{AnswerFormatHelp("Points")\}
+$PAR
+If there are multiple answers, enter the answers separated by commas.
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+#####################################################################
+
+$ans1 = $d;
+
+ANS($ans1->cmp());
+ANS($ans2->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,64 @@
+## Original: /Library/UVA-Stew5e/setUVA-Stew5e-C05S05-Substitution/5-5-50.pg
+
+## DESCRIPTION
+## Calculus: The Substitution Rule
+## ENDDESCRIPTION
+
+## KEYWORDS('calculus', 'integrals', 'substitution rule')
+## Tagged by XW
+
+## DBsubject('Calculus')
+## DBchapter('Integrals')
+## DBsection('The Substitution Rule')
+## Date('6/5/2005')
+## Author('Jeff Holt')
+## Institution('UVA')
+## TitleText1('Calculus')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('5.5')
+## Problem1('50')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->constants->add(
+a=>Real(random(2,8,1)),
+b=>Real(random(2,8,1)),
+A=>Real(random(2,7,1)),
+B=>Real(random(2,7,1)),
+p=>Real(random(2,7,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = random(-5,5,1);
+$a = Formula("a");
+$b = Formula("b");
+$B = random(-15,15,1);
+$p = Formula("p");
+$func = Compute("($A *x + $B)^($p) ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int_{$a}^{$b} $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(a\), \(b\), and \(p\). You may assume \(p \ne -1\).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+if($A ==0){
+$ans = Formula("($B)^($p)*x");
+}
+else{
+$ans = Formula("1/($A*($p+1)) *($A*x + $B)^($p+1) ");
+}
+$ans = $ans->substitute(x=>$b) - $ans->substitute(x=>$a);
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

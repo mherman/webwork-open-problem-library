@@ -1,0 +1,53 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Derivatives of exponential functions)
+## Institution(UCSB)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('3.1')
+## Problem1('2')
+## KEYWORDS('Product','Quotient','Differentiation')
+
+DOCUMENT();
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(&beginproblem);
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A => 'Real', a => 'Real', b=> 'Real');
+
+$A = Compute("A");
+$a = Compute("a");
+$b = Compute("b");
+
+# Insert problem text between the $PAR, and space for the
+# answer, like this   \(y =\) \{ans_rule(50)\}
+# just before the END_TEXT.
+$func = Compute("$A e^($a x + $b)");
+$dfunc = $func->D(x);
+$functex = $func->reduce->TeX;
+BEGIN_TEXT
+
+Let \(f(x) = $functex \). Compute, in terms of \(A\), \(a\), and \(b\), \(f^{\prime}(x)\).
+
+$PAR
+\(f^{\prime}(x) = \) \{ans_rule(30)\}
+
+$PAR
+
+
+END_TEXT
+
+ANS($dfunc->cmp());
+
+ENDDOCUMENT();

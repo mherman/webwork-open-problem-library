@@ -1,0 +1,68 @@
+##DESCRIPTION
+##  find distance between two points, find coordinates of the midpoint of
+##  a line segment connecting them
+##ENDDESCRIPTION
+
+## hcao tagged and PAID on 2-20-2004
+
+## DBsubject(Algebra)
+## DBchapter(Cartesian coordinate system)
+## DBsection(Midpoint and distance formulas)
+## Institution(Rochester)
+## MLT(Find_midpoint_and_distance)
+## Level(2)
+## TitleText1('College Algebra')
+## AuthorText1('Stewart, Redlin, Watson')
+## EditionText1('3')
+## Section1('2.1')
+## Problem1('6')
+## KEYWORDS('algebra', 'coordinate geometry', 'distance', 'midpoint')
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Point");
+Context()->variables->are(y0 => 'Real' , y1 => 'Real');
+$x1 = random(1,5,1);
+$y1 =Compute("y0");
+$x2 = random(-10,-3,1);
+$y2 = Compute("y1");
+$len1 = sqrt(($x1-$x2)**2 + ($y1-$y2)**2);
+$midx = Compute("($x1+$x2)/2");
+$midy = ($y1+$y2)/2;
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the two points \( ($x1 ,$y1 )\) and \( ($x2 ,$y2 )\).
+$BR
+1. Compute the distance between these two points in terms of \($y1\) and \($y2\).
+$BR
+Distance: \{ans_rule(30)\}
+$PAR
+2. Compute the midpoint of these two points in terms of \($y1\) and \($y2\).
+$BR
+Midpoint: \{ans_rule(30) \}
+$BR
+Note: Use y0 for \($y1\) and y1 for \($y2\). For the midpoint, surround the point with parentheses. If you think the answer is (-1,1), write "(-1,1)".
+END_TEXT
+
+Context()->normalStrings;
+
+$ans = $len1;
+ANS($ans->cmp);
+
+$ans = Point($midx,$midy);
+
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

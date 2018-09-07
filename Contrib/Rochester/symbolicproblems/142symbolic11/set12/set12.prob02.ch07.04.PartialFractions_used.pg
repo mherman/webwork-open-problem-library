@@ -1,0 +1,37 @@
+## Original: /rochesterLibrary/setIntegrals25RationalFunctions/ur_in_25_13.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'partial fractions')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(b=>'Real', a=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+
+$func = Compute("1/((x-$a)(x-$b))")->reduce;
+
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Assuming \( $a \ne $b\), compute $integral in terms of \(a\) and \(b\).
+$PAR
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = FormulaUpToConstant("1/($a-$b)*ln(|x-$a|/|x-$b|)");
+ANS($ans1->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

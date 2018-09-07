@@ -1,0 +1,55 @@
+##DESCRIPTION
+##  Polar Coordinates
+##  Arc Length.
+#ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Trigonometry)
+## DBchapter(Polar coordinates & vectors)
+## DBsection(Polar and rectangular coordinates)
+## Date(6/3/2002)
+## Institution(Rochester)
+## Author(Utah ww group)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('10.3')
+## Problem1('28')
+## TitleText2('Calculus')
+## AuthorText2('Dale Varberg, Edwin J. Purcell, and Steve E. Rigdon')
+## EditionText2('9')
+## Section2('.')
+## Problem2('')
+## KEYWORDS('Integration', 'Arc length', 'parametric','calculus','integral' 'polar' 'match','polar' 'curve' 'length','polar coordinates')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Point");
+Context()->variables->add(R=> 'Real', S=> 'Real');
+
+$R = Formula("R");
+$S = Formula("S");
+Context()->texStrings;
+BEGIN_TEXT
+Consider two circles \(C_1\) and \(C_2\). The circle \(C_1\) is centered at the origin and has radius \(R\), and the circle \(C_2\) has a diameter which is the line segment between the origin and the point \((2 ($S),0)\), with \(S \gt \frac{R}{2}\). These two circles intersect at two points: one in the first quadrant, and one in the fourth quadrant. Write, in standard polar form, (i.e. , with \(r \ge 0\) and \(-\pi \lt \theta \le \pi \) ) the coordinates of the point \( (r, \theta )\) in the first quadrant where the circles \(C_1\) and \(C_2\) meet. Your answer should be in terms of \(R\) and \(S\).
+$PAR
+Point (in polar coordinates): \{ans_rule(30)\} \{AnswerFormatHelp("points")\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("($R, arccos($R / (2 *$S) ) )");
+
+ANS($ans1->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

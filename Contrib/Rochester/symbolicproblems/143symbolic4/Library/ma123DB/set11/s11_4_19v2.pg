@@ -1,0 +1,77 @@
+##DESCRIPTION
+## Determine if the series convgerges. 
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Comparison tests)
+## Date(6/3/2002)
+## MLT(Simple_comparison_to_geometric_series)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.4')
+## Problem1('19')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('10.3')
+## Problem2('69')
+## KEYWORDS('Sequences', 'Comparison Test')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGbasicmacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+Context()->variables->are(a=> 'Real', b=> 'Real', A=> 'Real', B=> 'Real', n=> 'Real');
+
+$a = random(-15,15,1);
+$b = random(-15,15,1);
+$A = Compute("A");
+$B = Compute("B");
+
+$func = Compute("($a^(n) + $b)/($A^(n)+ $B) ");
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \( \displaystyle \sum_{n=1}^{\infty} $func \) with \(A, B \gt 0\). 
+$BR
+This series converges if \(A\) belons to the interval \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\} and diverges if \(A\) belongs to the interval \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}. Your answers should be in terms of \(a\), \(b\), and \(B\).
+$PAR
+$BITALIC Hint $EITALIC : The union of your two answers should be \( ( 0, \infty) \), because of the assumption \(A \gt 0\). 
+END_TEXT
+Context()->normalStrings;
+Context("Interval");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants()->add(a=>Real(cos(exp(1.221))) , b=> Real(sin(exp(2.312))), A=>Real(exp(sin(1.222))), B=>Real(exp(cos(22.11))));
+
+
+@ans = (0,1);
+
+$ans[0] = Compute("(|$a|,infinity) ");
+if($a ==0){
+$ans[1] = Compute({0});
+}
+else{
+$ans[1] = Compute("(0, |$a| ) ");
+}
+for my $i (0 .. $#ans){
+ANS($ans[$i]->cmp);
+}
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

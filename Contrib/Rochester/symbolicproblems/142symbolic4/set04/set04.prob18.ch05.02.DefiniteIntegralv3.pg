@@ -1,0 +1,44 @@
+## Original: /rochesterLibrary/setIntegrals0Theory/ur_in_0_13.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'theory')
+##  Write a difference of two integrals as a single integral
+##This is setIntegrals0Theory/nttheo1.pg slightly cleaned up and expanded
+##by Zig Fiedorowicz, Jan. 2001
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real', u=>'Real',v=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$u = random(-15,15,1);
+$v= random(-15,15,1);
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Suppose \(\displaystyle \int_{$a}^{$b} f(x) dx  = $u \) and \(\displaystyle \int_{$c}^{$b} f(x) dx = $v \).$BR
+Compute \(\displaystyle \int_{$b}^{$c} f(x) dx \).
+$PAR
+\(\displaystyle \int_{$b}^{$c} f(x) dx =\)\{ans_rule(30)\}
+$PAR
+Now compute\(\displaystyle \int_{$a}^{$c} f(x) dx \). $PAR
+\(\displaystyle \int_{$a}^{$c} f(x) dx = \) \{ans_rule(30)\}
+$PAR
+Your answers should be in terms of \(a\), \(b\), and \(c\).
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("-$v");
+$ans2 = Compute("$u - $v");
+ANS($ans1->cmp, $ans2->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+

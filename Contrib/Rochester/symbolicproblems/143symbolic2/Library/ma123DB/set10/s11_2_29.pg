@@ -1,0 +1,73 @@
+## DESCRIPTION
+##   Geometric Series
+## ENDDESCRIPTION
+
+## Tagged by nhamblet
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Geometric)
+## Date(6/3/2002)
+## Institution(OSU)
+## Author(Utah ww group)
+## MLT(SumNumerator)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('10.2')
+## Problem1('27')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('11.2')
+## Problem2('29')
+## TitleText3('Calculus')
+## AuthorText3('Dale Varberg, Edwin J. Purcell, and Steve E. Rigdon')
+## EditionText3('9')
+## Section3('.')
+## Problem3('')
+## KEYWORDS('Series', 'Geometric','Series' , 'Summation' , 'Summation', 'Geometric series' ,'calculus','geometric series')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGbasicmacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=> 'Real', b=> 'Real', c=> 'Real', N=> 'Real', n=> 'Real', p=> 'Real', q=> 'Real');
+
+$n= Compute("n");
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+$N = Compute("N");
+$p = Compute("p");
+$q = Compute("q");
+
+
+$func = Compute("($a^($n + $p) + $b^($n + $q) )/($c^$n)")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(0 \lt a,b \lt c\), compute \(\displaystyle \sum_{n=$N}^{\infty}$func\) in terms of \(N\), \(a\), \(p\), \(b\), \(q\), and \(c\).
+$BR
+ \(\displaystyle \sum_{n=$N}^{\infty}$func = \)\{ans_rule(30)\}
+$PAR
+$BBOLD If the limit or series is \(\infty\), write "Infinity". $BR
+If the limit or series is \(-\infty\), write "-Infinity".$BR
+If the limit does not exist, write "DNE". $BR
+If the series diverges but not to \(\infty \) or \(-\infty\), write "DIV".$EBOLD
+END_TEXT
+$ans = Compute("$c^(1-$N)*( ($a^($N+$p))/($c-$a) + ($b^($N+$q))/($c-$b) ) ");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,50 @@
+##DESCRIPTION
+##ENDDESCRIPTION
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Interval of convergence of a power series)
+## Date(6/3/2002)
+## MLT(IntervalCzeroDpoly)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.8')
+## Problem1('11')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('10.6')
+## Problem2('19')
+## KEYWORDS('Power Series', 'Radius of Convergence', 'Interval of Convergence')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl", 
+"parserPopUp.pl"
+);
+
+Context("Numeric");
+Context()->variables->are(n=> 'Real', a=> 'Real');
+$popup1 = PopUp(["?","the series converges absolutely","the series diverges","the root test is inconclusive"],"the series converges absolutely");
+
+$a = Formula("a");
+$func  = Formula("($a^n)/(n^n) ");
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \(\displaystyle \sum_{n = 1}^{\infty} c_n \) where \(c_n = $func \). Compute \( \displaystyle \lim_{n \to \infty} \vert c_n \vert^{\frac{1}{n}} \). 
+$BR
+\( \displaystyle \lim_{n \to \infty} \vert c_n \vert^{\frac{1}{n}} = \)\{ans_rule(30)\}
+$PAR
+Based on your answer, it is the case that \{$popup1->menu\}
+END_TEXT
+Context()->normalStrings;
+
+ANS(Compute("0")->cmp);
+ANS($popup1->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

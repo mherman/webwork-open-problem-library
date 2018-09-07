@@ -1,0 +1,68 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Euclidean spaces)
+## DBsection(Span)
+## Institution(TCNJ)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('2.2')
+## Problem1('')
+## KEYWORDS('vectors' 'basis' 'span' 'matrix')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+"AnswerFormatHelp.pl"
+        );
+ 
+TEXT(beginproblem());    
+# Do not show which answers are incorrect.
+$showPartialCorrectAnswers = 0;
+Context("Matrix");
+Context()->constants->remove(e);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->add(
+a=>Real(non_zero_random(-10,10,1)),
+b=>Real(non_zero_random(-10,10,1)),
+c=>Real(non_zero_random(-10,10,1)),
+d=>Real(non_zero_random(-10,10,1)),
+e=>Real(non_zero_random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Compute("c");
+$d = Compute("d");
+$e = Formula("e");
+$A = ColumnVector($a,0,$c);
+$B = ColumnVector(0,$b,$d);
+$C = ColumnVector(0,0,$e);
+Context()->texStrings;
+BEGIN_TEXT
+Consider the following collection of vectors in \({\mathbb R}^3\):
+\[$A, $B, $C,\]
+where \(a,b \ne 0\). Depending upon the values of \(e\), this collection of vectors may or may not span \({\mathbb R}^3\). Fill in the blanks.
+$PAR 
+(i) This collection of vectors $BBOLD spans $EBOLD \({\mathbb R}^3\) if $BR \(e\) belongs to the set \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}.
+$PAR
+(ii) This collection of vectors $BBOLD does not span $EBOLD \({\mathbb R}^3\) if $BR \(e\) belongs to the set \{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}.
+$PAR
+Your answers should be given as intervals or unions of intervals. The intervals may be open or closed.
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+Context("Interval");
+ANS(
+Compute("(-infinity,0)U(0,infinity)")->cmp,
+Compute("{0}")->cmp,
+);
+
+ENDDOCUMENT();

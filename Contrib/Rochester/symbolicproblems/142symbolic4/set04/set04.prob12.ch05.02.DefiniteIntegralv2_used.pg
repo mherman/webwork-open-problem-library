@@ -1,0 +1,49 @@
+## Original: /Library/UVA-Stew5e/setUVA-Stew5e-C05S02-DefIntegral/5-2-33.pg
+
+
+## DESCRIPTION
+##  Calculus: The Definite Integral
+## ENDDESCRIPTION
+
+##KEYWORDS('calculus', 'definite integral')
+## Tagged by XW
+
+## DBsubject('Calculus')
+## DBchapter('Integrals')
+## DBsection('The Definite Integral')
+## Date('5/30/2005')
+## Author('Jeff Holt')
+## Institution('UVA')
+## TitleText1('Calculus')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('5.2')
+## Problem1('33')
+
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(r=> 'Real');
+$func = Compute("sqrt(r^2 - x^2 ) ");
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Assuming \(r \gt 0 \), compute the integral \(\displaystyle \int_{-r}^{r} $func dx \) in terms of \(r\) by interpreting the integral as the area of a familiar geometric shape. 
+$PAR
+\(\displaystyle \int_{-r}^{r} $func dx = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("1/2 pi r^2 ");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();

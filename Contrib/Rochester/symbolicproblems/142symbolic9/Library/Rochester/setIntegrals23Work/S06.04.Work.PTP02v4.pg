@@ -1,0 +1,57 @@
+## DESCRIPTION
+## Calculus: Applications of Integration: Work
+## ENDDESCRIPTION
+
+## Tagged by jjh2b
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of integration)
+## DBsection(Work)
+## Institution(ASU)
+## MLT(work_tank_cylinder_vert)
+## Level(5)
+## KEYWORDS('work')
+
+## Original: /Library/ASU-topics/setCalc2/tracogna9.pg
+
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(r=>'Real', H=>'Real', h=>'Real', p=>'Real', T=>'Real', g=>'Real');
+$r = Formula("r");
+$H = Formula("H");
+$h = Formula("h");
+$p = random(800,1200,50);
+$T = Formula("T");
+$g = Formula("g");
+
+$ans1 = Compute("1/2*$p*($r)^2*$g*$h*pi*(2*$H - $h)");
+$ans2 = Compute("1/2*$p*($r)^2 * $g*$h*pi*(2*$H+2*$T-$h)");
+
+Context()->texStrings;
+BEGIN_TEXT
+A circular swimming pool that has a radius of \($r\) meters and height of \($H\) meters is filled to a height of \($h\) meters with a liquid of density \($p\) kilograms per cubic meter. If a spout is connected to the top of the pool, how much work will it take to pump all of the liquid out of the pool through the spout? 
+$PAR 
+Work = \{ans_rule(30)\} J
+$PAR
+How much work will it take to pump all of the liquid out of the pool through a spout that is \($T\) feet above the top of the pool? 
+$PAR
+Work = \{ans_rule(30)\} J
+$PAR 
+Your answers should be in terms of \(H\), \(r\), \(h\), \(T\), and \(g\), the gravitational constant. 
+$PAR
+END_TEXT
+Context()->normalStrings;
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();
+
+

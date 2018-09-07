@@ -1,0 +1,90 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## KEYWORDS('matrix' 'null space')
+## Tagged by tda2d
+
+## DBsubject('Linear Algebra')
+## DBchapter('Matrices')
+## DBsection('Image and Kernel')
+## Date('')
+## Author('')
+## Institution('TCNJ')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Matrix");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->add(
+a=>Real(non_zero_random(-20,20,1)),
+b=>Real(non_zero_random(-20,20,1)),
+c=>Real(non_zero_random(-20,20,1)),
+d=>Real(non_zero_random(-20,20,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+$A = Matrix([
+[$a,$b],
+[$c,$d]
+]);
+$B = Matrix([
+[0],
+[0],
+]);
+$C = Matrix([
+[-$b/$a],
+[1]
+]);
+Context()->texStrings;
+
+BEGIN_TEXT
+Consider the \(2 \times 2 \) matrix 
+$BR
+\[A = $A,\]
+with \(a \ne 0\).
+(i) Regardless of how \(d\) is chosen, there is a certain \(2 \times 1\) matrix that belongs to the nullspace of \(A\). What is that matrix?
+$BR
+\{mbox("Answer:",$B->ans_array())\}
+$PAR
+(ii) For \(d\) chosen to be a certain number, there are also other members of the nullspace of \(A\). How should \(d\) be chosen to accomplish this?
+$BR
+\( d= \)\{ans_rule(30)\}
+$BR
+(iii) With \(d\) chosen as in (ii), find another element of the nullspace of \(A\) besides the one you found in (i).
+$BR
+\{mbox("Answer:",$C->ans_array())\}
+$PAR
+Your answers should be given in terms of \(a\), \(b\), and \(c\).
+END_TEXT
+ANS($B->cmp);
+ANS(Compute("$b*$c/($a)")->cmp);
+ANS($C->cmp( checker=>sub {
+my ( $correct, $student, $ansHash ) = @_;
+@sarray = $student->value;
+@carray = $correct->value;
+if($sarray[1][0]==0){
+return 0;
+}
+$mult = $sarray[1][0];
+
+return $mult*$correct == $student;
+} ) );
+
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

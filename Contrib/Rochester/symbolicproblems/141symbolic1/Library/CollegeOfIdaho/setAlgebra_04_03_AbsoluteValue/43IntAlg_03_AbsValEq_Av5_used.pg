@@ -1,0 +1,84 @@
+##DESCRIPTION
+## Absolute Value Equalites and Inequalities
+## 
+##ENDDESCRIPTION
+## DBsubject(Algebra)
+## DBchapter(Inequalities and problem solving)
+## DBsection('Equations and Inequalities Involving Absolute Value')
+## KEYWORDS('inequalities','absolute value')
+## TitleText1('Essentials of Intermediate Algebra')
+## EditionText1('1')
+## AuthorText1('Blitzer')
+## Section1('4.3
+## Problem1('')
+## Author('RA Cruz')
+## Institution('The College of Idaho')
+## Date: 2007/10
+
+DOCUMENT(); # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "contextInequalitiesAllowStrings.pl",
+  "AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+
+######################################
+#  Setup
+
+Context("Inequalities-AllowStrings");
+Context()->constants->add(a => Real(exp(2)/cos(1)), b=> Real(3147.115));
+Context()->flags->set(formatStudentAnswer=>"parsed");
+Context()->strings->add(none=>{});
+
+$c = random(-10,10,1);
+
+if($c==1)
+{$c=random(2,10,1);}
+
+
+Context()->texStrings;
+######################################
+
+#  Main text
+
+
+BEGIN_TEXT
+Solve for \(x\) in terms of \(a\) and \(b\) (you may assume \(a \gt 0\):  \( |a x + b| \ge $c \)
+$PAR
+Answer:  \{ ans_rule(20) \}
+$BR
+To express \(-5 \lt x \lt 4\), write "-5 < x < 4". 
+$BR
+To express \(-5 \le x \le 4\), write "-5 <= x <= 4". 
+$BR
+To express \(x<4\), write "x < 4". $BR
+You may also use "and" and "or" in your solutions. $BR
+If there is no solution, write "none". $BR
+For more information, see \{AnswerFormatHelp("Inequalities")\}
+END_TEXT
+
+
+######################################
+Context()->normalStrings;
+#  Answer
+
+
+$ans = Compute("0");
+if($c < 0 )
+{  $ans = Compute("All real numbers"); }
+if($c>=0)
+{ $ans = Compute("x=<(-$c-b)/a or x>=($c-b)/a"); }
+ANS($ans->cmp); 
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();
+

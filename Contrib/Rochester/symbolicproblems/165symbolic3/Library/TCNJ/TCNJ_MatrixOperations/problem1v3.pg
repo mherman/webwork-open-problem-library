@@ -1,0 +1,83 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Matrices)
+## DBsection(Matrix algebra)
+## Date(July 2013)
+## Institution(TCNJ and Hope College)
+## Author(Paul Pearson)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('3.2')
+## Problem1('')
+## KEYWORDS('matrix' 'product')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGcourse.pl",
+"PGmatrixmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context('Matrix');
+Context()->constants->remove(e);
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+f=>Real(random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+$e = Compute("e");
+$f = Compute("f");
+
+$A = Matrix([
+[$a,$b],
+[$c,$d],
+]);
+
+$B = Matrix([
+[$e],
+[$f],
+]);
+Context()->texStrings;
+BEGIN_TEXT
+Compute the matrix product
+$BR
+\[$A $B\]
+in terms of \(a,b,c\), and \(d\).
+$BR
+\{mbox("\($A $B = \)",
+display_matrix([
+[ans_rule(5)],
+[ans_rule(5)]])
+)
+\}
+
+$BR
+END_TEXT
+Context()->normalStrings;
+@ans = (
+($a*$e+$b*$f),
+($c *$e +$d*$f)
+);
+foreach (@ans){
+ANS($_->cmp);
+}
+COMMENT('MathObject version');
+ENDDOCUMENT();

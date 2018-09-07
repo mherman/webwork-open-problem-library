@@ -1,0 +1,77 @@
+#DESCRIPTION
+#Sequences. Find the limit of Convergence
+#ENDDESCRIPTION
+
+## tsuda tagged and PAID on 2-20-2004
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Limit of a sequence)
+## Date(6/3/2002)
+## MLT(ExponentialPlusDistraction)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.1')
+## Problem1('36')
+## KEYWORDS('Sequences', 'convergence')
+
+
+DOCUMENT(); # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+);
+
+TEXT(beginproblem());
+######################################
+#  Setup
+Context("Numeric");
+Context()->variables->add(A=> 'Real', B=> 'Real', n=> 'Real', C=> 'Real');
+
+$A = Compute("A");
+$B = random(-3,3,1);
+$B = $B/2;
+$C = Compute("C");
+
+$func = Compute("($A * cos($B pi*n) )/ ($C)^n");
+Context()->texStrings;
+######################################
+
+#  Main text
+
+
+BEGIN_TEXT
+Consider the sequence given by \(x_n = $func\). Compute, in terms of \(A\) and \(C\), \( \lim_{n \to \infty} x_n\), if 
+$BR
+(i) \(C \lt -1\):  \{ans_rule(30)\} $BR
+(ii) \( 0 \lt |C| \lt 1 \) and \(A \ne 0\):  \{ans_rule(30)\} $BR
+(iii) \( C \gt 1\): \{ans_rule(30)\}.
+$BR
+$BBOLD If the limit is \(\infty\), write "Infinity" $BR
+If the limit is \(-\infty\), write "-Infinity"$BR
+If the limit does not exist, write "DNE". $EBOLD
+END_TEXT
+
+
+######################################
+Context()->normalStrings;
+#  Answer
+$ans1 = Compute("0");
+$ans2 = Compute("DNE");
+if($B % pi ==0)
+{ $ans2= Compute("0"); }
+$ans3 = Compute("0");
+ANS($ans1->cmp,
+         $ans2->cmp,
+         $ans3->cmp);
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

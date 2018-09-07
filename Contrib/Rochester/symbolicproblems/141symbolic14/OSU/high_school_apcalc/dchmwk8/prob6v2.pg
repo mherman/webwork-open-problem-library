@@ -1,0 +1,80 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## KEYWORDS('calculus','critical number','minimum','maximum')
+## Tagged by cmd6a 5/29/06
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Maximum and Minimum Values')
+## Date('')
+## Author('')
+## Institution('OSU')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserPopUp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+
+Context()->variables->add(A=> 'Real', B=> 'Real');
+
+$A = random(1,20,1);
+$B = Compute("B");
+
+$func = Compute("$A * x^3 - $B*x ")->reduce;
+
+$ans1 = Compute("-sqrt($B / (3*$A) ) ");
+$ans2 = Compute("sqrt($B / (3*$A)) ");
+$anslist1 = List($ans1,$ans2);
+
+$ans1 = Compute("-2 sqrt(3*$A*$B) ");
+$ans2 = Compute("2 sqrt(3*$A*$B) ");
+$anslist2 = List($ans1,$ans2);
+
+$popup1 = PopUp(["?","local maximum","local minimum","neither"],"local maximum");
+$popup2 = PopUp(["?","local maximum","local minimum","neither"],"local minimum");
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Let \(f(x) = $func \), with \(B \gt 0 \). Compute the two critical numbers of \(f\) in terms of \(B\). Enter the critical numbers separated by a comma. Enter the lesser value first and the greater value second.
+$BR
+Critical Numbers: \{ans_rule(30)\} 
+$PAR
+Now compute the second derivative of \(f\), in terms of \(B\), at those two critical numbers. Again, enter your answers separated by a comma. Enter the answer that corresponds with the lesser critical number first, and the one with the the greater critical number second.
+$BR
+Second derivative of \(f\) at the critical numbers: \{ans_rule(30)\}
+$PAR
+Finally, use these answers to determine, for each critical number, if \(f\) has a local minimum, a local maximum, or neither at that critical number. 
+$BR
+For the lesser critical number, there is a \{$popup1->menu\} here.
+$BR
+For the greater critical number, there is a \{$popup2->menu\} here.
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+ANS($anslist1->cmp(ordered=>1) );
+ANS($anslist2->cmp(ordered=>1) );
+ANS($popup1->cmp);
+ANS($popup2->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

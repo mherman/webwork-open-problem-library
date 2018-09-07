@@ -1,0 +1,39 @@
+## Original: /rochesterLibrary/setIntegrals14Substitution/sc5_5_26.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'substitution')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real',A=>'Real');
+$A = Formula("A");
+$a = random(-15,15,1);
+$b = random(-15,15,1);
+$func = Compute("$A*e^($a*x+$b) *sin(e^($a*x+$b))  ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(A\).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+if($a == 0 ){
+$ans = FormulaUpToConstnat("$A*e^($b)*sin(e^($b))*x ");
+}
+else{
+$ans = FormulaUpToConstant("$A/$a *cos(e^($a*x+$b))");
+}
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

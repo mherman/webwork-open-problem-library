@@ -1,0 +1,42 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Ratio test)
+## Institution(W.H.Freeman)
+## Author(Emily Price)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('10.5')
+## Problem1('7')
+## KEYWORDS('calculus', 'series', 'sequences', 'convergence', 'ratio test')
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl", 
+"parserPopUp.pl"
+);
+
+Context("Numeric");
+Context()->variables->are(n=> 'Real', a=> 'Real', b=> 'Real');
+$popup1 = PopUp(["?","the series converges absolutely","the series diverges","the ratio test is inconclusive"],"the series diverges");
+
+$a = Formula("a");
+$b = Formula("b");
+
+$func  = Formula("1/(n^($a*n +$b) ) ");
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \(\displaystyle \sum_{n = 1}^{\infty} c_n \) where \(\displaystyle c_n = $func \) with \(a \lt 0\). Compute \( \displaystyle \lim_{n \to \infty} \vert \frac{c_{n+1}}{c_n} \vert \). 
+$BR
+\( \displaystyle \lim_{n \to \infty} \vert \frac{c_{n+1}}{c_n} \vert = \)\{ans_rule(30)\}
+$PAR
+Based on your answer, it is the case that \{$popup1->menu\}
+END_TEXT
+Context()->normalStrings;
+
+ANS(Compute("infinity")->cmp);
+ANS($popup1->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

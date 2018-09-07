@@ -1,0 +1,61 @@
+# DESCRIPTION
+# Problem from Calculus, single variable, Hughes-Hallett et al., 4th ed.
+# WeBWorK problem written by Gavin LaRose, <glarose@umich.edu>
+# ENDDESCRIPTION
+
+## Tagged by glr 01/21/09
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of integration)
+## DBsection(Distance, velocity, acceleration)
+## Institution(University of Michigan)
+## Author(Gavin LaRose)
+## Level(3)
+## TitleText1('Calculus')
+## AuthorText1('Hughes-Hallett')
+## EditionText1('4')
+## Section1('6.3')
+## Problem1('24')
+## TitleText2('Calculus')
+## AuthorText2('Hughes-Hallett')
+## EditionText2('5')
+## Section2('6.3')
+## Problem2('24')
+## TitleText3('Calculus')
+## AuthorText3('Hughes-Hallett')
+## EditionText3('6')
+## Section3('6.3')
+## Problem3('22')
+## KEYWORDS('differential equation','calculus','antiderivatives'")
+
+## Textbook tags
+## HHChapter1('Constructing Antiderivatives')
+## HHChapter2('Constructing Antiderivatives')
+
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+Context("Numeric");
+Context()->variables->add(t=> 'Real', V=> 'Real', H=> 'Real', g=> 'Real');
+$V = Formula("V");
+$H = Formula("H");
+$g = Formula("g");
+Context()->texStrings;
+BEGIN_TEXT
+An object is thrown from a precipice of height \($H\) m directly upwards with a velocity of \($V \frac{m}{s}\). Answer the following: 
+$BR
+(i) Given that the acceleration due to gravity is \(-g \frac{m}{s^2} \), compute the function \(s(t)\) which gives the height of the object at time \(t\) seconds, from the time of release until it lands on the ground (at height \(0\) m). Your function s(t) should be written in terms of \(H\), \(V\), \(g\), and \(t\). $PAR
+\(s(t) = \)\{ans_rule(30)\} m
+$PAR
+(ii) Use your anwer to (i) and the quadratic formula to find the time, in terms of \(H\), \(V\), and \(g\), when the stone lands on the ground. $BITALIC Hint$EITALIC: you will need to take the positive square root in the quadratic formula. Try to convince yourself why this is. $PAR
+\(t = \) \{ans_rule(30)\} s $PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("-1/2$g * t^2 + $V * t + $H ");
+$ans2 = Compute("($V + sqrt(($V)^2 + 2*$g*$H ) )/($g) ");
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();

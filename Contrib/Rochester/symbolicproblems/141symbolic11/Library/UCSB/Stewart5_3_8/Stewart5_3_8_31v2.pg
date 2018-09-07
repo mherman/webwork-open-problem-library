@@ -1,0 +1,67 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Chain rule (without trigonometric functions))
+## Institution(UCSB)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('3.8')
+## Problem1('31')
+## KEYWORDS('Differentiation','Product','Quotient')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(c=> 'Real');
+Context()->variables->set(c=> {limits=>[2,5]} );
+
+$c = Compute("c");
+
+
+$func = Compute("ln(ln(x))");
+$functex = $func->reduce->TeX;
+$dfunc = $func->D(x);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+Find, in slope-intercept form, the equation of the line that is tangent to the graph of the function \(f(x) = $functex ) \) at the point \( ($c ,f($c ) ) \), in terms of \(c\). You may assume \(c \gt 1 \). 
+$PAR
+Equation of Tangent Line: \(y =\) \{ans_rule(30) \}
+END_TEXT
+Context()->normalStrings;
+
+
+##############################################################
+#
+#  Answers
+#
+#
+$dfuncofc = $dfunc->substitute(x=>$c);
+$funcofc = $func->substitute(x=>$c);
+$ans = Compute("$dfuncofc*x + $funcofc - $dfuncofc * $c "); 
+ANS($ans->cmp());
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

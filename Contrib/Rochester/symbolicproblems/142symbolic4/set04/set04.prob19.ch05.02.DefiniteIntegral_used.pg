@@ -1,0 +1,56 @@
+## Original: /Library/ma122DB/set11/s5_2_51.pg
+
+##DESCRIPTION
+##  Properties of the definite integrals
+##ENDDESCRIPTION
+##KEYWORDS('integrals', 'theory')
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Integrals')
+## DBsection('The Definite Integral')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('5.2')
+## Problem1('49')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', m=>'Real',M=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$m = Formula("m");
+$M = Formula("M");
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \( $m \le f(x) \le $M\) whenever \(a \le x \le b\). Complete the inequality: 
+$PAR
+$BCENTER
+\{ans_rule(30)\} \(\displaystyle \le \int_a^bf(x)dx \le \)\{ans_rule(30)\}
+$ECENTER
+$PAR
+Your answers should be in terms of \(m\), \(M\), \(a\), and \(b\).
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("($b-$a)*$m ");
+$ans2 = Compute("-($a-$b)*$M");
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+

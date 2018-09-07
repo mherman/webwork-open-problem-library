@@ -1,0 +1,72 @@
+# DESCRIPTION
+# Problem from Functions Modeling Change, Connally et al., 3rd ed.
+# WeBWorK problem written by Adam Spiegler, <aspiegler@luc.edu>
+# ENDDESCRIPTION
+
+## DBsubject(Algebra)
+## DBchapter(Functions)
+## DBsection(Compositions and combinations of functions)
+## Institution(Loyola University Chicago)
+## Author(Adam Spiegler)
+## MLT(ccf-harder-mix)
+## MLTleader(1)
+## Level(2)
+## TitleText1('Functions Modeling Change')
+## AuthorText1('Connally')
+## EditionText1('3')
+## Section1('8.3')
+## Problem1('44')
+## TitleText2('Functions Modeling Change')
+## AuthorText2('Connally')
+## EditionText2('4')
+## Section2('10.')
+## Problem2('44')
+## KEYWORDS('composition','function')
+
+DOCUMENT();
+
+loadMacros("PG.pl",
+           "PGbasicmacros.pl",
+           "PGchoicemacros.pl",
+           "PGanswermacros.pl",
+           "PGgraphmacros.pl",
+           "PGauxiliaryFunctions.pl",
+           "extraAnswerEvaluators.pl",
+           "MathObjects.pl",
+);
+
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a =>'Real' , b => 'Real', c => 'Real');
+
+$showPartialCorrectAnswers = 1;
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Let \( u(x) = e^{a x} \) and \( v(x) = b x + c \). The quantity \(  (v[u(x)] )^2 \) can be written in the simple form \[  (v[u(x)] )^2= A e^{2 B} + C e^{B} + D, \] where \(A\), \(B\), \(C\), and \(D\) are given in terms of \(a\), \(b\), and \(c\). 
+$BR 
+Compute \(A\), \(B\), \(C\), and \(D\).
+
+$PAR
+\(A = \) \{ans_rule(5)\} $BR
+\(B = \) \{ans_rule(5)\} $BR
+\(C = \) \{ans_rule(5)\} $BR
+\(D = \) \{ans_rule(5)\} $BR
+END_TEXT
+Context()->normalStrings;
+
+$A = Compute("b^2");
+$B = Compute("ax ");
+$C = Compute("2*b*c");
+$D = Compute("c^2");
+
+ANS( $A->cmp());
+ANS( $B->cmp());
+ANS( $C->cmp());
+ANS( $D->cmp());
+
+Context()->normalStrings;
+
+
+ENDDOCUMENT();

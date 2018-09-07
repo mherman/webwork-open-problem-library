@@ -1,0 +1,101 @@
+## DESCRIPTION
+##  Calculus: How Derivatives Affect the Shape of a Graph
+## ENDDESCRIPTION
+
+## Tagged by YL
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of Differentiation)
+## DBsection(Summary of curve sketching)
+## Date(5/29/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## MLT(SCS_all_poly)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('4.3')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('4.3')
+## Problem2('')
+## KEYWORDS('derivatives', 'shape of graph')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl");
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+
+Context("Interval");
+Context()->constants->add(A=>Real(cos(exp(.387))), B=> Real(-sin(exp(.387))), C=> Real(tan (exp(.387))) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = A;
+$B = B;
+$C = random(-15,15,1);
+$func = Compute("$A * x^3 + $B * x + $C ")->reduce;
+
+@ans = (0,1,2,3,4,5,6,7,8,9,10);
+
+$pt1 = Formula("-sqrt(-($B)/(3*$A))");
+$pt2 = Formula("sqrt(-($B)/(3*$A))");
+$pt3 = Formula("0");
+
+$ans[0] = Compute("$pt1, $pt2");
+$ans[1] = Compute("(-infinity,$pt1)U($pt2,infinity) ");
+$ans[2] = Compute("($pt1,$pt2)");
+$ans[3] = Compute("$pt2");
+$ans[4] = $func->substitute(x=>$pt2);
+$ans[5] = Compute("$pt1");
+$ans[6] = $func->substitute(x=>$pt1);
+$ans[7] = Compute(" ($pt3,infinity) ");
+$ans[8] = Compute("( -infinity, $pt3) ");
+$ans[9] = $pt3 ;
+$ans[10] = $func->substitute(x=>$pt3);
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the function \(f(x) = $func\), with \(B \lt 0 \lt A \). 
+$PAR
+(A) Find the critical numbers for \(f\). If there are more than one, separate your answers by commas.
+$BR
+\{ans_rule(30)\}
+$PAR
+(B) Where is \(f\) increasing? $BR
+\{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\}
+$PAR
+(C) Where is \(f\) decreasing? $BR
+\{ans_rule(30)\}\{AnswerFormatHelp("Intervals")\}
+$PAR
+(D) For what value(s) of \(x\) does \(f\) have a local minimum? What is the value of \(f\) at this (these) local minimum (minima)?$BR
+\(x = \)\{ans_rule(30)\}, \(f = \) \{ans_rule(30)\}
+$PAR
+(E) For what value(s) of \(x\) does \(f\) have a local maximum? What is the value of \(f\) at this (these local maximum (maxima)? $BR
+\(x = \)\{ans_rule(30)\}, \(f = \) \{ans_rule(30)\}
+$PAR
+(F) Where is \(f\) concave up? $BR
+\{ans_rule(30)\}\{AnswerFormatHelp("Intervals")\} 
+$PAR
+(G) Where is \(f\) concave down? $BR
+\{ans_rule(30)\} \{AnswerFormatHelp("Intervals")\} 
+$PAR
+(H) For what value(s) of \(x\) does \(f\) have a point (points) of inflection? What is the value of \(f\) at this (these) point (points)?$BR
+\(x = \)\{ans_rule(30)\}, \(f = \) \{ans_rule(30)\}
+$PAR
+$BBOLD Your answers should all be in terms of \(A\) and \(B\).
+END_TEXT
+Context()->normalStrings;
+for my $i (0 .. $#ans){
+ANS($ans[$i]->cmp);
+}
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

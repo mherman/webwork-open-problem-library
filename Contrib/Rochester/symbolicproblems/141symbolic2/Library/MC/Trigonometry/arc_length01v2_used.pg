@@ -1,0 +1,61 @@
+##DESCRIPTION
+## Relating radian measure to arclength and area of the sector
+##ENDDESCRIPTION
+
+## DBsubject('Trigonometry')
+## DBchapter('Circular Definition for Trig functions')
+## DBsection('Arc Length and Area')
+## Date('January 2012')
+## Author('John Travis')
+## Institution('Mississippi College')
+## TitleText1('Trigonometry')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+##KEYWORDS('radian', 'unit circle','arclength','area')
+
+DOCUMENT();      
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl", 
+"PGgraphmacros.pl",
+"MathObjects.pl",
+"contextFraction.pl",
+);
+
+TEXT(&beginproblem);
+
+$showPartialCorrectAnswers = 0;
+$showHint = 3;
+Context("Numeric");
+Context()->variables->are(r => 'Real');
+$r = Formula("r");        # circle radius, non-integer
+$random = random(1,11,1);
+Context("Fraction");
+$thetaoverpi = Compute("$random/  6");
+$theta = $thetaoverpi * pi;   
+
+$radians = $theta;
+$s = $r*$radians;
+
+Context()->texStrings;
+BEGIN_TEXT
+A circle has radius \($r\). Compute the length of the arc of this circle subtended by a central angle \(\theta = $thetaoverpi \pi \):
+
+
+$PAR
+Arclength  = \{ ans_rule(20) \}.
+
+END_TEXT
+Context()->normalStrings;
+
+ANS($s->cmp );
+
+
+
+ENDDOCUMENT(); 

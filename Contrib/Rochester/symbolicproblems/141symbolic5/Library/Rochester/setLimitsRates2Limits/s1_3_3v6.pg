@@ -1,0 +1,42 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are(a => 'Real', A=> 'Real' , B => 'Real');
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Let \(f(x) = \frac{Ax^3 + Bx^2 - a^2 A x -a^2 B}{x^2-a^2}\). Compute, in terms of \(a\), \(A\), and \(B\), 
+\[ \lim_{ x \rightarrow a} f(x)\] 
+and 
+\[ \lim_{ x \rightarrow b} f(x)\] 
+If the limit does not exist, write "DNE".
+$BR
+$PAR
+\( \lim_{ x \rightarrow a} f(x) \)  \{ans_rule(25) \}
+$BR
+\( \lim_{ x \rightarrow b} f(x) \)  \{ans_rule(25) \}
+$BR
+END_TEXT
+
+$ans1 = Compute("B+A a");
+ANS($ans1->cmp());
+
+$ans2 = Compute("B- A a");
+ANS($ans2->cmp());
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+
+

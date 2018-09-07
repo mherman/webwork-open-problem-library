@@ -1,0 +1,91 @@
+# DESCRIPTION
+# Problem from Calculus, single variable, Hughes-Hallett et al., 4th ed.
+# WeBWorK problem written by Gavin LaRose, <glarose@umich.edu>
+# ENDDESCRIPTION
+
+## Tagged by glr 12/09/08
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Implicit differentiation)
+## Institution(University of Michigan)
+## Author(Gavin LaRose)
+## MLT(xy_powers_log)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus')
+## AuthorText1('Hughes-Hallett')
+## EditionText1('4')
+## Section1('3.7')
+## Problem1('11')
+## TitleText2('Calculus')
+## AuthorText2('Hughes-Hallett')
+## EditionText2('5')
+## Section2('3.7')
+## Problem2('11')
+## TitleText3('Calculus')
+## AuthorText3('Hughes-Hallett')
+## EditionText3('6')
+## Section3('3.7')
+## Problem3('14')
+## KEYWORDS('calculus','derivative','implicit functions','implicit differentiation')
+
+## Textbook tags
+## HHChapter1('Short-Cuts to Differentiation')
+## HHChapter2('Short-Cuts to Differentiation')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+######################################################
+###Setup####
+Context("Numeric");
+Context()->variables->add(y => 'Real', a=> 'Real', b=> 'Real', c=> 'Real', A=> 'Real', B=> 'Real', C=> 'Real');
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+$A = Compute("A");
+$B = Compute("B");
+$C = Compute("C");
+
+$func1 = Compute("$a* x^2 + $b*x + $c")->reduce;
+$func2 = Compute("$A*y^2 + $B * y + $C")->reduce;
+
+
+######################################################
+###Text###
+Context()->texStrings;
+BEGIN_TEXT
+Use implicit differentiation to find \(\frac{dy}{dx} \), in terms of \(x\), \(y\), \(a\), \(b\), \(c\), \(A\), \(B\), and \(C\), if \( ($func1) \ln{y} = ($func2) \ln{x} \).
+$PAR
+\(\frac{dy}{dx} = \)\{ans_rule(40)\}
+
+
+END_TEXT
+
+
+#######################################################
+###Answers####
+Context()->normalStrings;
+
+$dfunc1= $func1->D(x);
+$dfunc2 = $func2->D('y');
+
+$num = Compute("y * ($func2) - x y *($dfunc1)*ln(y)");
+$den = Compute("x * ($func1) - x y *($dfunc2)*ln(x)");
+
+$ans = Compute("$num / $den");
+
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();

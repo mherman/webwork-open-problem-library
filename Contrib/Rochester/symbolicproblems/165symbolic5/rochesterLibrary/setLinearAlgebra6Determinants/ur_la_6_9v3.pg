@@ -1,0 +1,78 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 4/29/06
+
+## DBsubject(Linear algebra)
+## DBchapter('Determinants')
+## DBsection('Properties')
+## Date('6/3/2002')
+## TitleText1('Elementary Linear Algebra')
+## AuthorText1('Larson, Edwards, Falvo')
+## EditionText1('5')
+## Section1('3.3')
+## Problem1('19')
+## KEYWORDS('linear algebra', 'matrix', 'determinant')
+## TitleText2('Linear Algebra with Applications')
+## AuthorText2('Jeffrey Holt')
+## EditionText2('1')
+## Section2('5.2')
+## Problem2('')
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"IansMacros.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Matrix");
+Context()->constants->remove(e,i);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+f=>Real(random(-10,10,1)),
+g=>Real(random(-10,10,1)),
+h=>Real(random(-10,10,1)),
+i=>Real(random(-10,10,1)),
+n=>Real(random(2,19,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+$e = Formula("e");
+$f = Formula("f");
+$g = Formula("g");
+$h = Formula("h");
+$i = Formula("i");
+$n = Compute("n");
+$A = Matrix([
+[$a,$b,$c],
+[$d,$e,$f],
+[$g,$h,$i]
+]);
+$det = det($A);
+$answer = ($det)**($n); 
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \[A = $A .\]
+Compute \(\det(A^{$n}) \) in terms of \(a,b,c,d,e,f,g,h,\) and \(i\).
+$PAR
+\(\det(A^{$n}) = \)\{ans_rule(30)\}
+$PAR
+
+
+END_TEXT
+
+ANS($answer->cmp);
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

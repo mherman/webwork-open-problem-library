@@ -1,0 +1,36 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are( a=> 'Real', b=> 'Real', c=>'Real', A => 'Real', B=>'Real');
+$a = Compute("a");
+$b =Compute("b");
+$c = Compute("c");
+$A = Compute("A");
+$B = Compute("B");
+$x0 = random(-5,5,1);
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute, in terms of \(A\) and \(B\), 
+\[ \lim_{ x \rightarrow $x0 } ($a x^2 + $b x + $c )( $A x + $B) \]
+$PAR \{ans_rule(25) \}
+$BR
+END_TEXT
+
+$ans = Compute("$A * ($x0)^3 * $a + ($B * $a + $A * $b)*($x0)^2+($B*$b + $A * $c)*$x0 + $B*$c");
+ANS($ans->cmp());
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+
+

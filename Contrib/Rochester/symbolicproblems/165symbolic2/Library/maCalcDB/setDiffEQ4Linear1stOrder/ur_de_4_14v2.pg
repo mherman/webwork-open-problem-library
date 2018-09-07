@@ -1,0 +1,65 @@
+##DESCRIPTION
+## tcao tagged and PAID on 3-22-2004
+
+## DBsubject(Differential equations)
+## DBchapter(First order differential equations)
+## DBsection(Integrating factor)
+## Date(6/3/2002)
+## MLT(integrating_factor_cancel)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('9.4')
+## Problem1('19')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('9.5')
+## Problem2('19')
+## KEYWORDS('differential', 'equation')
+##
+##ENDDESCRIPTION
+
+DOCUMENT() ;        # the first executable line
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+) ;
+
+TEXT(beginproblem()) ;
+
+$showPartialCorrectAnswers = 1 ;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real', t=>'Real', y=>'Real', A=>Real(.69785), B=>'Real', p=>'Real');
+$a = Real(non_zero_random(-8,8,1));
+$b = Real(non_zero_random(-8,8,1));
+$c = Real(random(-8,8,1));
+$A = Formula("A");
+$B = Formula("B");
+$p = Formula("p");
+
+$bty = Formula("$b*t*y")->reduce;
+$ctstuff = Formula("$c* t^($p)*e^(-$b/(2*$a)*t^2) ")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(p \ne -1\) and \(A \gt 0 \), find the solution \(y = y(t) \) to the initial-value problem
+\[ \begin{aligned} 
+&$a y^{\prime} + $bty = $c t^{$p} e^{\frac{-$b}{2 ($a)} t^2}, \\
+&y($A) = $B, 
+\end{aligned} \]
+on the interval \( ( 0, \infty) \) in terms of \(p\), \(A\), and \(B\).
+$PAR 
+\(y = \)\{ans_rule(30)\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("$B*e^($b/(2*$a)*(($A)^2 -t^2 )) + $c/($a*($p + 1))*e^-($b/(2*$a)*t^2 ) *(t^($p+1)-($A)^($p+1) )");
+ANS($ans->cmp);
+
+ENDDOCUMENT() ;        # the last executable line
+
+

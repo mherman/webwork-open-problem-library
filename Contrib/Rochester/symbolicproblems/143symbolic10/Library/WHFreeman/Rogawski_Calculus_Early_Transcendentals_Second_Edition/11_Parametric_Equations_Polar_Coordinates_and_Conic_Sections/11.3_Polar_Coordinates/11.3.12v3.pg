@@ -1,0 +1,54 @@
+## DBsubject(Trigonometry)
+## DBchapter(Polar coordinates & vectors)
+## DBsection(Curves)
+## Institution(W.H.Freeman)
+## Author(JustAsk - Kobi Fonarov)
+## MLT(PolarCircle)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('11.3')
+## Problem1('12')
+## KEYWORDS('calculus')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+$showPartialAnswersCorrect = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=> 'Real', b=> 'Real');
+Context()->constants->add('theta'=>Real(cos(exp(.12))) );
+Context()->constants->set(theta=>{TeX=>'\theta'});
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$a = Formula("a");
+$b = random(-5,5,5);
+$func = Formula("$a *cos(theta) + $b*sin(theta)")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+$BR
+The polar equation \(r(\theta) = $func \) is the equation of a circle. This circle can be expressed in rectangular coordinates in the standard form \((x-h)^2 + (y-k)^2 = \rho^2,\) where \((h,k)\) is the center and \(\rho \gt 0 \) is the radius. Compute \(h\), \(k\), and \(\rho\) for this circle in terms of \(a\).
+$PAR
+\(h =\)\{ans_rule(30)\}
+$BR
+\(k =\)\{ans_rule(30)\}
+$BR
+\(\rho = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("1/2 $a");
+$ans2 = Compute("1/2 $b ");
+$ans3 = Compute("1/2*sqrt(($a)^2+($b)^2)");
+ANS(
+$ans1->cmp,
+$ans2->cmp,
+$ans3->cmp
+);
+
+
+ENDDOCUMENT();

@@ -1,0 +1,63 @@
+##DESCRIPTION
+## Write parametric equations in Cartesian form
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Parametric)
+## DBsection(Eliminating the parameter)
+## Date(6/3/2002)
+## MLT(LinLin)
+## MLTleader(1)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('10.1')
+## Problem1('1')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('11.1')
+## Problem2('7 8 9 10 11 12 13 14')
+## KEYWORDS('parametric equation', 'Cartesian equation')
+DOCUMENT();
+loadMacros(
+"PG.pl",
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', B=> 'Real', a=> 'Real', b=> 'Real', t=>'Real');
+$A = Compute("A");
+$B = Compute("B");
+$b = Compute("b");
+$a = Compute("a");
+
+$funcx = Compute("$a * t + $b ")->reduce;
+$funcy = Compute("$A*t + $B")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Eliminate the parameter \(t\) from the set of parametric equations.$BR
+\[  \begin{array}{rl}
+& x = $funcx \\
+& y = $funcy
+\end{array}  \]
+
+where \(a \ne 0 \), to find the \(\alpha\) and \(\beta,\) such that \(y = \alpha x + \beta \). Your answers should be expressed in terms of \(A\), \(B\), \(a\), and \(b\). 
+$PAR
+\(\alpha = \)\{ans_rule(15)\}$BR
+\(\beta = \)\{ans_rule(15)\} $BR
+
+END_TEXT
+Context()->normalStrings;
+ANS(Compute("$A /$a")->cmp);
+ANS(Compute("$B-$A*$b/($a)")->cmp);
+
+ENDDOCUMENT();

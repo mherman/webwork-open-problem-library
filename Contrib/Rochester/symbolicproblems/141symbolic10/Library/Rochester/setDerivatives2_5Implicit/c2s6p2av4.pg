@@ -1,0 +1,91 @@
+## DESCRIPTION
+##   Implicit Differentiation and Tangent Line
+## ENDDESCRIPTION
+
+## Tagged by nhamblet
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Implicit differentiation)
+## Date(6/3/2002)
+## Institution(OSU)
+## Author(Utah ww group)
+## MLT(xy_powers_slope_new)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('3.8')
+## Problem1('8')
+## TitleText2('Mathematical Applications')
+## AuthorText2('Ronal J. Harshbarger and James J. Reynolds')
+## EditionText2('8')
+## Section2('Applications of Derivatives')
+## Problem2('')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('6')
+## Section3('3.5')
+## Problem3('8')
+## KEYWORDS('Implicit', 'Derivative', 'Tangent','derivatives', 'tangent line', 'implicit differentiation','Implicit Derivative')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(y => 'Real', A=> 'Real', B=> 'Real', C=> 'Real', D=> 'Real', E=> 'Real', F=> 'Real');
+
+$x = Compute("x");
+$y = Compute("y");
+$A= Compute("A");
+$B = Compute("B");
+$C = Compute("C");
+$D = Compute("D");
+$E = Compute("E");
+$F = random(-1252,152151,1);
+
+$func = Compute("$A* ($x)^2 + $B * $x * $y + $C *($y)^2 + $D*$x + $E*$y + $F");
+$functex = $func->reduce->TeX;
+#$dfunc = $func->D(x);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+Use implicit differentiation to find \(\frac{dy}{dx}\), in terms of \(x\), \(y\), \(A\), \(B\), \(C\), \(D\), and \(E\), if 
+\[ $functex = 0. \]
+
+$PAR
+ \(\frac{dy}{dx} = \)\{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+
+
+##############################################################
+#
+#  Answers
+#
+#
+$ans = Compute(" - (2 *$A * $x + $B*$y + $D)/($B*$x + 2 *$C * $y + $E)");
+ANS($ans->cmp());
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

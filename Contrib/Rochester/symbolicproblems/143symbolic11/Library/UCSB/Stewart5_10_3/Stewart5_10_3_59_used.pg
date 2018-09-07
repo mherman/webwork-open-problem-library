@@ -1,0 +1,50 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Polar)
+## DBsection(Tangents)
+## Institution(UCSB)
+## MLT(cPLtrig)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('10.3')
+## Problem1('59')
+## KEYWORDS('polar coordinates')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(&beginproblem);
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(y=>'Real', A=> 'Real', C=> 'Real', B=> 'Real', C=> 'Real', theta=> 'Real');
+Context()->variables->set(theta=>{TeX=>'\theta'});
+
+$A = Formula("A");
+$B = Formula("B");
+$C = Formula("C");
+
+$func = Formula("$A + $B*cos(theta) + $C*sin(theta)")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+
+$PAR
+Compute the derivative \(\frac{dy}{dx} \) for the curve defined by the polar equation \(r(\theta) = $func \). Your solution should be in terms of \(\theta\), \(A\), \(B\), and \(C\).
+$PAR
+\(\frac{dy}{dx} = \)\{ans_rule(30)\}
+$PAR
+Note: use "theta" in place of \(\theta\) in your answer. 
+$PAR
+END_TEXT
+Context()->normalStrings;
+$num = Formula("$C*sin(2*theta)+$A*cos(theta)+$B*cos(2*theta)");
+$denom = Formula("$C*cos(2*theta)-$A*sin(theta) - $B*sin(2*theta)");
+$ans1 = Compute("$num/$denom");
+ANS($ans1->cmp);
+
+
+ENDDOCUMENT();

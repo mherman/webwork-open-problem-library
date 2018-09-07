@@ -1,0 +1,64 @@
+## DESCRIPTION
+## Precalculus: Trigonometry
+## ENDDESCRIPTION
+
+## KEYWORDS('trigonometry')
+
+
+## DBsubject('Trigonometry')
+## DBchapter('Trigonometric Functions of Angles')
+## DBsection('Trigonometry of Right Triangles')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a => 'Real' , b => 'Real');
+$a = Formula("a");
+$b = Formula("b");
+
+Context()->strings->add(none=>{});
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Let \(f\) be a function that is defined everywhere and let \(g(x) = $a x + $b\), with \(a \gt 0\). Find, in terms of \($a \) and \(b\), the value(s) of \(x\), if any, for which the function \(\frac{f}{g}\) is undefined.
+
+$PAR
+Value(s) of x: \{ans_rule(20)\}
+$BR
+$BBOLD Note: If there are multiple values, answer with a list with each item separated by commas. That is, if \(\frac{f}{g}\) is undefined at \(x = 1, x=2\), write "1 , 2". If there is no such value, write "none". $EBOLD
+$BR
+
+END_TEXT
+
+
+Context()->normalStrings;
+
+$ans1 = Compute("-$b/$a");
+
+
+ANS(($ans1)->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

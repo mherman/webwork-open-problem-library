@@ -1,0 +1,62 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Differential equations)
+## DBchapter(First order differential equations)
+## DBsection(Separable)
+## Date(6/3/2002)
+## MLT(Separable_Initial_Condition_Other_2)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('9.1')
+## Problem1('4')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('9.3')
+## Problem2('4')
+## KEYWORDS('differential equation' 'separable' 'initial','Differential Equation', 'Separable')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', p=>'Real', a=>'Real', b=>'Real');
+Context()->variables->set(x=>{limits=>[1,2]});
+Context()->variables->set(p=>{limits=>[0,2],resolution=>1});
+Context()->variables->set(A=>{limits=>[1,2]});
+
+$A = Formula("A");
+$a = random(-8,8,1);
+$b = random(-8,8,1);
+$p = Formula("p");
+
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(p \ne -1\), find the solution \(y = y(x)\) to the initial-value problem
+\[ \begin{aligned}
+&y^{\prime}  = $A x^{$p} y, \\
+&y($a) = $b, 
+\end{aligned} \]
+in terms of \(A\) and \(p\).
+$PAR
+\( y = \)\{ans_rule(30)\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans = Compute("$b*e^($A/($p+1)*(x^($p+1)-($a)^($p+1) ) )");
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,46 @@
+## Original: /setIntegrals2Indefinite/ur_in_2_1.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals')
+##  Evaluate the integral
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', B=>'Real', p=>'Real', q=>'Real', a=>'Real', b=>'Real');
+$A = random(-15,15,1);
+$B = random(-15,15,1);
+$p = Formula("p");
+$q = Formula("q");
+$a = Formula("a");
+$b = Formula("b");
+
+
+$func = Compute("$A* x^($p) + $B* x^($q) ")->reduce;
+Context()->texStrings;
+
+BEGIN_TEXT
+
+Compute \(\displaystyle \int_{$a}^{$b} ( $func ) dx \) in terms of \(p\), \(q\), \(a\), and \(b\). You may assume \(a\) and \(b\) are of the same sign and \(p,q \ne -1\).
+$PAR 
+\(\displaystyle \int_{$a}^{$b} ( $func ) dx =\)\{ans_rule(30)\}
+
+END_TEXT
+
+Context()->normalStrings;
+$ans1 = Compute("$A / ($p + 1) *(($b)^($p+1) - ($a)^($p+1) ) + $B / ($q + 1) *(($b)^($q+1) - ($a)^($q+1) ) ");
+ANS($ans1->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+
+

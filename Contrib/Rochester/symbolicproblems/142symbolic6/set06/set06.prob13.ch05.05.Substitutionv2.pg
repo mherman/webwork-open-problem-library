@@ -1,0 +1,51 @@
+## Original: /rochesterLibrary/setIntegrals14Substitution/sc5_5_32a.pg
+## Modified May 2007 by Paul Pearson
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'substitution')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->constants->add(
+a=>Real(random(2,8,1)),
+b=>Real(random(2,8,1)),
+A=>Real(random(2,7,1)),
+B=>Real(random(2,7,1)),
+p=>Real(random(2,7,1)),
+q=>Real(random(2,7,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = Formula("A");
+$a = random(-15,15,1);
+$b = random(-15,15,1);
+while($b == $a ){
+$b = random(-15,15,1);
+}
+$B = Formula("B");
+$p = Formula("p");
+$q = Formula("q");
+$func = Compute("x^$p * ($A + $B*x^($p+1))^$q ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int_{$a}^{$b} $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(A\), \(B\), \(p\), and \(q\). You may assume \(B \ne 0 \) and \(p,q \ne -1\).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans = Formula("($A + $B*(x)^($p+1))^($q+1)/($B*($p+1)*($q+1))");
+
+$ans = $ans->substitute(x=>$b) - $ans->substitute(x=>$a);
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

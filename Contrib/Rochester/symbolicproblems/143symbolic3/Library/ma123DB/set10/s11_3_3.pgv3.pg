@@ -1,0 +1,103 @@
+##DESCRIPTION
+## Use integral test to test a series for convergence.
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Integral test)
+## Date(6/3/2002)
+## Institution(University of Minnesota)
+## Author(Justin Sukiennik)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.3')
+## Problem1('3')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('10.3')
+## Problem2('5')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('5e')
+## Section3('11.3')
+## Problem3('')
+## TitleText4('Calculus')
+## AuthorText4('Dale Varberg, Edwin J. Purcell, and Steve E. Rigdon')
+## EditionText4('9')
+## Section4('.')
+## Problem4('')
+## TitleText5('Calculus: Concepts and Contexts')
+## AuthorText5('Stewart')
+## EditionText5('4 Custom UMTYMP Ed.')
+## Section5('11.3')
+## Problem5('')
+## KEYWORDS('Series' , 'Integral Test' ,'calculus','series','convergence','integral test','convergent','divergent', 'Converge', 'Diverge', Integral Test', 'series', 'integral test', 'improper integral', 'Convergence' )
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserPopUp.pl",
+#"PGbasicmacros.pl",
+#"PGanswermacros.pl",
+#"PGauxiliaryFunctions.pl"
+"AnswerFormatHelp.pl",
+  "contextInequalitiesAllowStrings.pl",
+);
+
+TEXT(beginproblem());
+
+Context("Numeric");
+Context()->variables->add(A=> 'Real', p=> 'Real', n=> 'Real', N=> 'Real', B=> 'Real');
+$A = Compute("A");
+$B = Compute("B");
+$p = list_random(.5,1,1.5,2);
+$N = Compute("N");
+
+$func = Compute("1/($A *x - $B)^($p) ")->reduce;
+$funcn = Compute("1/($A * n - $B)^($p)")->reduce;
+$ans2 = Compute("1/($A^($p)*($p-1)) ");
+
+
+Context("Inequalities-AllowStrings");
+Context()->variables->add(p=> 'Real');
+Context()->constants->add(A => Real(exp(2)/cos(3)), n=> Real(exp(cos(2))) , N=> Real(cos(exp(3))), B=> Real(sin(cos(exp(1)))) );
+Context()->flags->set(formatStudentAnswer=>"parsed");
+Context()->strings->add(none=>{});
+Context()->strings->add('yes'=>{}, 'no'=>{},'N/A'=>{});
+
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(A \gt 0\) and \(N \) is an integer with \(N \ge \frac{B}{A} + 1 \), complete the following:
+$BR
+(i) Does the improper integral \(\displaystyle \int_{\frac{$B}{$A} +1}^{\infty} $func dx \) converge? Enter "yes" or "no".
+\{ans_rule(5)\} 
+$PAR
+(ii) If you answered "yes" to (i), what is the value of \(\displaystyle \int_{\frac{$B}{$A}+1}^{\infty} $func dx\), in terms of \(A\) and \(B\)? Otherwise, answer "N/A".
+$BR
+\(\displaystyle \int_{\frac{$B}{$A}+1}^{\infty} $func dx = \)\{ans_rule(30)\}
+$PAR
+(iii) Does the sum \(\displaystyle \sum_{n= $N}^{\infty} $funcn \) converge? Enter "yes" or "no".
+\{ans_rule(5)\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+if($p>1){
+ANS( Compute(" yes ")->cmp );
+ANS( $ans2->cmp);
+ANS( Compute("yes ")->cmp);
+}
+else{
+ANS( Compute("no")->cmp);
+ANS( Compute("N/A")->cmp);
+ANS( Compute("no")->cmp);
+}
+COMMENT('MathObject version');
+ENDDOCUMENT();

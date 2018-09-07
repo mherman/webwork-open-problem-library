@@ -1,0 +1,73 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 4/29/06
+
+## DBsubject(Linear algebra)
+## DBchapter('Determinants')
+## DBsection('Properties')
+## Date('6/3/2002')
+## TitleText1('Elementary Linear Algebra')
+## AuthorText1('Larson, Edwards, Falvo')
+## EditionText1('5')
+## Section1('3.3')
+## Problem1('19')
+## KEYWORDS('linear algebra', 'matrix', 'determinant')
+## TitleText2('Linear Algebra with Applications')
+## AuthorText2('Jeffrey Holt')
+## EditionText2('1')
+## Section2('5.2')
+## Problem2('')
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"IansMacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->remove('x');
+$toBeEval = <<'END';
+Context()->constants->add(
+n=>Real(random(2,9,1)),
+x=>Real(random(-20,20,1)),
+y=>Real(random(-20,20,1)),
+k=>Real(random(-10,10,1)),
+m=>Real(random(-3,5,1)),
+);
+END
+generate_perl_variables_from_constants($toBeEval,"x,y");
+
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Suppose \(A\) and \(B\) are \( $n \times $n \) matrices, \(\det \, (A)=$x\), and \(\det \, (B)=$x\). $BR
+Compute \(\det(A B)\), \(\det(B A)\), \(\det($k A)\), \(\det(A^{T})\), and \(\det(B^{$m})\) \{InTermsOfString()\}.
+$PAR
+\( \det \, (AB) = \) \{ans_rule(10)\}, 
+$BR
+\(\det \, (BA) = \) \{ans_rule(10)\},
+$BR
+\( \det \, ($k A) = \) \{ans_rule(10)\}, 
+$BR
+\( \det \, (A^{T}) = \) \{ans_rule(10)\}, 
+$BR
+\( \det \, (B^{$m}) = \) \{ans_rule(10)\}. 
+
+
+END_TEXT
+
+ANS(
+Compute("$x * $y")->cmp,
+Compute("$x * $y")->cmp,
+Compute("($k)^($n)*$x")->cmp,
+Compute("$x")->cmp,
+Compute("($y)^($m)")->cmp,
+);
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

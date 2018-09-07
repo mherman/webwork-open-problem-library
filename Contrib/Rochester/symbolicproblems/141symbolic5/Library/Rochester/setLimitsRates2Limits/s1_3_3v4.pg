@@ -1,0 +1,76 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are( a=> 'Real', b=> 'Real', c=>'Real', A => 'Real', B=>'Real');
+$a = 0;
+$b = 0;
+$c = 0;
+$A = Compute("A");
+$B = Compute("B");
+$x0 = random(-5,5,1);
+
+$limit = Compute("DNE");
+
+while($a == 0 && $b == 0 && $c == 0 ){
+
+	$a = random(-5,5,1);
+	$b = random(-5,5,1);
+	$c = random(-5,5,1);
+	$x0 = random(-5,5,1);
+	
+	if($a != 0){
+		if($x0 == (-$b + sqrt($b^2 - 4*$a*$c))/(2*$a) ||
+		   $x0 == (-$b + sqrt($b^2 - 4*$a*$c))/(2*$a) ){
+			
+		        $limit = Compute("DNE");
+			 
+		}
+		else{
+			$limit = Compute("($x0*$A + $B)/($a*$x0^2+$x0*$b+$c)");
+		}
+	}
+	else{
+		if($b !=0) {
+			if($x0 == -$c/$b){
+				
+				$limit = Compute("DNE");
+				
+			}
+			else{
+				$limit = Compute("($A*$a + $B)/($b*$x0 + $c)");
+			}
+		}
+		else{
+			if($c!= 0){
+				$limit = Compute("($x0*$A + $B)/$c");
+			}
+		}
+	}
+}
+Context()->texStrings;
+BEGIN_TEXT
+Compute, in terms of \(A\) and \(B\), 
+\[ \lim_{ x \rightarrow $x0 } \frac{$A x + $B}{ $a x^2 + $b x + $c  }\] 
+If the limit does not exist, write "DNE".
+$BR
+$PAR \{ans_rule(25) \}
+$BR
+END_TEXT
+
+$ans = $limit;
+ANS($ans->cmp());
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+
+

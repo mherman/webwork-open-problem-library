@@ -1,0 +1,63 @@
+##DESCRIPTION
+##
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Parametric)
+## DBsection(Area)
+## Date(6/3/2002)
+## Institution(Rochester)
+## Author(Arnie Pizer)
+## MLT(CosSin)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('10.2')
+## Problem1('35')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('6.1')
+## Problem2('31')
+## KEYWORDS('integrals', 'area between curvers')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(r=> 'Real', h=> 'Real', k=> 'Real');
+
+$r = Formula("r");
+$h = random(-15,15,1);
+$k = random(-15,15,1);
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute, in terms of \(r\), the area enclosed by and the arc length of the curve defined by the parametric equations 
+\[ \begin{aligned} 
+&x(t) = $r \cos{\theta}+ $h \pi \\
+&y(t) = $r \sin{\theta}+ $k \pi
+\end{aligned} \]
+for \(0 \le \theta \le 2 \pi\).
+$PAR
+Area = \{ans_rule(30)\}
+$BR
+Arc length = \{ans_rule(30)\}
+
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("($r)^2*pi");
+$ans2 = Compute("2(pi*|$r|)");
+
+ANS($ans1->cmp, $ans2->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

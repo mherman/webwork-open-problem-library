@@ -1,0 +1,58 @@
+## Original: /Library/ma122DB/set13/s6_5_5.pg
+
+##DESCRIPTION
+## Find average value of a function on a given interval
+##KEYWORDS('integrals', 'average value of a function')
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Integration')
+## DBsection('Average Value of a Function')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('6.5')
+## Problem1('5')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', B=>'Real', a=>'Real', b=>'Real');
+$A = Formula("A");
+$B = Formula("B");
+$a = Formula("a");
+$b = Formula("b");
+$func = Compute("$A*x*e^($B*x^2 )")->reduce;
+
+
+TEXT(beginproblem());
+Context()->texStrings;
+
+BEGIN_TEXT
+Find the average value of the function \(f(x) = $func \) on the interval \([$a,$b]\). You may assume \($B \ne 0 \) and \($a \lt $b \). 
+$PAR 
+Average value of \(f(x) = \)\{ans_rule(30)\}
+$PAR
+Your answer should be in terms of \(A\), \(B\), \(a\), and \(b\). 
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans = Formula("($A*(e^($B*x^2 ) ) )/(2*$B*($b-$a) ) ");
+$ans = $ans->substitute(x=>$b) - $ans->substitute(x=>$a) ;
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

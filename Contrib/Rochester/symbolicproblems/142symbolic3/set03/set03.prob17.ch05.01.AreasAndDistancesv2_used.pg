@@ -1,0 +1,34 @@
+## Original: /rochesterLibrary/setDerivatives20Antideriv/c3s10p3.pg 
+
+#DESCRIPTION
+#KEYWORDS('derivatives', 'antiderivatives', 'distance,velocity,acceleration')
+#TYPE('word problem')
+# Anti-derivative -- Find the maximum height of a ball thrown straight up.
+#ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+$showPartialAnswersCorrect = 1;
+TEXT(beginproblem());
+
+Context("Numeric");
+Context()->variables->add(V=> 'Real', g=> 'Real');
+$V = random(2,20,1);
+$g = Formula("g");
+Context()->texStrings;
+BEGIN_TEXT
+An object is thrown directly upwards from the ground at a velocity of \($V \frac{m}{s} \). Recalling that the acceleration due to gravity is \(-$g \frac{m}{s^2}\), find the time at which the object reaches its maximum height. What is this maximum height? Your answers should be in terms of \($g\).
+$PAR 
+Time \(t = \)\{ans_rule(30)\} s $BR
+Height \(h = \)\{ans_rule(30)\} m
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$V / $g ");
+$ans2  = Compute("($V)^2 / (2 * $g) ");
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

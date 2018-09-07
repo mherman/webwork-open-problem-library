@@ -1,0 +1,44 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Indeterminate forms and L'Hopital's rule)
+## Institution(UCSB)
+## MLT(Indeterminate-TrigOverPoly-TwoTerm)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('4.4')
+## Problem1('26')
+## KEYWORDS('L'Hospital','Indeterminate','Limit')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=> 'Real', A=> 'Real');
+$a = random(-10,10,1);
+$A = Compute("A");
+
+$func = Formula("(cos($a * x) - 1 + 1/2 * $a^2 *x^2) /($A* x^4)")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute \( \displaystyle \lim_{x \to 0} $func \), in terms of \(A\). You may assume \(A \ne 0 \). 
+$BR
+\( \displaystyle \lim_{x \to 0} $func  = \)\{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("$a^4/(24*$A)");
+ANS($ans->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

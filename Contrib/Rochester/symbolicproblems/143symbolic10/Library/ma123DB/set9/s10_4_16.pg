@@ -1,0 +1,43 @@
+##Description
+##convert polar equation of a line to Cartesian form
+##EndDescription
+
+## Shotwell cleaned
+
+## DBsubject(Trigonometry)
+## DBchapter(Polar coordinates & vectors)
+## DBsection(Curves)
+## Date(6/3/2002)
+## MLT(LineInPolar)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('10.3')
+## Problem1('18')
+## KEYWORDS('polar equation', 'line')
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(A=> 'Real', B=> 'Real', C=> 'Real');
+$A = Formula("A");
+$B = Formula("B");
+$C = Formula("C");
+Context()->texStrings;
+BEGIN_TEXT
+The curve defined by \(\displaystyle r(\theta) = \frac{$A}{$B \sin{\theta} + $C \cos{\theta}}\), with \($B, A \ne 0 \), is a line. Write the equation for this line in slope-intercept form in rectangular coordinates. $PAR
+\(y = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("-$C/$B x + $A / $B ");
+ANS($ans1->cmp);
+
+ENDDOCUMENT();

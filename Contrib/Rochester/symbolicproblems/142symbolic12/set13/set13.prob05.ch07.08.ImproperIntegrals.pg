@@ -1,0 +1,72 @@
+## Original: /Library/ma123DB/set4/s7_8_17.pg
+
+##KEYWORDS('integrals', 'improper')
+##DESCRIPTION
+## Determine if an improper integral converges and evaluate it.
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Improper Integrals')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('7.8')
+## Problem1('17')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserPopUp.pl"
+
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+
+Context()->variables->add(n=>'Real');
+Context()->variables->set(n=>{limits=>[1,10], resolution=>1});
+$popup1 = PopUp(["?","yes","no"],"no");
+$popup2 = $popup1;
+$func = Compute("sin(x)")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+For \(n\) a positive integer, compute \(\displaystyle \int_{0}^{2 n \pi} $func dx \). 
+$BR
+\(\displaystyle \int_{0}^{2 n \pi} $func dx = \)\{ans_rule(30)\}
+$PAR
+Can you deduce the nature (i.e., convergent or divergent) of \(\displaystyle \int_{0}^{\infty} $func dx \) from this? 
+$BR
+Answer: \{$popup1->menu\}
+$PAR
+Now compute \(\displaystyle \int_{0}^{n \pi} $func dx \). 
+$BR
+\(\displaystyle \int_{0}^{n \pi} $func dx = \)\{ans_rule(30)\}
+$PAR
+Does \(\displaystyle \int_{0}^{\infty} $func dx\) converge?
+$BR
+Answer: \{$popup2->menu\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("0");
+$ans2 = Compute("1-(-1)^n");
+ANS(
+$ans1->cmp,
+$popup1->cmp,
+$ans2->cmp,
+$popup2->cmp
+);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

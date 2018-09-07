@@ -1,0 +1,57 @@
+## Original: /Library/UVA-Stew5e/setUVA-Stew5e-C04S07-Optimization/4-7-03.pg
+
+## DESCRIPTION
+##  Calculus: Optimization Problems
+## ENDDESCRIPTION
+
+## KEYWORDS('Optimization Problems')
+## Tagged by YL
+
+## DBsubject('Calculus')
+## DBchapter('Applications of Differentiation')
+## DBsection('Optimization Problems')
+## Date('5/29/2005')
+## Author('Jeff Holt')
+## Institution('UVA')
+## TitleText1('Calculus')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('4.7')
+## Problem1('3')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+
+TEXT(beginproblem());
+
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(C=>'Real');
+$C = Compute("C");
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Given a fixed number \(C\), find \(x\) and \(y\), with \(x+y = C\), such that the product \(x y \) is as large as possible. 
+$PAR 
+\(x =\)\{ans_rule(30)\} $BR
+\(y = \) \{ans_rule(30)\} $PAR
+What is the maximum product?$BR
+\(x y = \)\{ans_rule(30)\}
+$PAR
+ Your answers should be in terms of \(C\)
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("1/2 C");
+$ans2 = Compute("1/2 C");
+$ans3 = Compute("1/4 C^2");
+ANS($ans1->cmp,$ans2->cmp,$ans3->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

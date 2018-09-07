@@ -1,0 +1,74 @@
+##DESCRIPTION
+##Calculus: Differentiation
+##ENDDESCRIPTION
+
+##Tagged by YJ
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Evaluating limits - trigonometric)
+## Date(5/26/2005)
+## Institution(UCSB)
+## Author(Jeff Holt)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('3.4')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('3.3')
+## Problem2('')
+## KEYWORDS('calculus', 'differentiation','Differentiation','Trigonometric','Transcendental','Derivative')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+###################################################
+####Setup####
+Context("Numeric");
+Context()->variables->add(a=> 'Real', b=> 'Real');
+$a = Compute("a");
+$b = Compute("b");
+$c = $a+$b;
+$d = $a*$b;
+
+$func = Compute("(sin(x-$a))/(x^2 - $c * x + $d)")->reduce->TeX;
+###################################################
+####Text####
+Context()->texStrings;
+BEGIN_TEXT
+Let
+\(f(x) = $func \), with \( $a \ne $b\). 
+$BR
+Compute, in terms of \(a\) and \(b\), \(\displaystyle \lim_{x \to $a } f(x) \) and \(\displaystyle \lim_{x \to $b } f(x) \). 
+$PAR
+
+ \(\displaystyle \lim_{x \to $a } f(x) =\) \{ ans_rule(20) \}
+$BR
+ \(\displaystyle \lim_{x \to $b } f(x) =\) \{ans_rule(20)\}
+$BR
+Write "Infinity" for \(\infty\) and "-Infinity" for \( -\infty\). If the limit does not exist, write "DNE".
+END_TEXT
+###################################################
+####Answers####
+Context()->normalStrings;
+$ans = 1 /( $a-$b );
+ANS($ans->cmp());
+$ans = Compute("DNE");
+ANS($ans->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

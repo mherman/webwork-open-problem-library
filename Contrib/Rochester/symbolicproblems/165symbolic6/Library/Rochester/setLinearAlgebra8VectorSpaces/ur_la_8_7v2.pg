@@ -1,0 +1,68 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 5/3/06
+
+## DBsubject(Linear algebra)
+## DBchapter(Euclidean spaces)
+## DBsection(Linear combinations)
+## Institution('Rochester')
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('2.1')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Vector");
+Context()->constants->remove(k);
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+k=>Real(non_zero_random(-10,10,1)),
+l=>Real(non_zero_random(-10,10,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+$d = Compute("d");
+$k = Formula("k");
+$l = Formula("l");
+$x = Vector($a,$b);
+$y = Vector($c,$d);
+Context()->texStrings;
+
+BEGIN_TEXT
+Let \(x = $x\) and \(y = $y\) be vectors. $BR
+If \($k\) and \($l\) are real numbers, compute the vectors \($k x\), \($l y\), and \($k x + $l y\) in terms of \(k\) and \(l\).
+$PAR
+\($k x = \)\{ans_rule(30)\} \{AnswerFormatHelp("Vectors")\}
+$BR
+\($l y = \)\{ans_rule(30)\}\{AnswerFormatHelp("Vectors")\}
+$BR
+\($k x + $l y = \)\{ans_rule(30)\}\{AnswerFormatHelp("Vectors")\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+ANS(
+Vector($k*$a,$k*$b)->cmp,
+Vector($l*$c,$l*$d)->cmp,
+Vector($k*$a+$l*$c,$k*$b+$l*$d)->cmp,
+);
+
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.
+

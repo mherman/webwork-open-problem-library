@@ -1,0 +1,60 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Differential equations)
+## DBchapter(Higher order differential equations)
+## DBsection(Linear, constant coefficients, homogeneous (distinct real roots))
+## Institution(Rochester)
+## MLT(repeated_roots_second_order)
+## Level(3)
+## KEYWORDS('differential equation' 'second order' 'linear')
+
+DOCUMENT() ;       
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+
+) ;
+
+TEXT(beginproblem()) ;
+$showPartialCorrectAnswers = 1 ;
+
+Context("Numeric");
+Context()->constants->add(
+A=>Real(non_zero_random(1,10,1)),
+B=>Real(non_zero_random(1,10,1)),
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+);
+$A = Formula("A");
+$B = Formula("B");
+$a = Formula("a");
+$b = Formula("b");
+Context()->texStrings;
+BEGIN_TEXT
+
+Solve the initial value problem 
+
+\[ \begin{aligned}
+&$A y'' - $B y = 0 \\
+&y(0) = $a \\
+&y'(0) = $b 
+\end{aligned} \]
+in terms of \(A\), \(B\), \(a\), and \(b\). You may assume \(A,B \gt 0\).
+
+$PAR
+\(y(x) = \)\{ans_rule(30)\}
+$PAR
+
+
+END_TEXT
+Context()->normalStrings;
+
+ANS(Compute("1/2*(($a+$b*sqrt($A/$B))*e^(sqrt($B/$A)*x)+($a-$b*sqrt($A/$B))*e^(-sqrt($B/$A)*x) )  ")->cmp);
+
+
+ENDDOCUMENT() ;

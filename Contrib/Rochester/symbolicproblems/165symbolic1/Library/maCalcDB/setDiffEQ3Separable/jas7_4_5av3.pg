@@ -1,0 +1,72 @@
+##DESCRIPTION
+##  Separable Differential Equation
+##ENDDESCRIPTION
+
+## tcao tagged and PAID on 3-22-2004
+
+## DBsubject(Differential equations)
+## DBchapter(First order differential equations)
+## DBsection(Separable)
+## Date(6/3/2002)
+## MLT(Separable_Initial_Condition)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('9.3')
+## Problem1('8')
+## KEYWORDS('Differential Equation', 'Separable')
+
+DOCUMENT(); 
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+
+
+#############################
+#  Setup
+
+Context("Numeric");
+Context()->variables->add(A=>Real(.688),a=>'Real',b=>'Real', B=>Real(99.55), t=>'Real');
+$A = Formula("A");
+$B = Formula("B");
+$b = non_zero_random(-5,5,1);
+$a =non_zero_random(-5,5,1);
+
+#############################
+#  Main text
+
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(A \ne 0 \), find the solution  \(u = u(t)\) to the initial-value problem 
+\[ \begin{aligned}
+&$A u^{\prime} = e^{$a u + $b t} \\
+&u(0) = $B,
+\end{aligned} \]
+in terms of \(A\) and \(B\).
+$PAR
+\(u  = \)\{ans_rule(30)\}
+
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+
+############################
+#  Answers
+
+$showPartialCorrectAnswers = 1;
+
+$ans1 = Compute("-($a)^(-1)*log($a/($A*$b)*(1-e^($b*t) ) + e^(-$a*$B) ) ");
+ANS($ans1->cmp);
+
+
+
+COMMENT("MathObject version.");
+
+ENDDOCUMENT();

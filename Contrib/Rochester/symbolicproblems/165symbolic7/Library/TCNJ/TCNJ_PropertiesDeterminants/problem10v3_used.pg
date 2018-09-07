@@ -1,0 +1,85 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Determinants)
+## DBsection(Properties)
+## Institution(TCNJ)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('5.1')
+## Problem1('')
+## KEYWORDS('determinant' 'matrix' 'linearly independent')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+"IansMacros.pl"
+        );
+ 
+TEXT(beginproblem());    
+# Do not show which answers are incorrect.
+$showPartialCorrectAnswers = 0;
+ Context("Matrix");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->remove(i,e,k);
+Context()->constants->add(
+a=>random(-10,10,1),
+b=>random(-10,10,1),
+c=>random(-10,10,1),
+d=>random(-10,10,1),
+e=>random(-10,10,1),
+f=>random(-10,10,1),
+g=>random(-10,10,1),
+h=>random(-10,10,1),
+i=>random(-10,10,1),
+);
+
+if(Compute("a")==0)
+{Context()->constants->remove(a);
+Context()->constants->add(a=>non_zero_random(-10,10,1));}
+
+$a = Formula("a");
+$b = Compute("b");
+$c = Compute("c");
+$d = Compute("d");
+$e = Compute("e");
+$f = Compute("f");
+$g = Compute("g");
+$h = Compute("h");
+$i = Compute("i");
+
+$minor=$e*$i-$f*$h;
+if($minor==0)
+{$e=0;
+$f=non_zero_random(-10,10,1);
+$h=non_zero_random(-10,10,1);}
+
+$A = ColumnVector($a,$d,$g);
+$B = ColumnVector($b,$e,$h);
+$C = ColumnVector($c,$f,$i);
+$M = Matrix([
+[$a,$b,$c],
+[$d,$e,$f],
+[$g,$h,$i],
+]);
+$ans = det($M);
+Context()->texStrings;
+BEGIN_TEXT
+Consider the following three vectors in \( {\mathbb R}^3 \):
+$BR
+\[$A,$B,$C\]
+These three vectors span \( {\mathbb R}^3 \) if and only if \{ans_rule(30)\}\( \ne 0\). Your answer should be given in terms of \(a\).
+$PAR
+
+END_TEXT
+
+ANS($ans->cmp);
+
+ENDDOCUMENT();

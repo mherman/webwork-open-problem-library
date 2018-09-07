@@ -1,0 +1,64 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Differential equations)
+## DBchapter(Introductory concepts)
+## DBsection(Verification of solutions)
+## Institution(Rochester)
+## MLT(Verify_Matching)
+## Level(3)
+## KEYWORDS('differential equation' 'solution')
+
+DOCUMENT();        # This should be the first executable line .
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+
+Context()->variables->add(a => ["Real",limits => [1,5]]);
+Context()->variables->add(b => ["Real",limits => [6,10]]);
+
+$a = Formula("a");
+$b = Formula("b");
+
+
+Context()->texStrings;
+BEGIN_TEXT
+If the function \(y = \sin(k t) \) solves the differential equation \[ $a y^{\prime\prime} + $b y = 0,\] where \(a,b \gt 0 \), what are the two possible nonzero values of \(k\) in terms of \(a\) and \(b\)?
+$PAR
+\(k = \)\{ans_rule(30)\}
+$PAR
+Note: use a comma to separate your answers.
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("-sqrt(b/a),sqrt(b/a) ");
+
+ANS($ans1->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+#DESCRIPTION
+##  Algebra problem:  Algebra of Matrices
+##  Cubing a 2x2 matrix
+##ENDDESCRIPTION
+
+##Tagged by ynw2d
+
+## DBsubject(Linear algebra)
+## DBchapter('Matrices')
+## DBsection(Matrix algebra)
+## Institution('Rochester')
+## KEYWORDS('algebra', 'matrix operation', 'matrix')
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('3.2')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"PGmatrixmacros.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Matrix");
+################################
+sub matrix_cmp{
+$ansMatrix = shift;
+@ans = $ansMatrix->value;
+for my $i (0..$#ans){
+   for my $j (0.. $#{$ans[0]}){
+      ANS(($ans[$i][$j]->reduce)->cmp);
+   }
+}
+}
+
+sub MatrixCross{
+	my $M1 = shift;
+	my $M2 = shift; #MathObject matrices
+	my @M1data = $M1->value;
+	my @M2data = $M2->value;
+	die("Dimensions mismatch in matrix multiplication") unless(scalar(@{$M1data[0]})==scalar(@M1data));
+	my $rows = 1+$#M1data;
+	my $cols = 1+$#{$M2data[0]};
+	#say "rows: ",$rows;
+	#say "cols: ",$cols;
+	my @out = ();
+	for(my $i=0; $i<$rows; $i++){
+		#say("Entering first for loop: time ",$i);
+		for(my $j=0; $j<$cols; $j++){
+			#say("Entering second loop: time ",$j);
+			$out[$i][$j] = 0;
+			for(my $k=0; $k<1+$#{$M1data[0]}; $k++){
+				#say("Entering third loop: time ",$k);
+				$out[$i][$j]+=$M1data[$i][$k]*$M2data[$k][$j];
+			}
+		}
+	
+	}
+
+	return (Matrix(@out));
+
+}
+#####################################
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$a = Formula("a");
+$b = Formula("b");
+$c = Compute("c");
+$d = Compute("d");
+$A = Matrix([
+[$a,$b],
+[$c,$d],
+]);
+Context()->texStrings;
+BEGIN_TEXT
+If \[A= $A, \] compute \(A^2\) and \(A^3\) in terms of \(a\) and \(b\).
+$BR
+\{ mbox( "\(A^2 =\)", answer_matrix(2,2,5), "." ) \}
+\{ mbox( "\(A^3 =\)", answer_matrix(2,2,5), "." ) \}  
+
+END_TEXT
+$ansMatrix = MatrixCross($A,$A);
+matrix_cmp($ansMatrix);
+
+$ansMatrix = MatrixCross($A,$ansMatrix);
+matrix_cmp($ansMatrix);
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

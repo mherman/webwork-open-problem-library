@@ -1,0 +1,36 @@
+## Original: /rochesterLibrary/setIntegrals14Substitution/sc5_5_25.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'substitution')
+##ENDDESCRIPTION
+
+## Before doing anything, we must import the macro definitions on the next few lines.
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', B=>'Real',A=>'Real');
+$A = Formula("A");
+$a = non_zero_random(-15,15,1);
+$B = Formula("B");
+$func = Compute("$a/($A *x*ln($B*x))  ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(A\) and \(B\). You may assume \(A, B \ne 0 \).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans = FormulaUpToConstant("$a/$A * ln(|ln($B*x)|) ");
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

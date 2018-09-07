@@ -1,0 +1,54 @@
+## DESCRIPTION
+## First-Order Linear Differential Equations
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 3/10/06
+
+## DBsubject(Differential equations)
+## DBchapter(First order differential equations)
+## DBsection(Integrating factor)
+## Institution(ASU)
+## Level(3)
+
+DOCUMENT() ; 
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFunctionPrime.pl"
+) ;
+
+TEXT(beginproblem()) ;
+$showPartialCorrectAnswers = 1 ;
+Context("Numeric");
+parser::FunctionPrime->Enable();
+parserFunction('y'=>'exp(sin(x))');
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real',C=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$c = random(-8,8,1);
+
+$func = Formula("$a*x^2 + $b*x*y(x) +$c*x*y'(x)")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \(b \ne 0 \), find the general solution to the differential equation 
+\[ $func = 0 \]
+in terms of \(a\), \(b\), and an indeterminate constant \(C\).
+$PAR
+\(y = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+if($c!= 0){
+$ans = Compute("$a * $c/($b)^2 - $a/$b * x + C e^(-$b/$c*x) ");
+}
+else{
+$ans = Compute("-$a/$b * x");
+}
+ANS($ans->cmp);
+
+
+ENDDOCUMENT() ;        # This should be the last executable line in the problem.
+
+
+

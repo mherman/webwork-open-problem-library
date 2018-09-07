@@ -1,0 +1,71 @@
+##DESCRIPTION
+## Determine if a series converges
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Alternating series test)
+## Date(6/3/2002)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.5')
+## Problem1('11')
+## KEYWORDS('Sequences', 'Comparison Test')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGbasicmacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"parserPopUp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+Context("Numeric");
+Context()->variables->are(a=> 'Real', b=> 'Real', n=> 'Real');
+$a = Compute("a");
+$b = Compute("b");
+
+
+$func = Compute("$a^n / $b^n")->reduce;
+$popup1 = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"divergent");
+$popup2 = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"absolutely convergent");
+$popup3 = PopUp(["?","absolutely convergent","conditionally convergent","divergent"],"absolutely convergent");
+$popup4 = PopUp(["?","absolutely convergent", "conditionally convergent","divergent"],"divergent");
+Context()->texStrings;
+BEGIN_TEXT
+Is the series \( \displaystyle \sum_{n=1}^{\infty} $func \) $BITALIC absolutely convergent$EITALIC,$BITALIC conditionally convergent$EITALIC, or $BITALIC divergent $EITALIC, if 
+$PAR
+(i) \(0 \lt b \le a\)?
+$BR
+\{$popup1->menu\}
+$PAR
+(ii) \(0 \lt a \lt b\)?
+$BR
+\{$popup2->menu\}
+$PAR
+(iii) \(a \lt 0 \lt -a \lt b\)?
+$BR
+\{$popup3->menu\}
+$PAR
+(iv) \(a \lt 0 \lt b \le -a \)?
+$BR
+\{$popup4->menu\}
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+ANS($popup1->cmp);
+ANS($popup2->cmp);
+ANS($popup3->cmp);
+ANS($popup4->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

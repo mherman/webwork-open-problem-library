@@ -1,0 +1,52 @@
+## Original: /Library/Rochester/setIntegrals10InvTrig/invtrigs1.pg
+
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## KEYWORDS ('integration','trigonometric','substitution')
+## Tagged by cmd6a 4/27/06
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Trig Substitution')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', B=>'Real', a=>'Real', b=>'Real');
+$A = Formula("A");
+$B = Formula("B");
+$a = Formula("a");
+$b = Formula("b");
+
+$func = Compute("($A) / (sqrt(($B)^2 - x^2 ) ) ")->reduce;
+Context()->texStrings;
+$integral = "\(\displaystyle \int_{$a}^{$b} $func dx \)";
+BEGIN_TEXT
+Assuming \($B \gt 0\), compute $integral in terms of \(a\), \(b\), \(A\), and \(B\).
+$PAR
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$A*ln(x+sqrt(($B)^2 + x^2 ) ) ");
+$ans1 = $ans1->substitute(x=>$b) - $ans1->substitute(x=>$a);
+ANS($ans1->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

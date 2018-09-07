@@ -1,0 +1,45 @@
+#DESCRIPTION
+#KEYWORDS('derivatives', 'related rates')
+#TYPE('word problem')
+# Related rates -- gravel dumped in a pile in a shape of a right circular
+#  cone with diameter = height.  Find the rate at which the height is growing
+#  given the volume, height and rate of change of the volume
+#ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+#"parserPrime.pl",
+"parserAssignment.pl",
+"parserFunctionPrime.pl"
+);
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+Context("Numeric");
+Context()->variables->are(t=>'Real');
+parser::FunctionPrime->Enable();
+parserFunction("s(t)" => "cos(3*e^t)");
+
+$ans = Compute("3*(s(t))^2 * s'(t)");
+
+BEGIN_TEXT
+$PAR
+Let \(V(t)\) represent the volume of a cube of side length \(s(t)\) at time \(t\), i.e. \(V(t) = [s(t)]^3\). Compute \(V^{\prime}(t)\) in terms of \(s(t)\) and \(s^{\prime}(t)\).
+$PAR
+\(V^{\prime}(t) = \)\{ans_rule(30)\}
+$BR
+Use "s(t)" for \(s(t)\) and "s'(t)" for \(s^{\prime}(t)\).
+END_TEXT
+
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

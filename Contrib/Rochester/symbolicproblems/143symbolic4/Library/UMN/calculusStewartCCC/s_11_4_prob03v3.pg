@@ -1,0 +1,67 @@
+#DESCRIPTION
+##  Calculus: The Comparison Tests
+##ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Comparison tests)
+## Date(04/07/2010)
+## Institution(University of Minnesota)
+## Author(Justin Sukiennik)
+## MLT(Compare_with_a_series_in_a_given_list)
+## Level(3)
+## TitleText1('Calculus: Concepts and Contexts')
+## AuthorText1('Stewart')
+## EditionText1('4 Custom UMTYMP Ed.')
+## Section1('11.4')
+## Problem1('')
+## KEYWORDS('calculus', 'series', 'comparison tests')
+
+#####################################################################
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserPopUp.pl",
+"AnswerFormatHelp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context('Numeric');
+
+$Q= random(0,6,1);
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \(\displaystyle \sum_{n=1}^{\infty} \frac{p(n)}{q(n)}\), where \(p\) and \(q\) are non-zero polynomials of degree \(P \ge 0 \)  and $Q respectively, and \(q\) has no roots that are positive integers. 
+$PAR
+This series converges if \(P\) is in the interval \{ans_rule(30)\}\{AnswerFormatHelp("intervals")\} and diverges if \(P\) is in the interval \{ans_rule(30)\} \{AnswerFormatHelp("intervals")\}.
+$PAR
+
+$BR
+END_TEXT
+Context()->normalStrings;
+
+Context("Interval");
+Context()->constants->add(Q=>Real(5+cos(exp(1.243))), P=>Real(5+sin(exp(1.2343))) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+if($Q <=1){
+$ans1 = Compute("{}");
+$ans2 = Compute("[0,infinity)");
+}
+else{
+$ans1 = Compute("[0,$Q-1)");
+$ans2 = Compute("[$Q-1,infinity)");
+}
+
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

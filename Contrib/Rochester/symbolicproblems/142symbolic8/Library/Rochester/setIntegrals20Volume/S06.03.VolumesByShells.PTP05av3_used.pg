@@ -1,0 +1,58 @@
+## DESCRIPTION
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of integration)
+## DBsection(Volumes by cylindrical shells)
+## Date(07/02/2008)
+## Institution(University of Rochester)
+## Author(Paul Pearson)
+## MLT(volume_shells_multi_V)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('6.3')
+## Problem1('')
+## KEYWORDS('integrals', 'volume','washers','disks')
+## ENDDESCRIPTION
+
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl");
+
+$showPartialCorrectAnswers = 1;
+
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(p=>'Real', a=>'Real', b=>'Real');
+$p = Formula("p");
+$a = random(1,10,1);
+$b = random(5,15,1);
+while($a>= $b){
+$b = random(5,15,1);
+}
+
+$func = Compute("x^($p) ");
+Context()->texStrings;
+BEGIN_TEXT
+Assume \( p \ne -2\), and compute the volume of the solid obtained by revolving the region bounded by the graph of \(f(x) = $func \), the \(x\)-axis, the line \(x = $a\), and the line \(x = $b\) about the \(y\)-axis. Your answers should be in terms of \(p\).
+$PAR 
+Volume = \{ans_rule(30)\}
+$PAR
+What is the volume if \(p = -2\)?
+$PAR
+Volume = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans =Compute("2*pi / ($p + 2)*(x^($p+2)) ");
+$ans1 = $ans->substitute(x=>$b) - $ans->substitute(x=>$a) ;
+
+$ans = Compute("2*pi * ln(x)");
+$ans2 = $ans->substitute(x=>$b) - $ans->substitute(x=>$a) ;
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+
+
+ENDDOCUMENT();

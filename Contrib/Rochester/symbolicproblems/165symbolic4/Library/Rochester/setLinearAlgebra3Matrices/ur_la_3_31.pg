@@ -1,0 +1,140 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 5/3/06
+
+## DBsubject(Linear algebra)
+## DBchapter(Matrices)
+## DBsection(Echelon form)
+## Date(July 2013)
+## Institution(Rochester and Hope College)
+## Author(Paul Pearson)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('1.2')
+## Problem1('')
+## KEYWORDS('linear algebra','matrix','echelon')
+
+DOCUMENT() ;        
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserVectorUtils.pl",
+"PGcourse.pl",
+"PGmatrixmacros.pl"
+) ;
+
+$showPartialCorrectAnswers = 1 ;
+
+############
+
+
+
+sub matrix_cmp{
+$ansMatrix = shift;
+@ans = $ansMatrix->value;
+for my $i (0..$#ans){
+   for my $j (0.. $#{$ans[0]}){
+      ANS(($ans[$i][$j]->reduce)->cmp);
+   }
+}
+}
+
+
+sub matrix_transpose{
+  my $M = shift;
+  my @m = $M->value;
+
+  my $nrows = scalar(@m); # number of rows
+  my $ncols = scalar(@{$m[0]}); # number of columns
+  my @mt = ();
+  foreach my $i (0..$nrows-1) {
+    foreach my $j (0..$ncols-1) {
+      $mt[$j][$i] = $m[$i][$j];
+    }
+  }
+  	
+  return Matrix(@mt);
+}
+sub matrix_cross{
+	my $M1 = shift;
+	my $M2 = shift; #MathObject matrices
+	my @M1data = $M1->value;
+
+
+	my @M2data = $M2->value;
+
+	die("Dimensions mismatch in matrix multiplication") unless(scalar(@{$M1data[0]})==scalar(@M2data));
+	my $rows = 1+$#M1data;
+	my $cols = 1+$#{$M2data[0]};
+	my @out = ();
+	for(my $i=0; $i<$rows; $i++){
+		
+		for(my $j=0; $j<$cols; $j++){
+			
+			$out[$i][$j] = 0;
+			for(my $k=0; $k<1+$#{$M1data[0]}; $k++){
+				$out[$i][$j]+=$M1data[$i][$k]*$M2data[$k][$j];
+			}
+		}
+	
+	}
+
+	return (Matrix(@out));
+
+}
+
+
+################################################
+TEXT(beginproblem());
+
+Context('Matrix');
+Context()->constants->remove(k);
+Context()->constants->add(
+a=>Real(non_zero_random(-10,10,1)),
+b=>Real(non_zero_random(-10,10,1)),
+k=>Real(non_zero_random(-10,10,1)),
+);
+Context()->flags(formatStudentAnswer=>'parsed');
+$a = Formula("a");
+$b = Formula("b");
+$k = Formula("k");
+$A = Matrix([
+[$a, $b], 
+[$k*$a,$k*$b], 
+]);
+$B = Matrix([
+[1,1],
+[-$a/$b, -$a/$b],
+]);
+Context()->texStrings;
+BEGIN_TEXT
+Consider the \(2 \times 2 \) matrix
+\[A = $A,\]
+with \(a,b,k \ne 0\). If \(Z\) represents the \(2 \times 2\) matrix whose entries are all equal to zero, find a \(2 \times 2\) matrix \(B \ne Z\) such that \(A B = Z\). The entries of \(B\) should be written in terms of \(a,b,\) and \(k\).
+$BR
+$BR
+
+\{mbox('\(B =\)',$B->ans_array() )\}
+
+END_TEXT
+Context()->normalStrings;
+ANS( $B->cmp( checker=>sub {
+my ( $correct, $student, $ansHash ) = @_;
+@ary = $student->value;
+
+$mult1 = $ary[0][0];
+$mult2 = $ary[0][1];
+
+if($ary[1][0] == Compute("$mult1*-$a/$b") && $ary[1][1] == Compute("$mult2*-$a/$b") ){  #if each column is a scalar multiple of [1][-a/b]...
+   return (1==1) unless($mult1 ==0 && $mult2 ==0); #correct unless it's all zero
+   Value->Error("Answer cannot have all entries zero.");
+}
+return (1==0); #
+#Value->Error("Answer cannot have all entries zero.");
+
+} ) );
+ENDDOCUMENT();

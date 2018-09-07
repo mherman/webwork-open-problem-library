@@ -1,0 +1,96 @@
+## DESCRIPTION
+##   Infinite Series with the Integral Test
+## ENDDESCRIPTION
+
+## Tagged by nhamblet
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Integral test)
+## Date(6/3/2002)
+## Institution(Rochester)
+## Author(Paul Pearson)
+## MLT(xsqe)
+## MLTleader(1)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.3')
+## Problem1('7')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('10.3')
+## Problem2('9')
+## KEYWORDS('Series', 'Converge', 'Diverge', Integral Test','Series' , 'Integral test' , 'Convergence' )
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserPopUp.pl",
+"AnswerFormatHelp.pl",
+"parserFormulaUpToConstant.pl",
+);
+
+TEXT(beginproblem());
+
+
+Context("Numeric");
+Context()->strings->add(diverges=>{},div=>{alias=>"diverges"},d=>{alias=>"diverges"},diverge=>{alias=>"diverges"});
+Context()->variables->add(A=> 'Real', p=> 'Real', N=> 'Real', n=> 'Real',b=>'Real');
+
+$A = random(1,10,1);
+$p = Compute("p");
+$N = Compute("N");
+$b = Formula("b");
+
+$func = Compute("$A * x^($p)*e^(-x^{$p+1} ) ")->reduce();
+$funcn = $func->substitute(x=>n);
+$generalint = FormulaUpToConstant("-$A/($p+1)*e^(-x^($p+1)) +C");
+$definiteint= Formula("$A / ($p+1)*(e^(-$N^($p+1) ) - e^(-b^($p+1))) ");
+$improperint= Compute("$A/($p+1)*(e^(-$N^($p+1)) )");
+$popup = PopUp(["?","converges","diverges"],"converges");
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Assuming \( p \gt -1\), and \(N\) is a nonnegative integer, complete the following:
+$BR
+(i) Compute \(\displaystyle \int {$func dx}\) in terms of \(p\).
+$BR
+ \(\displaystyle \int {$func dx}=\) \{ans_rule(30)\}
+$PAR
+(ii) Use your answer from (i) to compute \(\displaystyle \int_{$N}^{$b} $func dx \) in terms of \(N\), \(b\), and \(p\). 
+$BR
+\(\displaystyle \int_{$N}^{$b} $func dx = \)\{ans_rule(30)\}
+$PAR
+(iii) Now take the limit as \(b \to \infty \) of your answer from (ii) to compute \(\displaystyle \int_{$N}^{\infty} $func dx\) in terms of \(N\) and \(p\).
+$BR
+\(\displaystyle \int_{$N}^{\infty} $func dx = \)\{ans_rule(30)\}
+$PAR
+(iv) Use your answer from (iii) to decide whether the series \(\displaystyle \sum_{n=$N}^{\infty} $funcn \) converges.
+$BR
+\(\displaystyle \sum_{n=$N}^{\infty} $funcn \)  \{$popup->menu()\}
+$PAR
+$BBOLD If the limit or series is \(\infty\), write "Infinity". $BR
+If the limit or series is \(-\infty\), write "-Infinity".$BR
+If the limit does not exist, write "DNE". $BR
+If the series diverges, select"diverges". $BR
+If the series converges, select"converges". $EBOLD
+END_TEXT
+Context()->normalStrings;
+
+$showPartialCorrectAnswers = 0;
+
+ANS($generalint->cmp);
+ANS($definiteint->cmp);
+ANS($improperint->cmp);
+ANS($popup->cmp);
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

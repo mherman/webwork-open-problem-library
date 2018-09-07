@@ -1,0 +1,77 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 5/3/06
+
+## DBsubject(Linear algebra)
+## DBchapter(Matrices)
+## DBsection(Inverses)
+## Date(July 2013)
+## Institution(Rochester and Hope College)
+## Author(Paul Pearson)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('3.3')
+## Problem1('')
+## KEYWORDS('linear algebra','matrix','inverse')
+
+
+DOCUMENT() ;        
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+"parserVectorUtils.pl",
+"PGcourse.pl"
+) ;
+
+
+$showPartialCorrectAnswers = 1 ;
+
+############
+
+TEXT(beginproblem());
+
+Context('Matrix');
+do{
+Context()->constants->add(
+a=>Real(non_zero_random(-10,10,1)),
+b=>Real(non_zero_random(-10,10,1)),
+c=>Real(non_zero_random(-10,10,1)),
+d=>Real(non_zero_random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+}
+while($a*$d - $b*$c ==0);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+$A = Matrix([
+[$a,$b],
+[$c,$d]
+]);
+$det = $a*$d-$b*$c;
+$answer = Matrix([
+[$d/($det), -$b/($det)],
+[-$c/($det),$a/($det)]
+]);
+$answer = $answer->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \[A = $A,\] with \(ad \ne bc\). Find a \(2 \times 2 \) matrix \(B\) such that \(AB = I_2\), where \(I_2 \) is the \(2 \times 2\) identity matrix. Your matrix \(B\) should have entries written in terms of \(a,b,c,\) and \(d\).
+
+\{mbox('\(B=\)',$answer->ans_array)\}
+END_TEXT
+Context()->normalStrings;
+ANS($answer->cmp);
+COMMENT('MathObject version');
+
+ENDDOCUMENT();

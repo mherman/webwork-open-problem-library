@@ -1,0 +1,58 @@
+## Original: /Library/Rochester/setIntegrals18Improper/sc5_9_3a.pg
+
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## KEYWORDS ('integration','improper','area')
+## Tagged by cmd6a 4/27/06
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Improper Integrals')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(A=>'Real', p=>'Real', b=>'Real', a=>'Real');
+$A = Formula("A");
+$p = Formula("p");
+$b = Formula("b");
+$a = Formula("a");
+$func = Compute("$A*x^($p) ")->reduce;
+
+Context()->texStrings;
+$integralproper = "\displaystyle \int_{$a}^{$b} f(x) dx";
+$integralimproper = "\displaystyle \int_{$a}^{\infty} f(x) dx ";
+BEGIN_TEXT
+Consider the function \(f(x) = $func \), where \(p \lt -1\). Assuming \(1 \le a \le $b \), compute \($integralproper\) in terms of \(A\), \(p\), \(a\), and \(b\).
+$BR
+\($integralproper = \)\{ans_rule(30)\}
+$PAR
+Now compute \($integralimproper\) in terms of \(A\), \(p\), and \(a\), by letting \(b \to \infty \) in your first answer.
+$BR
+\($integralimproper =\)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$A/($p+1)*(($b)^($p+1)-($a)^($p+1))");
+$ans2 = Compute("-$A*($a)^($p+1)/($p+1)");
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();

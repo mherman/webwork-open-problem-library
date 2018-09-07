@@ -1,0 +1,79 @@
+##DESCRIPTION
+##ENDDESCRIPTION
+## DBsubject(Linear algebra)
+## DBchapter(Matrices)
+## DBsection(Inverses)
+## Institution(NAU)
+## Level(2)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('3.3')
+## Problem1('')
+## KEYWORDS('inverse')
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+);
+
+TEXT(beginproblem());
+
+$showPartialCorrectAnswers = 1;
+Context("Matrix");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->remove(e);
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+f=>Real(random(-10,10,1)),
+g=>Real(random(-10,10,1)),
+h=>Real(random(-10,10,1)),
+);
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+$d = Compute("d");
+$e = Formula("e");
+$f = Formula("f");
+$g = Formula("g");
+$h = Formula("h");
+Context()->texStrings;
+$A = Matrix([
+[$a,$b],
+[$c,$d]
+]);
+$B = Matrix([
+[$e,$f],
+[$g,$h]
+]);
+$ans1 = Matrix([
+[$a*$e+$c*$f,$b*$e+$d*$f],
+[$a*$g+$c*$h,$b*$g+$d*$h],
+]);
+$ans2 = Matrix([
+[$a*$e+$b*$g,$a*$f+$b*$h],
+[$c*$e+$d*$g,$c*$f+$d*$h],
+]);
+BEGIN_TEXT
+Suppose
+$BCENTER \(\displaystyle A^{-1} = $A\) and \(\displaystyle B^{-1}=$B\). $ECENTER
+Compute \((AB)^{-1}\) and \((BA)^{-1}\) in terms of \(e,f,g,\) and \(h\).
+$PAR
+\{mbox('\((AB)^{-1} = \)', $ans1->ans_array)\}
+$BR
+\{mbox('\((BA)^{-1} = \)', $ans2->ans_array)\}
+$PAR
+
+END_TEXT
+
+ANS(
+$ans1->cmp,
+$ans2->cmp,
+);
+ENDDOCUMENT();

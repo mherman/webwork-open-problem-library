@@ -1,0 +1,42 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are(a => 'Real', b => 'Real');
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute, in terms of \(a\) and \(b\), 
+\[ \lim_{ x \rightarrow a} \frac{x^2 -(a+b)x + ab}{ x-a }\] 
+and
+\[ \lim_{ x \rightarrow b } \frac{x^2 -(a+b)x + ab}{ x-b }\] 
+If the limit does not exist, write "DNE".
+$BR
+$PAR
+\( \lim_{ x \rightarrow a} \frac{x^2 -(a+b)x + ab}{ x-a }\)  \{ans_rule(25) \}
+$BR
+\( \lim_{ x \rightarrow b} \frac{x^2 -(a+b)x + ab}{ x-b }\)  \{ans_rule(25) \}
+$BR
+END_TEXT
+
+$ans1 = Compute("a-b");
+ANS($ans1->cmp());
+
+$ans2 = Compute("b-a");
+ANS($ans2->cmp());
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+
+

@@ -1,0 +1,45 @@
+## Original:  /rochesterLibrary/setDerivatives20Antideriv/ur_dr_20_3.pg
+
+##DESCRIPTION
+##KEYWORDS('derivatives', 'antiderivatives')
+##  Find an antiderivative of the function
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl",
+ "answerHints.pl",
+);
+$showPartialAnswersCorrect = 1;
+TEXT(beginproblem());
+
+Context("Numeric");
+Context()->constants->add(A=> Real(.1574), B=> Real(cos(.31574)) );
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$A = Formula("A");
+$B = Formula("B");
+
+$ansstring = "$A *($B)^-1 arctan(x)";
+$func = Formula("$A / ($B x^2+ $B)")->reduce;
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute the antiderivative of \(f(x) = $func \) in terms of \(A\) and \(B\). You may assume \(B \ne 0 \). 
+$PAR 
+\(\displaystyle \int f(x) = \)\{ans_rule(30)\} 
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = FormulaUpToConstant($ansstring);
+ANS($ans1->cmp()->withPostFilter(AnswerHints( 
+  Formula($ansstring) => {"Did you remember to add a constant?", replaceMessage=>1}
+)));
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

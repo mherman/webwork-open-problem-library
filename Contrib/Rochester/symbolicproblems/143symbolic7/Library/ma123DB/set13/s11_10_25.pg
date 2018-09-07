@@ -1,0 +1,78 @@
+##DESCRIPTION
+## Find the Maclaurin series of a function
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Representations of functions as series)
+## Date(6/3/2002)
+## MLT(multxpower)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.10')
+## Problem1('25')
+## KEYWORDS('Power Series'  )
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(p=>'Real', q=> 'Real', A=> 'Real', B=> 'Real', n=> 'Real');
+$A = Compute("A");
+$B = Compute("B");
+$p = Formula("p");
+$q = Formula("q");
+
+$func = Compute("$A* x^($p)*e^($B*x^($q) ) ")->reduce;
+Context()->texStrings;
+BEGIN_TEXT
+Consider the function \( \displaystyle f(x) = $func\), with \(A, B \ne 0 \), and \(p,q \) nonnegative integers. This function can be represented by a Maclaurin series \( \displaystyle \sum_{n=0}^{\infty} c_n x^n \). Some, but not all, of the coefficients \(c_n\) are equal to zero. Answer the following:
+$PAR
+(i) Which power of \(x\), in terms of \(p\) and \(q\), is the first one to have a nonzero coefficient? $BR
+Answer: \{ans_rule(0)\}
+$PAR
+(ii) What is the coefficient for the term you found in (i), in terms of \(A\) and \(B\)?$BR
+Answer: \{ans_rule(30)\}
+$PAR
+(iii) Which power of x, in terms of \(p\) and \(q\), is the seond to have a nonzero coefficient? $BR
+Answer: \{ans_rule(30)\}
+$PAR
+(iv) What is the coefficient of the term you found in (iii), in terms of \(A\) and \(B\)?
+$BR
+Answer: \{ans_rule(0)\}
+$PAR
+(v) Which power of \(x\), in terms of \(p\) and \(q\), is the third one to have a nonzero coefficient? $BR
+Answer: \{ans_rule(30)\}
+$PAR
+(vi) What is the coefficient of the term you found in (v), in terms of \(A\), and \(B\)? $BR
+Answer: \{ans_rule(30)\}
+$PAR
+END_TEXT
+
+@ans = (0,1,2,3,4,5);
+
+$ans[0] = Compute("$p");
+$ans[1] = Compute("$A ");
+$ans[2] = Compute("$p +$q");
+$ans[3] = Compute("$A* $B ");
+$ans[4] = Compute("$p + 2*$q ");
+$ans[5] = Compute("$A* ($B)^2 /2");
+
+for my $i (0 .. $#ans){
+ANS($ans[$i]->cmp);
+}
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+ problem.

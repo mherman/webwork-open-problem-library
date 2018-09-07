@@ -1,0 +1,90 @@
+##DESCRIPTION
+##ENDDESCRIPTION
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Limit of a sequence)
+## Institution(Univeristy of Utah)
+## Author(Utah ww group)
+## MLT(Terms2Limit)
+## Level(2)
+## TitleText1('Calculus')
+## AuthorText1('Dale Varberg, Edwin J. Purcell, and Steve E. Rigdon')
+## EditionText1('9')
+## Section1('.')
+## Problem1('')
+## KEYWORDS('calculus')
+
+DOCUMENT(); # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+);
+
+TEXT(beginproblem());
+######################################
+#  Setup
+Context("Numeric");
+Context()->variables->add(a=> 'Real', D=> 'Real',  B=> 'Real', n=> 'Real');
+Context()->constants->add(
+A=>Real(random(2,20,1)),
+C=>Real(random(2,20,1)),
+);
+Context()->variables->set(D=>{limits=>[5,30]});
+
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$a = random(2,10,1);
+$A = Formula("A");
+$B = Formula("B");
+$C = Formula("C");
+$D = Formula("D");
+$n = Compute("n");
+
+$func = Compute(" ( ln(($a)/($A*$n + $B) ) ) /(sqrt($C * $n + $D )) ")->reduce;
+Context()->texStrings;
+######################################
+
+#  Main text
+
+
+BEGIN_TEXT
+Consider the sequence given by \( \displaystyle x_n = $func \), with \(A,C \gt 0\). Compute the first five terms of the sequence, \(x_1\), ... , \(x_5\). Now compute \( \displaystyle \lim_{n \to \infty} x_n\). Your answers should be in tems of \(A\), \(B\), \(C\), and \(D\).
+$PAR
+First five terms: \{ans_rule(30)\}
+$BR
+$BBOLD Answer with the terms in order, separated by commas. That is, answer with an ordered list. $EBOLD
+$PAR
+\( \displaystyle \lim_{n \to \infty} x_n = \)\{ans_rule(30)\}
+END_TEXT
+
+
+######################################
+Context()->normalStrings;
+#  Answer
+
+$n = 0;
+@ans = (1,1,1,1,1,1);
+for my $n (1 .. 5) 
+{
+$ans[$n ] = Compute(" ( ln(($a)/($A*$n + $B) ) ) /(sqrt($C * $n + $D )) ")->reduce;
+}
+
+shift(@ans);
+
+$anslist = List(@ans);
+ANS($anslist->cmp,
+         Compute("0")->cmp);
+
+
+
+
+#ANS($list->cmp(ordered=> 1));
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

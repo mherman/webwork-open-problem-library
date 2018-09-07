@@ -1,0 +1,87 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 5/3/06
+
+## DBsubject(Linear algebra)
+## DBchapter(Matrices)
+## DBsection(Transpose and trace)
+## Date(July 2013)
+## Institution(Rochester and Hope College)
+## Author(Paul Pearson)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('3.2')
+## Problem1('')
+## KEYWORDS('linear algebra','matrix','trace')
+
+######################################
+#  Initialization
+
+DOCUMENT() ;        
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserVectorUtils.pl",
+"PGcourse.pl"
+) ;
+TEXT(beginproblem());
+
+#######################################
+#  Setup
+Context('Matrix');
+Context()->constants->remove(e,i);
+Context()->constants->add(a=>Real(random(0,10,1)),
+b=>Real(random(0,10,01)),
+c=>Real(random(0,10,1)), 
+d=>Real(random(0,10,1)),
+e=>Real(random(0,10,1)),
+f=>Real(random(0,10,1)), 
+g=>Real(random(0,10,1)),
+h=>Real(random(0,10,1)),
+i=>Real(random(0,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Compute("d");
+$e = Compute("e");
+$f = Formula("f");
+$g = Formula("g");
+$h = Compute("h");
+$i = Compute("i");
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = Matrix([
+[$a, $b, $c],
+[$d, $e, $f],
+[$g, $h, $i]
+]);
+
+$answer = $a+$e+$i;
+
+
+#######################################
+#  Main text
+
+Context()->texStrings;
+BEGIN_TEXT
+If
+\[ A = $A\]
+$BR
+find the trace of \(A\), \(tr(A)\), in terms of \(a,b,c,f,\) and \(g\).$PAR
+\( tr(A) =\) \{ $answer->ans_rule() \}
+END_TEXT
+Context()->normalStrings;
+
+#######################################
+#  Answer evaluation
+
+$showPartialCorrectAnswers = 1 ;
+
+ANS( $answer->cmp() );
+
+COMMENT('MathObject version');
+
+ENDDOCUMENT();

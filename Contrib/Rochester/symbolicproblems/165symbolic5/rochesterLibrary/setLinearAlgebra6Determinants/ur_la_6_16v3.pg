@@ -1,0 +1,43 @@
+##DESCRIPTION
+##lcao tagged and PAID on 3-22-2004
+
+## DBsubject(Linear algebra)
+## DBchapter('Determinants')
+## DBsection('Properties')
+## Date('6/3/2002')
+## TitleText1('Elementary Linear Algebra')
+## AuthorText1('Larson, Edwards, Falvo')
+## EditionText1('5')
+## Section1('3.3')
+## Problem1('29')
+## KEYWORDS('matrix', 'determinant')
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('5.1')
+## Problem1('')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(n=>Real(12));
+$n = Compute("n");
+$x = non_zero_random(-10,10,1);
+Context()->texStrings;
+BEGIN_TEXT
+Consider an \($n\times $n\) matrix \(A\) whose diagonal entries are all equal to the same number, \($x\), and whose entries below the diagonal are all zero. Compute \(\det(A)\) in terms of \(n\).
+$PAR   
+\(\det\,(A)=\) \{ans_rule(15)\}.
+END_TEXT
+Context()->normalStrings;
+ANS(Compute("($x)^n")->cmp);
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

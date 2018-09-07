@@ -1,0 +1,92 @@
+##DESCRIPTION
+## Verify that a function satisfies that hypothesis of Rolle's function.
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Mean value theorem)
+## Date(6/3/2002)
+## MLT(MVT_Rolles_1)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('4.2')
+## Problem1('1')
+## KEYWORDS('derivatives','Rolle's theorem')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->strings->add(continuous=>{},differentiable=>{} ) ;
+Context()->variables->add(a=> 'Real', b=> 'Real');
+$a = Compute("a");
+$b = Compute("b");
+
+$endpointvalue = Compute("0");
+$criticalnumber = Compute("1/2 * ($a+ $b) ");
+
+$fun = Compute("x^2 - ($a + $b)*x + $a * $b");
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Consider the function \( f(x) = $fun \) with \($a \lt $b \), on the interval \( [ $a , $b] \).
+$PAR
+Verify that this function satisfies the three hypotheses of Rolle's
+Theorem on the inverval:$BR
+\(f(x)\) is \{ans_rule(10) \} on \([$a,$b]\), $BR
+\(f(x)\) is \{ans_rule(10) \} on \(($a,$b)\), $BR
+and \(f($a)=f($b)= \) \{ans_rule(20) \}, $BR
+Since these hypotheses are satisfied we can apply Rolle's theorem to conclude that there exists a \( \xi \) such that \(f'(\xi)=0\).$BR
+Find the value \(\xi\). $BR
+\(\xi=\) \{ans_rule(10) \}
+$BR
+Note: Your answer may depend on $a and $b.
+END_TEXT
+Context()->normalStrings;
+
+
+##############################################################
+#
+#  Answers
+#
+#
+
+
+ANS(
+	String("continuous")->cmp,
+	String("differentiable")->cmp,
+	$endpointvalue->cmp,
+	$criticalnumber->cmp
+);
+
+
+COMMENT('MathObject version');
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

@@ -1,0 +1,66 @@
+# DESCRIPTION
+# Problem from Functions Modeling Change, Connally et al., 3rd ed.
+# WeBWorK problem written by Adam Spiegler, <aspiegler@luc.edu>
+# ENDDESCRIPTION
+
+## DBsubject(Algebra)
+## DBchapter(Exponential functions)
+## DBsection(Continuous Growth and the Number e)
+## Institution(Loyola University Chicago and Fort Lewis College)
+## Author(Adam Spiegler and Paul Pearson)
+## TitleText1('Functions Modeling Change')
+## AuthorText1('Connally')
+## EditionText1('3')
+## Section1('3.4')
+## Problem1('8')
+## TitleText2('Functions Modeling Change')
+## AuthorText2('Connally')
+## EditionText2('4')
+## Section2('4.5')
+## Problem2('8')
+## KEYWORDS('exponential functions','continuous growth','natural base','e')
+
+DOCUMENT();
+
+loadMacros("PG.pl",
+           "PGbasicmacros.pl",
+           "PGanswermacros.pl",
+           "PGauxiliaryFunctions.pl",
+           "MathObjects.pl",
+          );
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+Context("Numeric");
+Context()->constants->are(a => Real(2717) , b => Real(3008) , c => Real(3244) , d=>Real(.9750) );	
+Context()->flags->set(formatStudentAnswer=> 'parsed');
+
+########################################################################
+
+
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Suppose \(c \lt b \lt a \lt 0 \) and \(d\) is a negative, even integer. Arrange the quantities \(a^d\), \(b^d\), and \(c^d\) in ascending order.
+
+$PAR
+
+\{ans_rule(15) \} \( \lt \) \{ans_rule(15) \} \( \lt \) \{ans_rule(15)\}.
+
+END_TEXT
+Context()->normalStrings;
+
+$greatest= Compute("a^d");
+$middle = Compute("b^d");
+$least= Compute("c^d");
+
+ANS( $least->cmp);
+ANS( $middle->cmp);
+ANS( $greatest->cmp);
+
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

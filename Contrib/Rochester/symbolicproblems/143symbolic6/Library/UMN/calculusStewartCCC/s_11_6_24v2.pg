@@ -1,0 +1,79 @@
+#DESCRIPTION
+##  Calculus: The Root Test
+##ENDDESCRIPTION
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Root test)
+## Date(04/13/2010)
+## Institution(University of Minnesota)
+## Author(Justin Sukiennik)
+## Level(2)
+## TitleText1('Calculus: Concepts and Contexts')
+## AuthorText1('Stewart')
+## EditionText1('4 Custom UMTYMP Ed.')
+## Section1('11.6')
+## Problem1('24')
+## KEYWORDS('calculus', 'series', 'root test', 'absolutely convergent')
+
+
+#####################################################################
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+"parserPopUp.pl"
+);
+
+TEXT(beginproblem());
+
+$showPartialCorrectAnswers = 0;
+
+Context("Numeric");
+Context()->constants->add(a=>Real(cos(.254)), A=>Real(sin(.2456)), B=>Real(exp(cos(.225))) );
+Context()->variables->are(n=> 'Real');
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->constants->set(pi=>Real(3.14159265) );
+$a = random(-2,2,1);
+$a = Formula("$a*pi / 2")->reduce;
+$A = Formula("A");
+$B = Formula("B");
+
+$func = Compute(" ( $a / (arctan($A * n + $B ) ) )^n");
+
+
+if(abs($a)< 1/2 * 3.14159265){
+$popup1 = PopUp(["?","the series converges absolutely","the series diverges","the root test is inconclusive"],"the series converges absolutely");
+$ans1 = Compute("2*(|$a|)/(pi) ");
+}
+else {if(abs($a)>1/2 * 3.14159265){
+$popup1 = PopUp(["?","the series converges absolutely","the series diverges","the root test is inconclusive"],"the series diverges");
+$ans1 = Compute("2*(|$a|)/(pi) ");
+}
+else{
+$popup1 = PopUp(["?","the series converges absolutely","the series diverges","the root test is inconclusive"],"the root test is inconclusive");
+$ans1 = Compute("1 ");
+}
+}
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the series \( \displaystyle \sum_{n=1}^{\infty} c_n\), where \(\displaystyle c_n = $func \), with \(A, B \gt 0\). Complete the following: $PAR
+(i) Compute \(\displaystyle \lim_{n \to \infty } |c_n|^{\frac{1}{n}} \).
+$BR
+\(\displaystyle \lim_{n \to \infty } |c_n|^{\frac{1}{n}} = \)\{ans_rule(30)\}
+$PAR
+(ii) Based on your answer to (i), it is the case that \{$popup1->menu\}.
+$BR
+
+
+END_TEXT
+Context()->normalStrings;
+
+ANS($ans1->cmp);
+ANS($popup1->cmp);
+
+ENDDOCUMENT()

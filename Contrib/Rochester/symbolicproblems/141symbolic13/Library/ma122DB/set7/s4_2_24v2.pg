@@ -1,0 +1,54 @@
+##DESCRIPTION
+## Use mean value theorem to estimate function in an interval
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Mean value theorem)
+## Date(6/3/2002)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('4.2')
+## Problem1('24')
+## KEYWORDS('Mean Value Theorem')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGbasicmacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"PGML.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a => 'Real', b=> 'Real', m=> 'Real', M=> 'Real');
+$a = random(-15,5,1);
+$b = random(-5,15,1);
+while($a>=$b){
+$a = random(-15,5,1);
+$b = random(-5,15,1);
+}
+$m = Compute("m");
+$M = Compute("M");
+
+$ans1 = Compute("$m*($b-$a)");
+$ans2 = Compute("$M*($b-$a)");
+Context()->texStrings;
+BEGIN_PGML
+Suppose [`f `] is a function that is continuous on [`[[$a],[$b]]`] and, for all [`x`] in the interval  [`[[$a],[$b]]`], [`[$m] \le f'(x) \le [$M]`]. Use the mean value theorem to complete the following inequality: 
+>>[________]{$ans1}[``\le f([$b])-f([$a]) \le``] [_______]{$ans2} <<
+
+Your answers should be in terms of [`m`], and [`M`].
+END_PGML
+Context()->normalStrings;
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,50 @@
+## Original: /Library/UVA-Stew5e/setUVA-Stew5e-C05S05-Substitution/5-5-32.pg
+
+## DESCRIPTION
+## Calculus: The Substitution Rule
+## ENDDESCRIPTION
+
+## KEYWORDS('calculus', 'integrals', 'substitution rule')
+## Tagged by XW
+
+## DBsubject('Calculus')
+## DBchapter('Integrals')
+## DBsection('The Substitution Rule')
+## Date('6/5/2005')
+## Author('Jeff Holt')
+## Institution('UVA')
+## TitleText1('Calculus')
+## EditionText1('5e')
+## AuthorText1('Stewart')
+## Section1('5.5')
+## Problem1('32')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', B=>'Real',A=>'Real');
+$A = non_zero_random(-15,15,1);
+$a = Formula("a");
+$B= random(-15,15,1);
+
+$func = Compute("$a*e^x / ($A*e^x + $B)  ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(a\).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans = FormulaUpToConstant("$a/$A ln(|$A*e^x + $B|)");
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

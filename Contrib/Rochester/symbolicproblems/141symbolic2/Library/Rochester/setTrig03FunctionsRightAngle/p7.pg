@@ -1,0 +1,70 @@
+## DESCRIPTION
+## Precalculus: Trigonometry
+## ENDDESCRIPTION
+
+## KEYWORDS('trigonometry')
+## Tagged by cmd6a 5/9/06
+
+## DBsubject('Trigonometry')
+## DBchapter('Trigonometric Functions of Angles')
+## DBsection('Trigonometry of Right Triangles')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"PGasu.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->are(h => 'Real');
+
+
+$height = Formula("h");
+$angle = random(15,75,15);
+
+
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+A ladder of height \($height\) feet leans against a building so that the angle between the
+ground and the ladder is  \( $angle ^\circ \).
+
+
+$PAR
+In terms of \($height\), how high does the ladder reach on the building?
+\{ans_rule(25) \} feet.
+$BR
+$BR
+
+Note: If you enter your answer using sine, cosine, or tangent of an angle, the angle must be in radians for webwork to recognize it correctly. 
+$BR
+
+END_TEXT
+
+
+Context()->normalStrings;
+$ans1 = $height*sin($angle * pi/180);
+
+ANS(($ans1)->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+
+

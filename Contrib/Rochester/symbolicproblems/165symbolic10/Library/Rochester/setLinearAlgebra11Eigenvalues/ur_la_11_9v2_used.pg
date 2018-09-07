@@ -1,0 +1,58 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 4/30/06
+
+## DBsubject(Linear algebra)
+## DBchapter(Eigenvalues and eigenvectors)
+## DBsection('Properties')
+## Institution('Rochester')
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('6.1')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"IansMacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->constants->add(m=>Real(random(-6,6,1)));
+$text = <<'STOP';
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+l=>Real(random(1,10,1)),
+);
+STOP
+generate_perl_variables_from_constants($text, "l");
+$m = Formula("m");
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \(A\) is an invertible \(n \times n\) matrix and \(v\) is an eigenvector of \(A\) with associated eigenvalue \($l\).
+$PAR
+(i) For \($m\) an integer, \(v\) is also an eigenvector of \(A^{$m}\). What, in terms of  \(m\), is the eigenvalue associated with \(v\) for \(A^{$m}\)?
+$BR
+Eigenvalue = \{ans_rule(30)\}
+$PAR
+(ii) For \(a\) and \(b\) real numbers, \(v\) is also an eigenvector of \($a A + $b I_n\), where \(I_n\) is the \(n \times n\) identity matrix. What, \{InTermsOfString()\}, is the eigenvalue associated with \(v\) for \($a A + $b I_n\)?
+$BR
+Eigenvalue = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 =Compute("($l)^$m");
+$ans2 = Compute("$a * $l + $b");
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.
+

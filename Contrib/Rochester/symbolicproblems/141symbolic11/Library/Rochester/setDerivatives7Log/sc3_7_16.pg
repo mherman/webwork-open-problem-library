@@ -1,0 +1,57 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",         # used to display problem source button
+   "PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(A=> 'Real', B=> 'Real', C=> 'Real', D=> 'Real');
+
+$A = Compute("A");
+$B = Compute("B");
+$C = Compute("C");
+$D = Compute("D");
+
+
+$func = Compute("$A * ln($B + $C * x + $D*ln(x) ) ");
+$functex = $func->reduce->TeX;
+$dfunc = $func->D(x);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+For \(x \gt 0 \), let \(f(x) = $functex \). $BR
+Compute \( f^{\prime}(x)\) in terms of \(A\), \(B\), \(C\), and \(D\).
+$PAR
+\(f^{\prime} (x) = \) \{ans_rule(30)\}
+
+END_TEXT
+Context()->normalStrings;
+
+
+##############################################################
+#
+#  Answers
+#
+#
+$ans = $dfunc ; 
+ANS($ans->cmp());
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

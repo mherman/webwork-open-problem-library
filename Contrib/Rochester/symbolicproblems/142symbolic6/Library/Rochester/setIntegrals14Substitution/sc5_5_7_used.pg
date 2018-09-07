@@ -1,0 +1,66 @@
+##DESCRIPTION
+##ENDDESCRIPTION
+## DBsubject(Calculus - single variable)
+## DBchapter(Techniques of integration)
+## DBsection(Substitution (without trigonometric functions))
+## Date(6/5/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## MLT(Sub_direct)
+## Level(2)
+## TitleText1('Calculus')
+## AuthorText1('Dale Varberg, Edwin J. Purcell, and Steve E. Rigdon')
+## EditionText1('9')
+## Section1('.')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('5.6')
+## Problem2('21')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('6')
+## Section3('5.5')
+## Problem3('21')
+## TitleText4('Calculus: Early Transcendentals')
+## AuthorText4('Stewart')
+## EditionText4('5')
+## Section4('5.5')
+## Problem4('21')
+## KEYWORDS('calculus','integral' 'substitution','integrals', 'substitution', 'substitution rule', 'Riemann Integral', 'integrals')
+
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(p=>'Real' );
+Context()->variables->set(x=>{limits=>[2, 8]});
+Context()->variables->set(p=>{limits=>[1, 4]});
+$p = Formula("p");
+$func=Compute("(ln(x))^($p)/x")->reduce;
+$ans = FormulaUpToConstant("1/($p+1) * ln(x)^($p+1)");
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Compute \(\displaystyle \int $func dx\) in terms of \(p\). You may assume \(p \ne -1\). 
+$PAR
+\(\displaystyle \int $func dx = \)\{ans_rule(30)\}
+$BR
+Note: Use \(C\) to denote an arbitrary constant.
+END_TEXT
+Context()->normalStrings;
+
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

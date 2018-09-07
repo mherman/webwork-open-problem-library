@@ -1,0 +1,88 @@
+## Original: /Library/Rochester/setIntegrals18Improper/sc5_9_3a.pg
+
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## KEYWORDS ('integration','improper','area')
+## Tagged by cmd6a 4/27/06
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Improper Integrals')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(A=>'Real', p=>'Real', b=>Real(.3578), a=>Real(.00144));
+$A = non_zero_random(-10,10,1);
+$p = random(-3,1,1);
+$b = Formula("b");
+$a = Formula("a");
+$func = Compute("$A*x^($p) ")->reduce;
+
+Context()->texStrings;
+$integralproper = "\displaystyle \int_{$a}^{$b} f(x) dx";
+$integralimproper = "\displaystyle \int_{$a}^{\infty} f(x) dx ";
+BEGIN_TEXT
+Consider the function \(f(x) = $func \). Assuming \(1 \le a \le $b \), compute \($integralproper\) in terms of \(a\) and \(b\).
+$BR
+\($integralproper = \)\{ans_rule(30)\}
+$PAR
+Now compute \($integralimproper\) in terms of \(a\), by letting \(b \to \infty \) in your first answer.
+$BR
+\($integralimproper =\)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+if($p<-1){
+   $ans1 = Compute("$A/($p+1)*(($b)^($p+1)-($a)^($p+1))");
+   $ans2 = Compute("-$A*($a)^($p+1)/($p+1)");
+}
+if($p==-1){
+   if($A<0){
+      $ans1 = Compute("$A*(ln($b)-ln($a))");
+      $ans2 = Compute("-infinity");
+   }
+   if($A==0){
+      $ans1 = Real(0);
+      $ans2 = Real(0);
+   }
+   if($A>0){
+      $ans1 = Compute("$A*(ln($b)-ln($a))");
+      $ans2 = Compute("infinity");
+   }
+}
+if($p>-1){
+   if($A<0){
+      $ans1 = Compute("$A/($p+1)*(($b)^($p+1)-($a)^($p+1)) ");
+      $ans2 = Compute("-infinity");
+   }
+   if($A==0){
+      $ans1 = Real(0);
+      $ans2 = Real(0);
+   }
+   if($A>0){
+      $ans1 = Compute("$A/($p+1)*(($b)^($p+1)-($a)^($p+1)) ");
+      $ans2 = Compute("infinity");
+   }
+}
+ANS($ans1->cmp,$ans2->cmp);
+
+ENDDOCUMENT();

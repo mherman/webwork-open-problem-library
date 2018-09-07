@@ -1,0 +1,55 @@
+#Problem 2.6.46
+
+DOCUMENT();
+
+# Load whatever macros you need for the problem
+loadMacros("PG.pl",
+           "PGbasicmacros.pl",
+           "PGchoicemacros.pl",
+           "PGanswermacros.pl",
+           "PGauxiliaryFunctions.pl",
+           "PGgraphmacros.pl",
+           "MathObjects.pl",
+          );
+ loadMacros("freemanMacros.pl");
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Evaluating limits - trigonometric)
+## Institution(W.H.Freeman)
+## Author(JustAsk!)
+## MLT(limits_trig_one_minus_cosx_over_sinx)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('2.6')
+## Problem1('46')
+## KEYWORDS('calculus', 'limits', 'trigonometric functions', 'trigonometric limits')
+
+$showPartialCorrectAnswers = 0;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add( a=> 'Real', b => 'Real', A => 'Real', B => 'Real');
+
+$a= Compute("a");
+$b= non_zero_random(-15,15,1);
+$A = Compute("A");
+$B = non_zero_random(-15,15,1);
+
+
+$func = Compute("($a * tan($A* x))/($b * x sec($B * x) )");
+$functex = $func->reduce->TeX;
+Context()->texStrings;
+BEGIN_TEXT
+Compute \(\displaystyle \lim_{x \to 0} $functex \) in terms of \(a\) and \(A\) (you may assume \(b \ne 0\)).
+
+$PAR
+\(\displaystyle \lim_{x \to 0} $func = \) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+
+ANS( Compute("$a * $A / $b")->cmp);
+
+ENDDOCUMENT();

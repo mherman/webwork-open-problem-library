@@ -1,0 +1,72 @@
+## DESCRIPTION
+##  Calculus
+## ENDDESCRIPTION
+
+## Tagged by dgt5v
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Derivatives of polynomials and power functions)
+## Date(6/3/2002)
+## Institution(Univeristy of Utah)
+## Author(Utah ww group)
+## MLT(Poly_positive_exponent_eval)
+## Level(2)
+## TitleText1('Mathematical Applications')
+## AuthorText1('Ronal J. Harshbarger and James J. Reynolds')
+## EditionText1('8')
+## Section1('.')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('3.1')
+## Problem2('')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('6')
+## Section3('2.7')
+## Problem3('')
+## TitleText4('Calculus I')
+## AuthorText4('Jerrold Marsden and Alan Weinstein')
+## EditionText4('2')
+## Section4('Derivatives and Limits')
+## Problem4('')
+## TitleText5('Calculus')
+## AuthorText5('Dale Varberg, Edwin J. Purcell, and Steven E. Rigdon')
+## EditionText5('9')
+## Section5('Limits')
+## Problem5('')
+## KEYWORDS('Calculus','Derivatives','tangent line', 'derivatives')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a => 'Real', b=> 'Real', c=> 'Real');
+
+$a = random(-15,15,1);
+$b = random(-15,15,1);
+$c = Compute("c");
+Context()->texStrings;
+BEGIN_TEXT
+If \( f(x) = $a x + $b  \), find, in terms of \(c\), \( f'( $c ) \).
+$BR $BR \{ans_rule(20) \}
+END_TEXT
+
+Context()->normalStrings;
+
+ANS(Compute("$a")->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

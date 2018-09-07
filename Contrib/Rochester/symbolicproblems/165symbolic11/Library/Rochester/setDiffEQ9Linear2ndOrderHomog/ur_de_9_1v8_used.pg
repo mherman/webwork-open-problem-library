@@ -1,0 +1,68 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Differential equations)
+## DBchapter(Higher order differential equations)
+## DBsection(Linear, constant coefficients, homogeneous (distinct real roots))
+## Institution(Rochester)
+## MLT(repeated_roots_second_order)
+## Level(3)
+## KEYWORDS('differential equation' 'second order' 'linear')
+
+DOCUMENT() ;       
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+
+) ;
+
+TEXT(beginproblem()) ;
+$showPartialCorrectAnswers = 1 ;
+
+Context("Numeric");
+Context()->constants->add(
+A=>Real(non_zero_random(1,10,1)),
+B=>Real(non_zero_random(1,10,1)),
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+);
+$A = Compute("A");
+$B = Compute("B");
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+while($A*$B<0){
+$A = non_zero_random(-10,10,1);
+$B = non_zero_random(-10,10,1);
+}
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Solve the initial value problem 
+
+\[ \begin{aligned}
+&$A y''' - $B y' = 0 \\
+&y(0) = $a \\
+&y'(0) = $b \\
+&y''(0) = $c
+\end{aligned} \]
+in terms of \(a\), \(b\), and \(c\).
+
+$PAR
+\(y(x) = \)\{ans_rule(30)\}
+$PAR
+
+
+END_TEXT
+Context()->normalStrings;
+
+ANS(Compute("1/2*($c*$A/$B + $b*sqrt($A/$B))*e^(sqrt($B/$A)*x ) + 1/2*($c*$A/$B - $b*sqrt($A/$B))*e^(-sqrt($B/$A)*x ) + $a -$c*$A/$B")->cmp);
+
+
+ENDDOCUMENT() ;

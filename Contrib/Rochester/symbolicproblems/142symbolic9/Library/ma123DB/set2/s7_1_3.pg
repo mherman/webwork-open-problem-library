@@ -1,0 +1,58 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 4/26/06
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Techniques of integration)
+## DBsection(Integration by parts (without trigonometric functions))
+## Date(6/3/2002)
+## Institution(OSU)
+## MLT(notrig_01)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('7.1')
+## Problem1('3')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('7.2')
+## Problem2('45')
+## KEYWORDS('Integration', 'Parts','integrals', 'integration by parts')
+## Changed by Jim.Swift@nau.edu to conform to guidelines in
+## http://webwork.maa.org/wiki/Problem_Authoring_Best_Practices#.Ut7M3xDn-9J
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+
+$func = Formula("$a*x*e^($b*x+$c) ");
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Assume \(b \ne 0 \) and use integration by parts to compute $integral . Your answer should be in terms of \(a\), \(b\), and \(c\).
+$PAR 
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans = FormulaUpToConstant("$a*($b)^(-2)*e^($b*x + $c)*($b*x-1)");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();

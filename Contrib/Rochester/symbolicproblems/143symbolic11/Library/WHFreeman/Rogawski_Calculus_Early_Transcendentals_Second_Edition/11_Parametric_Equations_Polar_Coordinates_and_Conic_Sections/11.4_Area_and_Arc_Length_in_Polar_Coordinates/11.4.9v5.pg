@@ -1,0 +1,66 @@
+## DBsubject(Calculus - single variable)
+## DBchapter(Polar)
+## DBsection(Area)
+## Institution(W.H.Freeman)
+## Author(JustAsk - Kobi Fonarov)
+## MLT(pa-area-roses)
+## MLTleader(1)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('11.4')
+## Problem1('9')
+## KEYWORDS('calculus')
+## UsesAuxiliaryFiles('image_11_4_7_a.png','image_11_4_7_b.png')
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+TEXT(beginproblem());
+$showPartialAnswersCorrect=1;
+
+Context("Numeric");
+Context()->variables->add(A=> 'Real', n=> 'Real', theta=> 'Real');
+Context()->variables->set(theta=>{TeX=>'\theta'});
+
+$A =Formula("A");
+$n = random(2,10,1);
+$func = Formula("$A*sin($n*theta)");
+
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Sketch the graph of the function \(r(\theta) = $func \), where \(A \gt 0 \). It looks like a flower :) 
+$PAR
+How many "petals" does this flower have? $BR
+Number of Petals: \{ans_rule(30)\}
+$PAR
+What is the area enclosed by one of these "petals"? $BR 
+Area of one Petal = \{ans_rule(30)\} 
+$PAR
+What is the total area enclosed by the curve? $BR
+Total Area = \{ans_rule(30)\}
+$PAR
+Your answers should be in terms of \(A\).
+
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+if($n%2==0){
+$ans1 = Compute("2*$n");
+$ans2 = Compute("($A)^2*pi/(4*$n)");
+$ans3 = Compute("$ans1*$ans2");
+}
+else{
+$ans1 = Compute("$n");
+$ans2 = Compute("($A)^2*pi/(4*$n)");
+$ans3 = Compute("$ans1*$ans2");
+}
+
+ANS($ans1->cmp, $ans2->cmp, $ans3->cmp);
+
+ENDDOCUMENT();

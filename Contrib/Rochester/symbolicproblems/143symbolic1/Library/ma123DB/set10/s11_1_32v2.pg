@@ -1,0 +1,73 @@
+##DESCRIPTION
+## Determine if a sequence is convergent and evaluate its limit
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Infinite sequences and series)
+## DBsection(Limit of a sequence)
+## Date(6/3/2002)
+## MLT(InterestingLimits)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('11.1')
+## Problem1('32')
+## KEYWORDS('sequences', 'convergent', 'divergent')
+
+DOCUMENT(); # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+);
+
+TEXT(beginproblem());
+######################################
+#  Setup
+Context("Numeric");
+Context()->variables->add(A=> 'Real', B=> 'Real', n=> 'Real', a=> 'Real', b=> 'Real');
+
+$A = random(0,12,1);
+$B =random(1,10,1);
+$a = Compute("a");
+$b = Compute("b");
+
+$func = Compute("ln($A* n + $B) - ln($a * n + $b)")->reduce;
+Context()->texStrings;
+######################################
+
+#  Main text
+
+
+BEGIN_TEXT
+Consider the sequence given by \( \displaystyle x_n = $func\), with \(a \gt 0 \). Compute, in terms of \(a\) and \(b\), \( \displaystyle \lim_{n \to \infty} x_n \).
+$BR
+\( \displaystyle  \lim_{n \to \infty} x_n =\) \{ans_rule(30)\}
+$BR
+$BBOLD If the limit is \(\infty\), write "Infinity" $BR
+If the limit is \(-\infty\), write "-Infinity"$BR
+If the limit does not exist, write "DNE". $EBOLD
+END_TEXT
+
+
+######################################
+Context()->normalStrings;
+#  Answer
+
+$ans1 = Compute("ln($A / $a)");
+if($A == 0 )
+{$ans1 = Compute("-Infinity");}
+
+
+ANS($ans1->cmp);
+
+$showPartialCorrectAnswers = 1;
+
+######################################
+
+
+COMMENT('MathObject version');
+ENDDOCUMENT();

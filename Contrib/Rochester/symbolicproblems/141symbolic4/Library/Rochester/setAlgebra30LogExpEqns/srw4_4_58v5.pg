@@ -1,0 +1,51 @@
+##DESCRIPTION
+##   Algebra: Exponential and Logarithmic Equations
+##ENDDESCRIPTION
+
+##Tagged by up2p
+
+## DBsubject(Algebra)
+## DBchapter(Exponential and logarithmic expressions and functions)
+## DBsection(Exponential and logarithmic equations)
+## Date(6/3/2002)
+## MLT(ELEqn_MTL8)
+## Level(2)
+## TitleText1('College Algebra')
+## AuthorText1('Stewart, Redlin, Watson')
+## EditionText1('3')
+## Section1('6.5')
+## Problem1('48')
+## KEYWORDS('Algebra', 'Exponential', 'Logarithmic', 'Applications','logarithms', 'exponentials')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->constants->add(a => Real(random(1,2,.01)), b=> Real(random(1,2,.01)), c=>Real(random(1,2,.01)), d=>Real(random(1,2,.01)));
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$a = Formula("a");
+$b = Formula("b");
+$c = random(-15,15,1);
+$d = Formula("d");
+Context()->texStrings;
+BEGIN_TEXT
+Solve \($a ^{$b x + $c} = $d\) for \(x\) in terms of \(a\), \(b\), and \(d\). (You may assume \(a,d \gt 0\) and \( b \ne 0\) .)
+$PAR
+\(x = \) \{ans_rule(10) \}.
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("(ln($d) - $c* ln($a))/($b * ln($a))");
+ANS($ans->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.;

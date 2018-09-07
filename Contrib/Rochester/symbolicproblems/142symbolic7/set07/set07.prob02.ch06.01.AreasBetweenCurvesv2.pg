@@ -1,0 +1,53 @@
+## Original: /rochesterLibrary/setIntegrals19Area/sc6_1_5.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'area between curvers')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+"parserPopUp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Point");
+Context()->variables->add(A=>'Real', B=>'Real');
+$A = non_zero_random(-10,10,1);
+$B =  Formula("B");
+$popup = PopUp(["?","above","below"],"below");
+$func1 = Compute("$A * x^2")->reduce;
+$func2 = Compute("$B*x")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Assume \(A \gt 0 \), and consider the functions \(f(x) = $func1 \) and \(g(x) = $func2 \). Complete the following in terms of \(A\):
+$PAR
+(i) What are the two points where the graphs of \(f\) and \(g\) intersect? 
+$BR
+Points: \{ans_rule(30)\} \{AnswerFormatHelp("Points")\}
+$BR
+$BITALIC Note: Enter the points separated by a comma. $EITALIC
+$PAR
+(ii) Between those two points, does the graph of \(f\) lie $BITALIC above$EITALIC or $BITALIC below$EITALIC the graph of \(g\)?
+$BR
+The graph of \(f\) lies \{$popup->menu\} the graph of \(g\).
+$PAR
+(iii) Based on your answers to (i) and (ii), compute the area of the region bounded by the graphs of \(f\) and \(g\). 
+$BR
+Area bounded by \(f\) and \(g\) = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("(0,0),($B/$A,($B)^2/$A) ");
+$ans2 = $popup;
+$ans3 = Compute("($B)^3 /(6*($A)^2) ");
+ANS($ans1->cmp,$ans2->cmp,$ans3->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

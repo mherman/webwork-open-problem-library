@@ -1,0 +1,62 @@
+## DESCRIPTION
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of integration)
+## DBsection(Volumes by cylindrical shells)
+## Date(07/02/2008)
+## Institution(University of Rochester)
+## Author(Paul Pearson)
+## MLT(volume_shells_multi_V)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('6.3')
+## Problem1('')
+## KEYWORDS('integrals', 'volume','washers','disks')
+## ENDDESCRIPTION
+
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl");
+
+$showPartialCorrectAnswers = 1;
+
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(p=>'Real', a=>'Real', b=>'Real');
+Context()->variables->set(a=>{limits=>[1, 8]});
+Context()->variables->set(b=>{limits=>[1, 8]});
+$p = non_zero_random(-2,2,1);
+$a = Formula("a");
+$b = Formula("b");
+
+$func = Compute("x^($p) ");
+Context()->texStrings;
+BEGIN_TEXT
+Assume \(0\lt a \lt b\), and compute the volume of the solid obtained by revolving the region bounded by the graph of \(f(x) = $func \), the \(x\)-axis, the line \(x = $a\), and the line \(x = $b\) about the \(y\)-axis. Your answers should be in terms of \(a\) and \(b\).
+$PAR 
+Volume = \{ans_rule(30)\}
+$BR$BR Hint: Use the method of cylindrical shells
+
+
+$PAR
+END_TEXT
+
+
+
+if($p ==-2){
+$ans = Compute("2*pi * ln(x)");
+$ans2 = $ans->substitute(x=>$b) - $ans->substitute(x=>$a) ;
+ANS($ans2->cmp);
+}
+else{
+Context()->normalStrings;
+$ans =Compute("2*pi / ($p + 2)*(x^($p+2)) ");
+$ans1 = $ans->substitute(x=>$b) - $ans->substitute(x=>$a) ;
+ANS($ans1->cmp);
+}
+
+
+ENDDOCUMENT();

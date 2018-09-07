@@ -1,0 +1,51 @@
+##DESCRIPTION
+## tcao tagged and PAID on 12-12-2003
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Indeterminate forms and L'Hopital's rule)
+## Date(6/3/2002)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('4.4')
+## Problem1('35')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('4.7')
+## Problem2('35')
+##
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=> 'Real', b=> 'Real');
+$a = random(-14,14,2);
+$b = Compute("b");
+
+$func = Formula("($a * e^x - ($a/2*x^2) -$a * x - $a) /($b * x^2) ")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Compute \( \displaystyle \lim_{x \to 0} $func \), in terms of \(b\). You may assume \(b \ne 0 \). 
+$BR
+\( \displaystyle \lim_{x \to 0} $func  = \)\{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("$a/(6*$b)");
+ANS($ans->cmp);
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

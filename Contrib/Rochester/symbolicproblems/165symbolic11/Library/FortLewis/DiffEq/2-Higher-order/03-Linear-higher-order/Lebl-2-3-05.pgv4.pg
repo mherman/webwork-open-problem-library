@@ -1,0 +1,96 @@
+## DESCRIPTION
+## Higher order ODEs: constant coefficient higher order homogeneous linear ODEs
+## ENDDESCRIPTION
+
+
+## DBsubject(Differential equations)
+## DBchapter(Introductory concepts)
+## DBsection(Verification of solutions)
+## Date(01/30/2011)
+## Institution(Fort Lewis College)
+## Author(Paul Pearson)
+## Level(2)
+## TitleText1('Notes on Diffy Qs')
+## AuthorText1('Jiri Lebl')
+## EditionText1('December 9, 2010')
+## Section1('2.3')
+## Problem1('5')
+## KEYWORDS('differential equations','second order linear ODE','constant coefficients')
+
+
+##############################
+#  Initialization
+
+DOCUMENT(); 
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"AnswerFormatHelp.pl",
+"alignedChoice.pl",
+);
+
+TEXT(beginproblem());
+
+
+#############################
+#  Setup
+
+SRAND($psvn);
+
+
+Context("Numeric");
+Context()->constants->add(A=>Real(random(-10,20,1)), B=>Real(random(-10,10,1)), w=>Real(random(-10,10,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+
+$A = Formula("A");
+$B = Formula("B");
+$w = Compute("w");
+
+
+$term = Formula("$A*e^($B*x)*(sin($w*x)+cos($w*x))")->reduce;
+
+
+$y0 = $term->substitute(x=>0)->reduce;
+$y1 = $term->D('x')->substitute(x=>0)->reduce;
+$y2 = Formula("$A*(($B)^2+2*$B*$w-($w)^2 )");
+$y3 = Formula("$A*($B-$w)*(($B)^2 + 4*$B*$w+($w)^2 )");
+
+
+Context()->texStrings;
+$al = new_aligned_list(ans_rule_len=>10, numbered=>0, tex_spacing=>"3pt");
+$al->qa(
+"\(y(0)\)",    $y0->cmp(),
+"\(y^{\,\prime}(0)\)",   $y1->cmp(),
+"\(y^{\,\prime\prime}(0)\)",  $y2->cmp(),
+"\(y^{\,\prime\prime\prime}(0)\)", $y3->cmp(),
+);
+Context()->normalStrings;
+
+
+######################
+#  Main text
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose that a fourth order differential equation 
+has a solution \( y = $term \). Compute \(y(0)\), \(y'(0)\), \(y''(0)\), and \(y'''(0)\) in terms of \(A\) and \(B\).
+$BR
+\{ $al->print_q() \}
+END_TEXT
+Context()->normalStrings;
+
+########################
+#  Answer evaluation
+
+$showPartialCorrectAnswers = 1;
+
+ANS( $al->correct_ans );
+
+
+COMMENT("MathObject version.");
+
+ENDDOCUMENT();
+
+

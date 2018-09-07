@@ -1,0 +1,129 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by tda2d
+
+## DBsubject(Linear algebra)
+## DBchapter(Euclidean spaces)
+## DBsection(Basis and dimension)
+## Institution(TCNJ)
+## TitleText1('Linear Algebra with Applications')
+## AuthorText1('Jeffrey Holt')
+## EditionText1('1')
+## Section1('4.2')
+## Problem1('')
+## KEYWORDS('bases' 'basis' 'matrix' 'linearly independent')
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+"IansMacros.pl",
+"parserPopUp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Matrix");
+Context()->constants->remove(e,i,j,k);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+Context()->strings->add('N/A'=>{});
+Context()->constants->add(
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+c=>Real(random(-10,10,1)),
+d=>Real(random(-10,10,1)),
+e=>Real(random(-10,10,1)),
+f=>Real(random(-10,10,1)),
+g=>Real(random(-10,10,1)),
+h=>Real(random(-10,10,1)),
+i=>Real(random(-10,10,1)),
+j=>Real(random(-10,10,1)),
+k=>Real(random(-10,10,1)),
+l=>Real(random(-10,10,1)),
+);
+$a = Formula("a");
+$b = Formula("b");
+$c = Formula("c");
+$d = Formula("d");
+$e = Formula("e");
+$f = Formula("f");
+$g = Formula("g");
+$h = Formula("h");
+$i = Compute("i");
+$j = Compute("j");
+$k = Compute("k");
+$l = Compute("l");
+$A = ColumnVector($a,$e,$i);
+$B = ColumnVector($b,$f,$j);
+$C = ColumnVector($c,$g,$k);
+$D = ColumnVector($d,$h,$l);
+$M = Matrix([
+[$a,$b,$c],
+[$e,$f,$g],
+[$i,$j,$k],
+]);
+@strarray1 = ("?","Yes","No","It depends.");
+@strarray2 = ("?","The vectors are not linearly independent.","The vectors do not span the space","Both","N/A");
+$popup1 = PopUp([@strarray1], $strarray1[2]);
+if($j ==0 && $k ==0 && $i ==0){
+$popup2 = PopUp([@strarray1], $strarray1[2]);
+}
+else{ $popup2 = PopUp([@strarray1], $strarray1[3]); 
+$popup6 = PopUp([@strarray2], $strarray2[1]);
+}
+$popup3 = PopUp([@strarray1], $strarray1[2]);
+
+$popup4 = PopUp([@strarray2], $strarray2[2]);
+if($i ==0 && $j==0 && $k ==0){
+$popup5 = PopUp([@strarray2], $strarray2[3]);
+$popup6 = PopUp([@strarray2], $strarray2[2]);
+}
+else{ $popup5 = PopUp([@strarray2], $strarray2[4]); }
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the following four vectors in \( {\mathbb R}^3 \):
+\[$A,$B,$C,$D\]
+I) Select "Yes", "No", or "It depends" to the following:
+$BR
+I-A) Do the first two vectors above form a basis for \( {\mathbb R}^3 \)?
+$BR\{$popup1->menu\}
+$PAR
+I-B) Do the first three vectors above form a basis for \( {\mathbb R}^3 \)?
+$BR
+\{$popup2->menu\}
+$PAR
+I-C) Do the first four vectors above form a basis for \( {\mathbb R}^3 \)?
+$BR
+\{$popup3->menu\}
+$PAR
+$PAR
+II) For those parts above for which you answered "No", select a reason from the following choices:
+$BR
+II-A) \{$popup4->menu\}$BR
+II-B) \{$popup5->menu\}$BR
+II-C) \{$popup6->menu\}$BR
+
+III) For those parts above to which you answered "It depends", fill in the blank: these vectors span \( {\mathbb R}^3 \) if and only if \{ans_rule(30)\} \(\ne 0\).$BR
+If you did not answer "It depends" to any, write "N/A".
+
+END_TEXT
+Context()->normalStrings;
+if($i ==0 && $j ==0&& $k ==0){
+$ans7 = Compute("N/A");
+}
+else{ $ans7 = det($M); }
+ANS(
+$popup1->cmp,
+$popup2->cmp,
+$popup3->cmp,
+$popup4->cmp,
+$popup5->cmp,
+$popup6->cmp,
+$ans7->cmp,
+);
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

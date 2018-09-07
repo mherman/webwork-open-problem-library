@@ -1,0 +1,60 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 4/20/06
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of differentiation)
+## DBsection(Linear approximation and differentials)
+## Institution(UCSB)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('4.1')
+## Problem1('21')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('3.10')
+## Problem2('21')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('5')
+## Section3('3.11')
+## Problem3('27')
+## KEYWORDS('derivatives', 'differentials','Calculus','Differentiation','Product','Quotient')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=> 'Real', b=> 'Real', c=> 'Real');
+$a = Compute("a");
+$b = Compute("b");
+$c = Compute("c");
+$x0 = non_zero_random(-5,10,1);
+$e = random(.001,.010,.001);
+$func = Compute("$a * x^2 + $b * x + $c ")->reduce;
+$ans = Compute("(2 * $a * $x0 + $b)*$e");
+Context()->texStrings;
+BEGIN_TEXT
+Let \(y = $func \). If \(x = $x0 \) and \(dx  = $e\), compute \(dy\) in terms of \(a\), \(b\), and \(c\).
+$PAR
+\(dy = \)\{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+ANS($ans->cmp);
+ 
+ENDDOCUMENT();        # This should be the last executable line in the problem.

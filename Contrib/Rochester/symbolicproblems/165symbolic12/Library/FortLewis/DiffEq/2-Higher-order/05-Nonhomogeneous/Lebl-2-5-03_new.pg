@@ -1,0 +1,65 @@
+## DESCRIPTION
+## Higher order ODEs: constant coefficient second order nonhomogeneous linear ODEs
+## ENDDESCRIPTION
+
+## KEYWORDS('differential equations','second order linear ODE','constant coefficients','nonhomogeneous')
+
+## DBsubject('Differential Equations')
+## DBchapter('Higher Order Differential Equations')
+## DBsection('Second Order Linear Nonhomogeneous')
+## Date('01/30/2011')
+## Author('Paul Pearson')
+## Institution('Fort Lewis College')
+## TitleText1('Notes on Diffy Qs')
+## EditionText1('December 9, 2010')
+## AuthorText1('Jiri Lebl')
+## Section1('2.5')
+## Problem1('3')
+
+
+##############################
+#  Initialization
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+Context("Numeric");
+Context()->constants->add(
+k=>Real(random(-10,10,1)),
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$k = Formula("k");
+$a = Formula("a");
+$b = Formula("b");
+
+$m2k = Formula("-2*$k")->reduce;
+$k2 = Formula("($k)^2")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Solve the initial-value problem
+$BR
+\[ \begin{aligned}
+&y'' +$m2k y' + $k2 y = e^{$k x}, \\
+&y(0) = $a, \\
+&y'(0) = $b
+\end{aligned} \]
+in terms of \(k\), \(a\), and \(b\).
+$PAR
+\(y = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("($a+($b-$k*$a)*x + 1/2*x^2)*e^($k*x)");
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

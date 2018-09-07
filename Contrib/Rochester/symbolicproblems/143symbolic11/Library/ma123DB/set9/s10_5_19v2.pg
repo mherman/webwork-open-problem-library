@@ -1,0 +1,63 @@
+##Keywords('Polar Coordinates', 'Area', 'Integration')
+##DESCRIPTION
+##Find the area enclosed by a Polar Graph
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Polar)
+## DBsection(Area)
+## Date(6/3/2002)
+## Institution(Rochester)
+## MLT(pa-area-roses)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('10.4')
+## Problem1('19')
+## KEYWORDS('Polar Coordinates', 'Area', 'Integration','integral' 'polar' 'area')
+
+DOCUMENT();
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+TEXT(beginproblem());
+$showPartialAnswersCorrect=1;
+
+Context("Numeric");
+Context()->variables->add(A=> 'Real', n=> 'Real', theta=> 'Real');
+Context()->variables->set(theta=>{TeX=>'\theta'});
+
+$A = random(1,10,1);
+$n = Formula("n");
+$func = Formula("$A*cos($n*theta)");
+
+Context()->texStrings;
+BEGIN_TEXT
+$PAR
+Sketch the graph of the function \(r(\theta) = $func \), where \(n \ge 3\) is an odd integer. It looks like a flower :) 
+$PAR
+How many "petals" does this flower have? $BR
+Number of Petals: \{ans_rule(30)\}
+$PAR
+What is the area enclosed by one of these "petals"? $BR 
+Area of one Petal = \{ans_rule(30)\} 
+$PAR
+What is the total area enclosed by the curve? $BR
+Total Area = \{ans_rule(30)\}
+$PAR
+Your answers should be in terms of \(n\).
+
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$n");
+$ans2 = Compute("($A)^2*pi/(4*$n)");
+$ans3 = Compute("$ans1*$ans2");
+ANS($ans1->cmp, $ans2->cmp, $ans3->cmp);
+
+ENDDOCUMENT();

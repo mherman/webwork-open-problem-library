@@ -1,0 +1,59 @@
+## DESCRIPTION
+## Calculus: Integration by Parts
+## ENDDESCRIPTION
+
+## Tagged by XW
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Techniques of integration)
+## DBsection(Integration by parts (with trigonometric functions))
+## Date(05/06/2007)
+## Institution(University of Rochester)
+## Author(Paul Pearson)
+## MLT(parts_04)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus')
+## AuthorText1('Stewart')
+## EditionText1('5e')
+## Section1('7.1')
+## Problem1('6')
+## KEYWORDS('calculus', 'integrals', 'integration by parts')
+
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real');
+$a = Formula("a");
+$b = random(-5,5,1);
+$c = random(-5,5,1);
+
+$func = Formula("$a*arctan($b*x + $c) ")->reduce;
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Compute $integral . Your answer should be in terms of \(a\).
+$PAR 
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+if($b != 0){
+$ans = FormulaUpToConstant("$a/$b*(($b*x+$c)*arctan($b*x+$c) - 1/2*ln(($b*x+$c)^2 + 1) )");
+}
+else{
+$ans = FormulaUpToConstant("$a*x*arctan($c)");
+}
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();

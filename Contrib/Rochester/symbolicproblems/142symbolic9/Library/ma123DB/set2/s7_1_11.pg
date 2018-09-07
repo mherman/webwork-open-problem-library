@@ -1,0 +1,66 @@
+##DESCRIPTION
+## Use integration by parts to evaluate an integral
+##ENDDESCRIPTION
+
+## AmberHolden tagged
+## Shotwell cleaned
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Techniques of integration)
+## DBsection(Integration by parts (with trigonometric functions))
+## Date(6/3/2002)
+## Institution(UVA)
+## Author(Jeff Holt)
+## MLT(part_03)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('7.1')
+## Problem1('11 12')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Rogawski')
+## EditionText2('1')
+## Section2('7.2')
+## Problem2('11')
+## TitleText3('Calculus: Early Transcendentals')
+## AuthorText3('Stewart')
+## EditionText3('5')
+## Section3('7.1')
+## Problem3('11')
+## KEYWORDS('integrals', 'integration by parts','calculus','integration','integration by parts', 'integration', 'integrals', 'Substitution' )
+
+
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+
+
+$func = Formula("e^($a*x)*sin($b*x)");
+Context()->texStrings;
+$integral = "\(\displaystyle \int $func dx \)";
+BEGIN_TEXT
+Assume \(a,b \ne 0 \) and compute $integral . Your answer should be in terms of \(a\) and \(b\).
+$PAR 
+$integral = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans = FormulaUpToConstant("($a*sin($b*x)-$b*cos($b*x))*e^($a*x)/(($a)^2+($b)^2)");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();

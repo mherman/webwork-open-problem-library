@@ -1,0 +1,71 @@
+##DESCRIPTION
+##  Evalute a limit of a fraction of two polynomials. Removable discontinuity
+##ENDDESCRIPTION
+
+##Tagged by ynw2d
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Continuity - concept of)
+## Date(6/3/2002)
+## MLT(cc-l)
+## MLTleader(1)
+## Level(3)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('1')
+## Section1('2.4')
+## Problem1('41')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('2.5')
+## Problem2('41')
+## KEYWORDS('Calculus','Discontinuity', 'Removable','limits', 'factoring', 'continuity')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGauxiliaryFunctions.pl",
+"MathObjects.pl",
+"contextInequalities.pl",
+"AnswerFormatHelp.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a => Real(5841), b => Real(221.1), c=> Real(0102), d => Real(9865) , A => Real(2210));
+Context()->flags->set(formatStudentAnswer => 'parsed');
+$a = Compute("a");
+$b =Compute("b");
+$c = Compute("c");
+$d = Compute("d");
+$A = Compute("A");
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Let \( f(x) =$a x^3 + $b x^2 + $c x + $d \) with \(a,b,c,d,A \gt 0\).
+$BR
+For what values of \(y_0\), in terms of \(a\), \(b\), \(c\), \(d\), and \(A\) does the intermediate value theorem guarantee that there is an \(x_0\) in the interval \([0,$A]\) such that \(f(x_0) = y_0 \)?
+$BR
+Answer with an inequality or interval.
+$BR
+\(y_0 = \) \{ans_rule(35)\} \{AnswerFormatHelp("Inequalities")\}; \{AnswerFormatHelp("Intervals")\}
+END_TEXT
+Context()->normalStrings;
+Context("Inequalities");
+#Context()->variables->remove(a , b, c, d);
+Context()->constants->add(a => Real(5841), b => Real(221.1), c=> Real(0102), d => Real(9865) , A => Real(2210) );
+$inequality = Compute("$d <= x <= $A^3*$a + $A^2*$b+$A*$c+$d");
+$ans = $inequality;
+ANS($ans->cmp());
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

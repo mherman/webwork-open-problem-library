@@ -1,0 +1,66 @@
+## DESCRIPTION
+## Higher order ODEs: constant coefficient second order nonhomogeneous linear ODEs
+## ENDDESCRIPTION
+
+
+## DBsubject(Differential equations)
+## DBchapter(Higher order differential equations)
+## DBsection(Undetermined coefficients)
+## Date(01/30/2011)
+## Institution(Fort Lewis College)
+## Author(Paul Pearson)
+## MLT(undet_05)
+## Level(3)
+## TitleText1('Notes on Diffy Qs')
+## AuthorText1('Jiri Lebl')
+## EditionText1('December 9, 2010')
+## Section1('2.5')
+## Problem1('4')
+## KEYWORDS('differential equations','second order linear ODE','constant coefficients','nonhomogeneous')
+
+
+##############################
+#  Initialization
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+Context("Numeric");
+Context()->constants->add(
+A=>Real(non_zero_random(-10,10,1)),
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = Compute("A");
+$a = Formula("a");
+$b = Formula("b");
+
+
+$A2 = Formula("($A)^2")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Solve the initial-value problem
+$BR
+\[ \begin{aligned}
+&y'' +$A2 y = \cos($A x) + \sin($A x), \\
+&y(0) = $a, \\
+&y'(0) = $b
+\end{aligned} \]
+in terms of \(a\) and \(b\).
+$PAR
+\(y = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("$a * cos($A*x) + (2*$b*$A+1)/(2*($A)^2 )*sin($A*x) + 1/(2*$A)*x*(sin($A*x) - cos($A*x) ) ");
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

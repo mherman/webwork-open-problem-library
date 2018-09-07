@@ -1,0 +1,50 @@
+## Original: /Library/ma122DB/set11/s5_2_37.pg
+
+##DESCRIPTION
+##  Properties of the definite integrals
+##ENDDESCRIPTION
+##KEYWORDS('integrals', 'theory')
+
+## Shotwell cleaned
+## lcao , PAID on 11-24-2003
+
+## DBsubject('Calculus')
+## DBchapter('Integrals')
+## DBsection('The Definite Integral')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('5.2')
+## Problem1('37')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real', c=>'Real');
+$a = Formula("a");
+$b = Formula("b");
+$c = random(-15,15,1);
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppsed \( \displaystyle \int_{$a}^{$b} f(x) dx = $c \). Compute \( \displaystyle \int_{$b}^{$a} f(x) dx\) in terms of \(a\) and \(b\). 
+$PAR
+\( \displaystyle \int_{$b}^{$a} f(x) dx = \)\{ans_rule(30)\} $PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("-$c");
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

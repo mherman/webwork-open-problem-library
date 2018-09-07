@@ -1,0 +1,65 @@
+## Original: /Library/ma123DB/set4/s7_8_23.pg
+
+##KEYWORDS('integrals', 'improper')
+##DESCRIPTION
+## Determine if an improper integral converges and evaluate it
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Improper Integrals')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('7.8')
+## Problem1('23,24')
+
+DOCUMENT();   
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(b=>Real(20.68),a=>Real(7.669),A=>'Real', B=>'Real', C=>'Real');
+Context()->variables->set(A=>{limits=>[1,5]});
+Context()->variables->set(B=>{limits=>[1,5]});
+Context()->variables->set(C=>{limits=>[1,5]});
+
+$a = Formula("a");
+$A = non_zero_random(-5,5,1);
+$B = non_zero_random(-5,5,1);
+do{
+$C = non_zero_random(-5,5,1);
+}
+while($B*$C<0);
+
+
+$func = Formula("$A/($B*x^2 + $C)")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the function \(f(x) = $func \). Compute \( \displaystyle \int_{$a}^{b} f(x) dx \) in terms of \(a\) and \(b\).
+$BR
+\( \displaystyle \int_{$a}^{b} f(x) dx = \)\{ans_rule(30)\}
+$PAR
+Now compute \(\displaystyle \int_{$a}^{\infty} f(x) dx \) in terms of \(a\) by letting \(b \to \infty\) in your first answer. 
+$BR
+\(\displaystyle \int_{$a}^{\infty} f(x) dx = \)\{ans_rule(30)\} 
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+$ans1 = Compute("$A/ sqrt($B*$C)*(arctan(b*sqrt($B/$C))-arctan($a*sqrt($B/$C)))");
+$ans2 = Compute("$A/sqrt($B*$C)*(pi/2 - arctan($a*sqrt($B/$C) ))");
+
+ANS($ans1->cmp,$ans2->cmp);
+ENDDOCUMENT(); 

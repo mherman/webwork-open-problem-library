@@ -1,0 +1,61 @@
+##DESCRIPTION
+##ENDDESCRIPTION
+## DBsubject(Differential equations)
+## DBchapter(Higher order differential equations)
+## DBsection(Undetermined coefficients)
+## Institution(Univeristy of Utah)
+## Author(Utah ww group)
+## MLT(undet_01)
+## Level(5)
+## TitleText1('Calculus')
+## AuthorText1('Dale Varberg, Edwin J. Purcell, and Steve E. Rigdon')
+## EditionText1('9')
+## Section1('.')
+## Problem1('')
+## KEYWORDS('calculus')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+Context("Numeric");
+Context()->constants->add(
+A=>Real(random(1,10,1)),
+B=>Real(random(-10,10,1)),
+C=>Real(random(-10,10,1)),
+a=>Real(random(-10,10,1)),
+b=>Real(random(-10,10,1)),
+);
+Context()->flags->set(formatStudentAnswer=>'parsed');
+$A = Compute("A");
+$B = Compute("B");
+$C = Compute("C");
+$a = Formula("a");
+$b = Formula("b");
+
+
+Context()->texStrings;
+BEGIN_TEXT
+Solve the initial-value problem
+$BR
+\[ \begin{aligned}
+&y'' + $A y = $B e^{$C x}, \\
+&y(0) = $a, \\
+&y'(0) = $b
+\end{aligned} \]
+in terms of \(a\) and \(b\). 
+$PAR
+\(y = \)\{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+
+$ans = Compute("1/sqrt($A)*($b-$B*$C/($A+($C)^2))*sin(sqrt($A)*x) + ($a - $B/($A+($C)^2))*cos(sqrt($A)*x)+$B/($A+($C)^2)*e^($C*x) ");
+ANS($ans->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.
+

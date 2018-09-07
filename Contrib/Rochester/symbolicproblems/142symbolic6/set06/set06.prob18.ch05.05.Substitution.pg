@@ -1,0 +1,36 @@
+## Original: /rochesterLibrary/setIntegrals14Substitution/sc5_5_38.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'substitution')
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"parserFormulaUpToConstant.pl"
+);
+
+$showPartialCorrectAnswers = 1;
+TEXT(beginproblem());
+Context("Numeric");
+Context()->variables->add(a=>'Real', b=>'Real',A=>'Real', B=>'Real');
+$A = Formula("A");
+$B = Formula("B");
+$a = Formula("a");
+$b = Formula("b");
+$func = Compute("e^(sin($A*x+$B)) * cos($A * x + $B) ")->reduce;
+
+Context()->texStrings;
+$integral = "\displaystyle \int_{$a}^{$b} $func dx " ;
+BEGIN_TEXT
+$PAR
+Compute \($integral\) in terms of \(a\), \(b\), \(A\), and \(B\).  You may assume \(A \ne 0\).
+$PAR
+\($integral =\) \{ans_rule(30)\}
+END_TEXT
+Context()->normalStrings;
+$ans = Formula("1/$A * e^(sin($A*x + $B) )");
+$ans = $ans->substitute(x=>$b) - $ans->substitute(x=>$a);
+ANS($ans->cmp);
+ENDDOCUMENT();        # This should be the last executable line in the problem.

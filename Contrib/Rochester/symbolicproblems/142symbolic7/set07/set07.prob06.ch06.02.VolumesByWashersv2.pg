@@ -1,0 +1,37 @@
+## Original: /rochesterLibrary/setIntegrals20Volume/sc6_2_1.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'volume')
+##ENDDESCRIPTION
+
+## Before doing anything, we must import the macro definitions on the next few lines.
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(A=>'Real', p =>'Real', c=>'Real');
+$A = non_zero_random(-12,12,1);
+$p = Formula("p");
+$c =Formula("c");
+$func = Compute("$A*x^($p) ")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Assume \(p \gt -\frac{1}{2} \) and \(c \gt 0 \), and compute the volume of the solid obtained by revolving the region bound by the graph of \(f(x) = $func \), the vertical line \(x = $c\), and the x-axis about the x-axis. Your answer should be in terms of  \(p\) and \(c\). 
+$PAR
+Volume = \{ans_rule(30)\}
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans = Compute("(($A)^2*($c)^(2*$p+1) *pi )/(2*$p + 1) ");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

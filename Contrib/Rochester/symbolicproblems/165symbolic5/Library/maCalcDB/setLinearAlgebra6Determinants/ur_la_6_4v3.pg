@@ -1,0 +1,83 @@
+## DESCRIPTION
+## Linear Algebra
+## ENDDESCRIPTION
+
+## Tagged by cmd6a 4/29/06
+
+## DBsubject(Linear algebra)
+## DBchapter('Determinants')
+## DBsection(Computing determinants)
+## Institution('Rochester')
+## TitleText1('Elementary Linear Algebra')
+## AuthorText1('Larson, Edwards, Falvo')
+## EditionText1('5')
+## Section1('3.2')
+## Problem1('')
+## TitleText2('Linear Algebra with Applications')
+## AuthorText2('Jeffrey Holt')
+## EditionText2('1')
+## Section2('5.1')
+## Problem2('')
+DOCUMENT() ;        
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+"PGmatrixmacros.pl",
+"parserVectorUtils.pl",
+"PGcourse.pl",
+"IansMacros.pl",
+) ;
+
+
+
+$showPartialCorrectAnswers = 1 ;
+
+############
+
+TEXT(beginproblem());
+
+Context('Matrix');
+Context()->constants->remove(e,i);
+Context()->constants->add(
+a=>Real(non_zero_random(-10,10,1)),
+b=>Real(non_zero_random(-10,10,1)),
+c=>Real(non_zero_random(-10,10,1)),
+d=>Real(non_zero_random(-10,10,1)),
+e=>Real(non_zero_random(-10,10,1)),
+f=>Real(non_zero_random(-10,10,1)),
+g=>Real(non_zero_random(-10,10,1)),
+h=>Real(non_zero_random(-10,10,1)),
+i=>Real(non_zero_random(-10,10,1)),
+);
+$a = Compute("a");
+$b = Formula("b");
+$c = Compute("c");
+$d = Formula("d");
+$e = Formula("e");
+$f = Compute("f");
+$g = Compute("g");
+$h = Formula("h");
+$i= Formula("i");
+
+
+$A = Matrix([
+[$a,$b,$c],
+[$d,$e,$f],
+[$g,$h,$i]
+]);
+
+$answer =det($A)->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Suppose \[A = $A.\]
+Compute the determinant of \(A\), \(\det(A)\), in terms of \(b,d,e,h,\) and \(i\).
+$PAR
+\(\det(A) = \)\{$answer->ans_rule\}
+END_TEXT
+Context()->normalStrings;
+ANS($answer->cmp);
+COMMENT('MathObject version');
+
+ENDDOCUMENT();

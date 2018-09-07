@@ -1,0 +1,55 @@
+## DESCRIPTION
+## Calculus
+## ENDDESCRIPTION
+## DBsubject(Calculus - single variable)
+## DBchapter(Applications of integration)
+## DBsection(Work)
+## Date(March 7, 2007)
+## Institution(Rochester)
+## Author(Paul Pearson)
+## MLT(work_springs_work)
+## Level(5)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('6.4')
+## Problem1('')
+## KEYWORDS('work' 'spring')
+
+## Original: /set8/sc6_4_10.pg
+## Modified May 2007 by Paul Pearson
+
+
+DOCUMENT();
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(F=>'Real',l=>'Real',L=>'Real');
+
+$l = Formula("l");
+$L = Formula("L");
+$F = Formula("F");
+
+
+#$l= random(3,5,1);    # Displacement of spring (in ft)
+#$w= random(10,18,1);  # Work (in ft-lb) done displacing to $D
+#$L= random(8,45,1);   # Upper limit of integration (displacement in inches)
+Context()->texStrings;
+BEGIN_TEXT
+It requires a force of \($F\) N to hold a spring stretched \($l\) m beyond its natural length. If \($L \gt $l \), how much work, in terms of \(F\), \(l\), and \(L\), is required to further stretch the spring from \($l\) m to \($L \) m?
+$PAR
+Work = \{ans_rule(30)\} N m
+$PAR
+END_TEXT
+Context()->normalStrings;
+$ans = Compute("$F*(($L)^2 - ($l)^2 )/(2*$l) ");
+ANS($ans->cmp);
+
+
+ENDDOCUMENT();

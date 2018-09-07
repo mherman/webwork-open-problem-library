@@ -1,0 +1,71 @@
+##DESCRIPTION
+##  Given that a tangent line to a curve passed through
+## a point (a, b), find f(a) and f'(a)
+##ENDDESCRIPTION
+
+## Shotwell cleaned
+## nsilva tagged and PAID on 9-27-2004
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Differentiation)
+## DBsection(Conceptual understanding of derivatives)
+## Date(5/26/2005)
+## Institution(UVA)
+## Author(Jeff Holt)
+## Level(4)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('6')
+## Section1('2.7')
+## Problem1('')
+## TitleText2('Mathematical Applications')
+## AuthorText2('Ronal J. Harshbarger and James J. Reynolds')
+## EditionText2('8')
+## Section2('.')
+## Problem2('')
+## TitleText3('Calculus: Concepts and Contexts')
+## AuthorText3('Stewart')
+## EditionText3('4 Custom UMTYMP Ed.')
+## Section3('2.6')
+## Problem3('4')
+## TitleText4('Calculus: Early Transcendentals')
+## AuthorText4('Stewart')
+## EditionText4('5')
+## Section4('2.8')
+## Problem4('4')
+## KEYWORDS('tangent line', 'derivatives','Calculus','Derivative', 'Tangent', 'derivative','Product','Quotient','Differentiation', 'limits')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PGbasicmacros.pl",
+"PGanswermacros.pl",
+"MathObjects.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(a=> 'Real', b=> 'Real', c=> 'Real', d=> 'Real');
+
+$a = random(-15,15,1);
+$b = random(-15,15,1);
+$c = Compute("c");
+$d = Compute("d");
+
+Context()->texStrings;
+BEGIN_TEXT
+ If \(f\) is a function whose tangent line at \( ($a,$b)\) passes through the point \( ($c,$d) \), with \($a \ne $c \), compute, in terms of \(c\) and \(d\), \(f($a)\) and \(f^{\prime}($a)\) 
+$PAR
+
+\(f($a) = \) \{ans_rule(20)\} $BR
+\(f^{\prime}($a) = \) \{ans_rule(20)\} $BR
+END_TEXT
+
+Context()->normalStrings;
+
+ANS(Compute("$b")->cmp);
+ANS(Compute("($d-($b))/($c-($a))")->cmp);
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

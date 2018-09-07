@@ -1,0 +1,63 @@
+## Original: /Library/maCalcDB/setIntegrals18Improper/ur_in_18_1.pg
+
+##DESCRIPTION
+##KEYWORDS('integrals', 'improper')
+## sbrummel tagged and PAID on 2-20-2004
+## DBsubject('Calculus')
+## DBchapter('Techniques of Integration')
+## DBsection('Improper Integrals')
+## Date('6/3/2002')
+## Author('Arnie Pizer')
+## Institution('rochester')
+## TitleText1('Calculus Early Transcendentals')
+## EditionText1('4')
+## AuthorText1('Stewart')
+## Section1('7.8')
+## Problem1('9,10')
+##ENDDESCRIPTION
+
+DOCUMENT();   
+
+loadMacros(
+"PGstandard.pl",
+"MathObjects.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+Context()->variables->add(b=>Real(20.68),a=>Real(7.669),A=>'Real', B=>'Real');
+Context()->variables->set(A=>{limits=>[-5,-2]});
+
+$a =  Formula("a");
+$A = Formula("A");
+$B = Formula("B");
+
+
+$func = Formula("e^($A*x+$B)")->reduce;
+
+Context()->texStrings;
+BEGIN_TEXT
+Consider the function \(f(x) = $func \). Under the assumption \(A \lt 0 \), compute \( \displaystyle \int_{$a}^{b} f(x) dx \) in terms of \(A\), \(B\), \(a\), and \(b\).
+$BR
+\( \displaystyle \int_{$a}^{b} f(x) dx = \)\{ans_rule(30)\}
+$PAR
+Now compute \(\displaystyle \int_{$a}^{\infty} f(x) dx \) in terms of \(a\), \(A\), and \(B\) by letting \(b \to \infty\) in your first answer. 
+$BR
+\(\displaystyle \int_{$a}^{\infty} f(x) dx = \)\{ans_rule(30)\} \((A \lt 0)\)
+$PAR
+What is \(\displaystyle \int_{$a}^{\infty} f(x) dx\) if \( A \ge 0\)?
+$BR
+\(\displaystyle \int_{$a}^{\infty} f(x) dx = \)\{ans_rule(30)\} \((A \ge 0)\)
+$PAR
+
+END_TEXT
+Context()->normalStrings;
+
+$ans1 = Compute("e^($B)/$A *(e^($A*b)-e^($A*$a))");
+$ans2 = Compute("-(e^($B+$A*$a))/($A) ");
+$ans3 = Compute("infinity");
+
+
+ANS($ans1->cmp,$ans2->cmp, $ans3->cmp);
+ENDDOCUMENT(); 
